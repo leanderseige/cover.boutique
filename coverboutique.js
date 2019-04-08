@@ -169,7 +169,7 @@ function coverboutique(config) {
         var img = document.createElement('img');
         img.crossOrigin = "Anonymous";
 
-        var imgurl_mask = "http://localhost:8000/test2.png"
+        var imgurl_mask = "http://localhost:8000/images/test2.png"
         var img_mask = document.createElement('img');
         img_mask.crossOrigin = "Anonymous";
 
