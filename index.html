@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<!--
+
+  CASE.CAFE
+
+  (c) 2018, Leander Seige, leander@seige.name
+
+  https://case.cafe
+	https://github.com/leanderseige/case.cafe
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+-->
+
+<head>
+  <meta charset='utf-8'>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" type="image/png" href="images/case.cafe.icon.png" sizes="any">
+  <title>COVER BOUTIQUE</title>
+  <link rel='stylesheet' type='text/css' media='screen' href='css/styles.css' />
+  <link rel='stylesheet' type='text/css' media='screen' href='css/styles-mobile.css' />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js" integrity="sha384-CchuzHs077vGtfhGYl9Qtc7Vx64rXBXdIAZIPbItbNyWIRTdG0oYAqki3Ry13Yzu" crossorigin="anonymous"></script>
+  <script src="libs/jsonc.min.js"></script>
+  <script src="openseadragon/openseadragon.min.js"></script>
+  <script src="coverboutique.js"></script>
+</head>
+
+<body>
+
+  <script type="text/javascript">
+    var config = {
+      "faces": false
+    };
+    var cb = new coverboutique(config);
+
+    cb.recalcVH();
+
+    window.addEventListener('resize', function(event){
+      cb.recalcVH();
+    });
+/*
+    $('.gridwrap').bind('touchend', function(e) {
+      e.preventDefault();
+      $(this).click();
+    })
+*/
+    $('.noselect').bind('touchend', function(e) {
+      e.preventDefault();
+      $(this).click();
+    })
+
+  </script>
+
+
+  <div id="gridwrap">
+
+    <!-- NEW ROW -->
+    <div class="grid-item ctrl noselect" id="discover">
+        Discovery goes here
+    </div>
+
+
+    <div class="grid-item ">
+        <div id="osd" class="overlay"></div>
+        <div id="mask" class="overlay overlay-mask"></div>
+    </div>
+
+    <div class=" noselect" id="adjust">
+        <div class="sliders" id="blur">Blur</div><br />
+        <div class="sliders" id="sharpen">sharpen</div><br />
+        <div class="sliders" id="grayscale">Grayscale</div><br />
+        <div class="sliders" id="brightness">brightness</div><br />
+        <div class="sliders" id="contrast">contrast</div><br />
+        <div class="sliders" id="rotate">huerotate</div><br />
+        <div class="sliders" id="invert">invert</div><br />
+        <div class="sliders" id="saturate">saturate</div><br />
+        <div class="sliders" id="sepia">sepia</div><br />
+      <div class="icons" onclick="cb.flipOSD()">&#xf362;</div>
+      <div class="icons" onclick="cb.zoomIn()">&#xf00e;</div>
+      <div class="icons" onclick="cb.zoomOut()">&#xf010;</div>
+    </div>
+
+
+    <!-- MAIN MENU -->
+
+    <div class="grid-item noselect" id="bottom">
+      <div class="icons mainmenu" onclick="cb.reloadAll();">&#xf2f1;</div>
+      <div class="icons mainmenu" onclick="cb.zoomInAll();">&#xf00e;</div>
+      <div class="icons mainmenu" onclick="cb.zoomOutAll();">&#xf010;</div>
+      <div class="icons mainmenu" onclick="cb.resetAll();">&#xf049;</div>
+      <div class="icons mainmenu" onclick="cb.launch_download();">&#xf56d;</div>
+      <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#metadata');">&#xf05a;</div>
+      <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#impressum');"><img src="images/case.cafe.icon.svg" /></div>
+    </div>
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="0%" height="0%">
+    <defs>
+      <filter id="fsharpen1">
+        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.5 0 -.5 5 -.5 0 -.5 0"/>
+      </filter>
+      <filter id="fsharpen2">
+        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.7 0 -.7 5 -.7 0 -.7 0"/>
+      </filter>
+      <filter id="fsharpen3">
+        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.9 0 -.9 5 -.9 0 -.9 0"/>
+      </filter>
+      <filter id="fsharpen4">
+        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -1 0 -1 5 -1 0 -1 0"/>
+      </filter>
+      <filter id="fsharpen5">
+        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -1.1 0 -1.1 5 -1.1 0 -1.1 0"/>
+      </filter>
+    </defs>
+    </svg>
+
+</body>
+</html>
