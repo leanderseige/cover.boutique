@@ -34,6 +34,10 @@ h1 {
   margin: 0 0;
 }
 
+.discoimage {
+  width:35vw;
+}
+
 #gridwrap {
   display: grid;
   grid-template-columns: 35vw 30vw 35vw;
@@ -71,8 +75,9 @@ h1 {
    float:left;
  }
 
-.sliders {
+.sliders, .sliders.p {
     display:flow-root;
+    width:20vw;
 }
 
 .grid-item {

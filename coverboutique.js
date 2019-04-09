@@ -16,6 +16,7 @@ function coverboutique(config) {
     var jcache = {};
     var viewer = false;
     var canvas = false;
+    var last_scrollrun=0;
 
 
     $(document).ready(function() {
@@ -40,7 +41,7 @@ function coverboutique(config) {
 
       load_data();
 
-      this.scrollrun();
+      setTimeout(function() {in_scrollrun();},3000);
     })
 
     function loadDiscoImage(elem) {
@@ -49,14 +50,24 @@ function coverboutique(config) {
     }
 
     coverboutique.prototype.discoClick = function(id) {
-      console.log("clicked: "+id);
+      // console.log("clicked: "+id);
       var elem=document.getElementById(id);
       var service=elem.getAttribute("iiif_service");
-      console.log("loading: "+service);
+      // console.log("loading: "+service);
       loadOSD(service);
     }
 
     coverboutique.prototype.scrollrun = function() {
+      in_scrollrun();
+    }
+
+    function in_scrollrun() {
+      var now = Math.floor(Date.now());
+      if(now<last_scrollrun+1000 && last_scrollrun>0) {
+        return;
+      }
+      last_scrollrun=now;
+      console.log("scrollrun");
       var delem = document.getElementById("scroll");
       var drect = delem.getBoundingClientRect();
       // console.log(drect);
@@ -75,11 +86,11 @@ function coverboutique(config) {
     }
 
     function loadCollection(curl) {
-      console.log("loading collection ..."+curl);
+      // console.log("loading collection ..."+curl);
       $.getJSON(curl, function(result) {
         for(var m in result['manifests']) {
           var murl=result['manifests'][m]['@id'];
-          console.log("loading manifest ..."+murl);
+          // console.log("loading manifest ..."+murl);
           $.getJSON(murl, function(result) {
             var label=result['label'];
             var murl=result['@id'];
