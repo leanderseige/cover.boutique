@@ -73,8 +73,11 @@
   <div id="gridwrap">
 
     <!-- NEW ROW -->
-    <div class="grid-item ctrl noselect" id="discover">
-      <h1>cover.boutique</h1><br />
+    <div class="grid-item ctrl noselect" >
+      <div id="scroll" onscroll="cb.scrollrun();">
+        <p><h1>cover.boutique</h1></p>
+        <div id="discovery"></div>
+      </div>
     </div>
 
 
@@ -83,7 +86,7 @@
         <div id="mask" class="overlay overlay-mask"></div>
     </div>
 
-    <div class=" noselect" id="adjust">
+    <div class="grid-item noselect" id="adjust">
         <div class="sliders" id="blur">Blur</div><br />
         <div class="sliders" id="sharpen">sharpen</div><br />
         <div class="sliders" id="grayscale">Grayscale</div><br />

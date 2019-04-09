@@ -36,9 +36,62 @@ function coverboutique(config) {
       $("#sepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
       $("#invert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
 
+      loadCollection("https://iiif.manducus.net/collections/0008/collection.json");
+
       load_data();
 
+      this.scrollrun();
     })
+
+    function loadDiscoImage(elem) {
+      var service=elem.getAttribute("iiif_service");
+      elem.setAttribute("src",service+"/full/400,/0/default.jpg");
+    }
+
+    coverboutique.prototype.discoClick = function(id) {
+      console.log("clicked: "+id);
+      var elem=document.getElementById(id);
+      var service=elem.getAttribute("iiif_service");
+      console.log("loading: "+service);
+      loadOSD(service);
+    }
+
+    coverboutique.prototype.scrollrun = function() {
+      var delem = document.getElementById("scroll");
+      var drect = delem.getBoundingClientRect();
+      // console.log(drect);
+      // console.log("scroll run...");
+      var x = document.getElementsByClassName("discoimage");
+      for (var i = 0; i < x.length; i++) {
+        var rect = x[i].getBoundingClientRect();
+        // console.log(rect.top);
+        if(rect.top < drect.height*3) {
+          if(x[i].getAttribute('src') == "") {
+            loadDiscoImage(x[i]);
+          } else {
+          }
+        }
+      }
+    }
+
+    function loadCollection(curl) {
+      console.log("loading collection ..."+curl);
+      $.getJSON(curl, function(result) {
+        for(var m in result['manifests']) {
+          var murl=result['manifests'][m]['@id'];
+          console.log("loading manifest ..."+murl);
+          $.getJSON(murl, function(result) {
+            var label=result['label'];
+            var murl=result['@id'];
+            var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
+            var html='<p>'+label;
+            html+='<img class="discoimage" src="" iiif_service="'+service+'" id="'+b64EncodeUnicode(murl)+'" onclick="cb.discoClick(\''+b64EncodeUnicode(murl)+'\')"; />';
+            html+='</p>';
+            $("#discovery").append(html);
+          });
+        }
+      });
+    }
 
     function getFilters() {
         var blur = $("#blur").slider("value");
@@ -64,8 +117,6 @@ function coverboutique(config) {
       $("#osd").css("-webkit-filter", getFilters());
     }
 
-
-
     coverboutique.prototype.recalcVH = function() {
         // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
         let vh = window.innerHeight * 0.01;
@@ -85,27 +136,28 @@ function coverboutique(config) {
 
     function init_display(result) {
       console.log("hi");
-      console.log(manifest_uri);
-      loadOSD();
+      // console.log(manifest_uri);
+      // loadOSD();
       $("#splash").hide();
       $("#loader").hide();
     }
 
-    function loadOSD() {
-        $.getJSON(manifest_uri, function(result) {
-            canvas = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
-            $.getJSON(canvas + "/info.json", function(result) {
-                // console.log(result);
-                var setup = setup_template;
-                setup.tileSources[0] = result;
-                if (viewer) {
-                    viewer.close();
-                    document.getElementById('osd').innerHTML = "";
-                }
-                viewer = OpenSeadragon(setup);
-            });
-        });
+    function loadOSD(service) {
+          canvas=service;
+          $.getJSON(service + "/info.json", function(result) {
+              // console.log(result);
+              var setup = setup_template;
+              setup.tileSources[0] = result;
+              if (viewer) {
+                  viewer.close();
+                  document.getElementById('osd').innerHTML = "";
+              }
+              viewer = OpenSeadragon(setup);
+          });
+
     }
+
+
 
     async function get_cached_url(url) {
       var key = b64EncodeUnicode(url);
