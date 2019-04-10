@@ -1,4 +1,5 @@
 # cover.boutique
 
 ![Graphic Recording by Michael Schrenk, http://live-illustration.de](images/graphicrecording.png)
-(Grafik: Michael Schrenk, http://live-illustration.de)
+
+Titelgrafik: Coding Da Vinci Süd, Kick-Off 2019, Graphic Recordings: Michael Schrenk Liveillustration
