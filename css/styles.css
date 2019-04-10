@@ -81,9 +81,9 @@ h1 {
 }
 
 .grid-item {
-  display:flex;
+  /* display:flex; */
   /* justify-content: space-evenly; */
-  align-items: center;
+  /* align-items: center; */
 }
 
 .icons {
@@ -91,6 +91,7 @@ h1 {
   font-size: 4vw;
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
+  display:flex;
 }
 
 .mainmenu {
@@ -109,10 +110,16 @@ strong {
 }
 
 #bottom {
+  display:flex;
   color:#888;
   font-size:4vw;
   padding:0vw;
-  grid-column: 1 / span 2;
+  grid-column: 2 / span 3;
+}
+
+#disco-item {
+  grid-row: 1 / 2;
+  grid-column:1;
 }
 
 .ctrl {
@@ -120,7 +127,7 @@ strong {
 }
 
 .ctrl-icon {
-  height:6vw;
+  /* height:6vw; */
 }
 
 #button_download_image,
@@ -191,6 +198,8 @@ strong {
 }
 
 #scroll {
+  grid-column: 1;
+  grid-row: 1 / span 2;
   overflow:scroll;
-  height:80vh;
+  height:100vh;
 }

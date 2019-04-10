@@ -10,8 +10,10 @@ function coverboutique(config) {
         zoomPerSecond: 1,
         prefixUrl: "openseadragon/images/",
         tileSources: [],
-        homeFillsViewer: true
+        homeFillsViewer: true,
+        maxZoomLevel: 1.333
     };
+
 
     var jcache = {};
     var viewer = false;
@@ -37,11 +39,13 @@ function coverboutique(config) {
       $("#sepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
       $("#invert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
 
-      loadCollection("https://iiif.manducus.net/collections/0008/collection.json");
+      // loadCollection("https://iiif.manducus.net/collections/0008/collection.json");
+      // loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=1");
+      loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=800");
 
       load_data();
 
-      setTimeout(function() {in_scrollrun();},3000);
+      setTimeout(function() {in_scrollrun();},2000);
     })
 
     function loadDiscoImage(elem) {
@@ -96,9 +100,10 @@ function coverboutique(config) {
             var murl=result['@id'];
             var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
             var html='<p>'+label;
-            html+='<img class="discoimage" src="" iiif_service="'+service+'" id="'+b64EncodeUnicode(murl)+'" onclick="cb.discoClick(\''+b64EncodeUnicode(murl)+'\')"; />';
+            var bid = b64EncodeUnicode(murl);
+            html+='<img class="discoimage" src="" iiif_service="'+service+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
             html+='</p>';
-            $("#discovery").append(html);
+            $("#discovery-items").append(html);
           });
         }
       });

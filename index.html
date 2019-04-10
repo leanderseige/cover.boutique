@@ -73,23 +73,19 @@
   <div id="gridwrap">
 
     <!-- NEW ROW -->
-    <div class="grid-item ctrl noselect" >
-      <div>
-        <h1>cover.boutique</h1>
-        <div id="scroll" onscroll="cb.scrollrun();">
-        <div id="discovery"></div>
-      </div>
-      </div>
-    </div>
 
+        <div id="scroll" class="noselect" onscroll="cb.scrollrun();" style=" border:2px solid yellow;">
+          <div id="discovery-items"></div>
+        </div>
 
-    <div class="grid-item ">
+    <div class="grid-item " style="border:1px solid red;">
         <div id="osd" class="overlay"></div>
         <div id="mask" class="overlay overlay-mask"></div>
     </div>
 
-    <div class="grid-item noselect" id="adjust">
-      <div>
+    <div class="grid-item noselect" id="adjust" style="border:1px solid blue;">
+      <div style="text-align:center;">
+        <h1>cover.boutique</h1>
         <div class="sliders" id="blur">Blur</div><br />
         <div class="sliders" id="sharpen">sharpen</div><br />
         <div class="sliders" id="grayscale">Grayscale</div><br />
@@ -108,7 +104,7 @@
 
     <!-- MAIN MENU -->
 
-    <div class="grid-item noselect" id="bottom">
+    <div class="grid-item noselect" id="bottom" style="border:1px solid orange;">
       <div class="icons mainmenu" onclick="cb.reloadAll();">&#xf2f1;</div>
       <div class="icons mainmenu" onclick="cb.zoomInAll();">&#xf00e;</div>
       <div class="icons mainmenu" onclick="cb.zoomOutAll();">&#xf010;</div>
