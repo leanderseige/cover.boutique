@@ -11,7 +11,7 @@ function coverboutique(config) {
         prefixUrl: "openseadragon/images/",
         tileSources: [],
         homeFillsViewer: true,
-        maxZoomLevel: 1.333
+        maxZoomLevel: 10
     };
 
 
@@ -39,13 +39,12 @@ function coverboutique(config) {
       $("#sepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
       $("#invert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
 
-      // loadCollection("https://iiif.manducus.net/collections/0008/collection.json");
+      loadCollection("https://iiif.manducus.net/collections/0006/collection.json");
       // loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=1");
-      loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=800");
+      // loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=800");
 
       load_data();
 
-      setTimeout(function() {in_scrollrun();},2000);
     })
 
     function loadDiscoImage(elem) {
@@ -59,6 +58,15 @@ function coverboutique(config) {
       var service=elem.getAttribute("iiif_service");
       // console.log("loading: "+service);
       loadOSD(service);
+    }
+
+    coverboutique.prototype.selectCollection = function () {
+      console.log("select");
+      var ds=document.getElementById("disco_select");
+      var di=document.getElementById("discovery-items");
+      console.log(ds.value);
+      di.innerHTML="";
+      loadCollection(ds.value);
     }
 
     coverboutique.prototype.scrollrun = function() {
@@ -107,6 +115,7 @@ function coverboutique(config) {
           });
         }
       });
+      setTimeout(function() {in_scrollrun();},3000);
     }
 
     function getFilters() {

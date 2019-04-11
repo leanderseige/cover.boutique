@@ -73,17 +73,21 @@
   <div id="gridwrap">
 
     <!-- NEW ROW -->
-
+        <select id="disco_select" class="select-css" onchange="cb.selectCollection();">
+          <option value="https://iiif.manducus.net/collections/0008/collection.json">Städel Museum, Frankfurt am Main</option>
+          <option value="https://iiif.manducus.net/collections/0009/collection.json">Metropolitan Museum of Art, New York</option>
+          <option value="https://iiif.manducus.net/collections/0006/collection.json">Leibniz-Institut für Länderkunde, Leipzig</option>
+        </select>
         <div id="scroll" class="noselect" onscroll="cb.scrollrun();" style=" border:2px solid yellow;">
           <div id="discovery-items"></div>
         </div>
 
-    <div class="grid-item " style="border:1px solid red;">
+    <div id="construction" style="border:1px solid red;">
         <div id="osd" class="overlay"></div>
         <div id="mask" class="overlay overlay-mask"></div>
     </div>
 
-    <div class="grid-item noselect" id="adjust" style="border:1px solid blue;">
+    <div class="noselect" id="adjust" style="border:1px solid blue;">
       <div style="text-align:center;">
         <h1>cover.boutique</h1>
         <div class="sliders" id="blur">Blur</div><br />
