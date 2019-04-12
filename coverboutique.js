@@ -44,6 +44,7 @@ function coverboutique(config) {
       // loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=800");
 
       load_data();
+      loadBrand();
 
     })
 
@@ -165,6 +166,38 @@ function coverboutique(config) {
       // loadOSD();
       $("#splash").hide();
       $("#loader").hide();
+    }
+
+    function loadBrand() {
+        $.getJSON("phones.json", function(result) {
+            var bsel = document.getElementById("brand_select");
+            for(var b in result) {
+                var brand = document.createElement("option");
+                brand.setAttribute("value",b);
+                brand.innerHTML=b;
+                bsel.appendChild(brand);
+            }
+        });
+    }
+
+    coverboutique.prototype.selectBrand = function() {
+        $.getJSON("phones.json", function(result) {
+            var bsel=document.getElementById("brand_select");
+            var msel=document.getElementById("model_select");
+            msel.innerHTML="";
+            for(var m in result[bsel.value]) {
+                var me = document.createElement("option");
+                me.setAttribute("value",result[bsel.value][m]['image']);
+                me.innerHTML=result[bsel.value][m]['model'];
+                msel.appendChild(me);
+            }
+        });
+    }
+
+    coverboutique.prototype.selectModel = function() {
+        var msel=document.getElementById("model_select");
+        var mask=document.getElementById("mask");
+        mask.style.backgroundImage = "url('/images/"+msel.value+"')";
     }
 
     function loadOSD(service) {
