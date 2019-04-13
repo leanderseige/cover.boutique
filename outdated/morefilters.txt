@@ -1,0 +1,52 @@
+JS:
+
+ready():
+
+// $("#blur").slider({orientation: "horizontal",min: 0,max: 25,value: 0,slide: cb.filter,change: cb.filter});
+// $("#sharpen").slider({orientation: "horizontal",min: 0,max: 5,value: 0,slide: cb.filter,change: cb.filter});
+// $("#grayscale").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
+
+getFilters():
+
+// var blur = $("#blur").slider("value");
+// var grayscale = $("#grayscale").slider("value");
+
+// var sharpen = $("#sharpen").slider("value");
+/*
+console.log("sharpen:"+sharpen)
+if(sharpen>0) {
+    sharpen="url(#fsharpen" + sharpen + ")";
+} else {
+    sharpen="";
+}
+console.log("sharpen:"+sharpen)
+*/
+
+//return("blur(" + blur + "px)" + "brightness(" + brightness + "%)" + "grayscale(" + grayscale + "%)" + "hue-rotate(" + rotate + "deg)" + "contrast(" + contrast + "%)" + "invert(" + invert + "%)" + "saturate(" + saturate + "%)" + "sepia(" + sepia + "%)" + sharpen);
+
+HTML:
+
+<!--div class="sliders" id="blur">Blur</div><br />
+<div class="sliders" id="sharpen">sharpen</div><br />
+<div class="sliders" id="grayscale">Grayscale</div><br /-->
+
+
+<!--svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="0%" height="0%">
+<defs>
+  <filter id="fsharpen1">
+    <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.5 0 -.5 5 -.5 0 -.5 0"/>
+  </filter>
+  <filter id="fsharpen2">
+    <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.7 0 -.7 5 -.7 0 -.7 0"/>
+  </filter>
+  <filter id="fsharpen3">
+    <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.9 0 -.9 5 -.9 0 -.9 0"/>
+  </filter>
+  <filter id="fsharpen4">
+    <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -1 0 -1 5 -1 0 -1 0"/>
+  </filter>
+  <filter id="fsharpen5">
+    <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -1.1 0 -1.1 5 -1.1 0 -1.1 0"/>
+  </filter>
+</defs>
+</svg-->

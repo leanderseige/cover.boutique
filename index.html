@@ -90,22 +90,29 @@
     <div class="noselect" id="adjust" style="border:1px solid blue;">
       <div style="text-align:center;">
         <h1>cover.boutique</h1><br />
-        <select id="brand_select" class="select-css" onchange="cb.selectBrand();">
+        <select id="brand_select" class="select-css" onchange="cb.selectBrand();cb.selectModel();">
         </select>
         <select id="model_select" class="select-css" onchange="cb.selectModel();">
         </select>
-        <div class="sliders" id="blur">Blur</div><br />
-        <div class="sliders" id="sharpen">sharpen</div><br />
-        <div class="sliders" id="grayscale">Grayscale</div><br />
-        <div class="sliders" id="brightness">brightness</div><br />
-        <div class="sliders" id="contrast">contrast</div><br />
-        <div class="sliders" id="rotate">huerotate</div><br />
-        <div class="sliders" id="invert">invert</div><br />
-        <div class="sliders" id="saturate">saturate</div><br />
-        <div class="sliders" id="sepia">sepia</div><br />
-        <div class="icons" onclick="cb.flipOSD()">&#xf362;</div>
-        <div class="icons" onclick="cb.zoomIn()">&#xf00e;</div>
-        <div class="icons" onclick="cb.zoomOut()">&#xf010;</div>
+        <div class="desktop">
+            <div class="sliders" id="dbrightness">brightness</div><br />
+            <div class="sliders" id="dcontrast">contrast</div><br />
+            <div class="sliders" id="drotate">huerotate</div><br />
+            <div class="sliders" id="dinvert">invert</div><br />
+            <div class="sliders" id="dsaturate">saturate</div><br />
+            <div class="sliders" id="dsepia">sepia</div><br />
+        </div>
+        <div class="mobile">
+            <div class="icons mainmenu" onclick="cb.showDisco();">&#xf0fe;</div>
+            <div class="icons mainmenu" onclick="cb.reloadAll();">&#xf2f1;</div>
+            <div class="icons mainmenu" onclick="cb.zoomIn();">&#xf00e;</div>
+            <div class="icons mainmenu" onclick="cb.zoomOut();">&#xf010;</div>
+            <div class="icons mainmenu" onclick="cb.resetAll();">&#xf049;</div>
+            <div class="icons mainmenu" onclick="cb.launch_download();">&#xf56d;</div>
+            <div class="icons" onclick="cb.flipOSD()">&#xf362;</div>
+            <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#metadata');">&#xf05a;</div>
+            <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#impressum');"><img src="images/case.cafe.icon.svg" /></div>
+        </div>
       </div>
     </div>
 
@@ -113,35 +120,28 @@
     <!-- MAIN MENU -->
 
     <div class="grid-item noselect" id="bottom" style="border:1px solid orange;">
-      <div class="icons mainmenu" onclick="cb.reloadAll();">&#xf2f1;</div>
-      <div class="icons mainmenu" onclick="cb.zoomInAll();">&#xf00e;</div>
-      <div class="icons mainmenu" onclick="cb.zoomOutAll();">&#xf010;</div>
-      <div class="icons mainmenu" onclick="cb.resetAll();">&#xf049;</div>
-      <div class="icons mainmenu" onclick="cb.launch_download();">&#xf56d;</div>
-      <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#metadata');">&#xf05a;</div>
-      <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#impressum');"><img src="images/case.cafe.icon.svg" /></div>
+        <div class="desktop">
+          <div class="icons mainmenu" onclick="cb.reloadAll();">&#xf2f1;</div>
+          <div class="icons mainmenu" onclick="cb.zoomIn();">&#xf00e;</div>
+          <div class="icons mainmenu" onclick="cb.zoomOut();">&#xf010;</div>
+          <div class="icons mainmenu" onclick="cb.resetAll();">&#xf049;</div>
+          <div class="icons mainmenu" onclick="cb.launch_download();">&#xf56d;</div>
+          <div class="icons" onclick="cb.flipOSD()">&#xf362;</div>
+          <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#metadata');">&#xf05a;</div>
+          <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#impressum');"><img src="images/case.cafe.icon.svg" /></div>
+        </div>
+        <div class="mobile">
+            <div class="sliders" id="mbrightness">brightness</div><br />
+            <div class="sliders" id="mcontrast">contrast</div><br />
+            <div class="sliders" id="mrotate">huerotate</div><br />
+            <div class="sliders" id="minvert">invert</div><br />
+            <div class="sliders" id="msaturate">saturate</div><br />
+            <div class="sliders" id="msepia">sepia</div><br />
+        </div>
     </div>
 
 
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="0%" height="0%">
-    <defs>
-      <filter id="fsharpen1">
-        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.5 0 -.5 5 -.5 0 -.5 0"/>
-      </filter>
-      <filter id="fsharpen2">
-        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.7 0 -.7 5 -.7 0 -.7 0"/>
-      </filter>
-      <filter id="fsharpen3">
-        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -.9 0 -.9 5 -.9 0 -.9 0"/>
-      </filter>
-      <filter id="fsharpen4">
-        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -1 0 -1 5 -1 0 -1 0"/>
-      </filter>
-      <filter id="fsharpen5">
-        <feConvolveMatrix order="3 3" preserveAlpha="true" kernelMatrix="0 -1.1 0 -1.1 5 -1.1 0 -1.1 0"/>
-      </filter>
-    </defs>
-    </svg>
+
 
 </body>
 </html>

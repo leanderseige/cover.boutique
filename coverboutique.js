@@ -19,29 +19,28 @@ function coverboutique(config) {
     var viewer = false;
     var canvas = false;
     var last_scrollrun=0;
+    var phones = false;
 
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
 
-      // buildSharpenFilters();
-
       $("#impressum").hide();
       $("#settings").hide();
 
-      $("#blur").slider({orientation: "horizontal",min: 0,max: 25,value: 0,slide: cb.filter,change: cb.filter});
-      $("#sharpen").slider({orientation: "horizontal",min: 0,max: 5,value: 0,slide: cb.filter,change: cb.filter});
-      $("#grayscale").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
-      $("#brightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#contrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#rotate").slider({orientation: "horizontal",min: -180,max: 180,value: 0,slide: cb.filter,change: cb.filter});
-      $("#saturate").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#sepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
-      $("#invert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
+      $("#dbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#dcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#drotate").slider({orientation: "horizontal",min: -180,max: 180,value: 0,slide: cb.filter,change: cb.filter});
+      $("#dsaturate").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#dsepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
+      $("#dinvert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
 
-      loadCollection("https://iiif.manducus.net/collections/0006/collection.json");
-      // loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=1");
-      // loadCollection("https://iiif.harvardartmuseums.org/collections/object?page=800");
+      $("#mbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#mcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#mrotate").slider({orientation: "horizontal",min: -180,max: 180,value: 0,slide: cb.filter,change: cb.filter});
+      $("#msaturate").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#msepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
+      $("#minvert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
 
       load_data();
       loadBrand();
@@ -120,27 +119,25 @@ function coverboutique(config) {
     }
 
     function getFilters() {
-        var blur = $("#blur").slider("value");
-        var grayscale = $("#grayscale").slider("value");
-        var brightness = $("#brightness").slider("value");
-        var contrast = $("#contrast").slider("value");
-        var rotate = $("#rotate").slider("value");
-        var invert = $("#invert").slider("value");
-        var saturate = $("#saturate").slider("value");
-        var sepia = $("#sepia").slider("value");
-        var sharpen = $("#sharpen").slider("value");
-        console.log("sharpen:"+sharpen)
-        if(sharpen>0) {
-            sharpen="url(#fsharpen" + sharpen + ")";
-        } else {
-            sharpen="";
-        }
-        console.log("sharpen:"+sharpen)
-        return("blur(" + blur + "px)" + "brightness(" + brightness + "%)" + "grayscale(" + grayscale + "%)" + "hue-rotate(" + rotate + "deg)" + "contrast(" + contrast + "%)" + "invert(" + invert + "%)" + "saturate(" + saturate + "%)" + "sepia(" + sepia + "%)" + sharpen);
+
+        var brightness = $("#dbrightness").slider("value");
+        var contrast = $("#dcontrast").slider("value");
+        var rotate = $("#drotate").slider("value");
+        var invert = $("#dinvert").slider("value");
+        var saturate = $("#dsaturate").slider("value");
+        var sepia = $("#dsepia").slider("value");
+
+        return("brightness(" + brightness + "%)" + "hue-rotate(" + rotate + "deg)" + "contrast(" + contrast + "%)" + "invert(" + invert + "%)" + "saturate(" + saturate + "%)" + "sepia(" + sepia + "%)");
     }
 
     coverboutique.prototype.filter = function() {
-      $("#osd").css("-webkit-filter", getFilters());
+        var map={'m':'d','d':'m'};
+        var oid = map[this.id.substring(0,1)]+this.id.substring(1,100);
+        var value = $('#'+this.id).slider("value");
+        $('#'+oid).slider({'slide':'','change':''});
+        $('#'+oid).slider({'value':value});
+        $('#'+oid).slider({'slide':cb.filter,'change':cb.filter});
+        $("#osd").css("-webkit-filter", getFilters());
     }
 
     coverboutique.prototype.recalcVH = function() {
@@ -170,6 +167,7 @@ function coverboutique(config) {
 
     function loadBrand() {
         $.getJSON("phones.json", function(result) {
+            phones=result;
             var bsel = document.getElementById("brand_select");
             for(var b in result) {
                 var brand = document.createElement("option");
@@ -177,21 +175,28 @@ function coverboutique(config) {
                 brand.innerHTML=b;
                 bsel.appendChild(brand);
             }
+            cb.selectBrand();
+            cb.selectModel();
         });
     }
 
     coverboutique.prototype.selectBrand = function() {
-        $.getJSON("phones.json", function(result) {
+        if(phones) {
             var bsel=document.getElementById("brand_select");
             var msel=document.getElementById("model_select");
             msel.innerHTML="";
-            for(var m in result[bsel.value]) {
+            var first=1;
+            for(var m in phones[bsel.value]) {
                 var me = document.createElement("option");
-                me.setAttribute("value",result[bsel.value][m]['image']);
-                me.innerHTML=result[bsel.value][m]['model'];
+                me.setAttribute("value",phones[bsel.value][m]['image']);
+                me.innerHTML=phones[bsel.value][m]['model'];
+                if(first==1) {
+                    first=0;
+                    me.setAttribute("selected","selected");
+                }
                 msel.appendChild(me);
             }
-        });
+        }
     }
 
     coverboutique.prototype.selectModel = function() {

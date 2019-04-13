@@ -53,6 +53,14 @@ h1 {
   */
 }
 
+.desktop {
+    display:block;
+}
+
+.mobile {
+    display:none;
+}
+
 .overlay {
     position: absolute;
     left:35vw;
@@ -197,7 +205,7 @@ strong {
 }
 
 
-#disco-select {
+#disco_select {
   grid-column: 1;
   grid-row: 1;
   height:10vh;

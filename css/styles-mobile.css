@@ -24,80 +24,69 @@
 
 @media (max-aspect-ratio: 16/17) {
 
-  #gridwrap {
-    display: grid;
-    grid-template-columns: 80vw 20vw;
-    grid-template-rows: 40vw 16vw 24vw 1fr 1fr 1fr;
-    /* height: 100vh; */
-    height: calc(var(--vh, 1vh) * 100);
-    top:0px;
-    border:0px;
-  }
+    #gridwrap {
+      display: grid;
+      grid-template-columns: 60vw 40vw;
+      grid-template-rows: 10vh 70vh 20vh;
+      /* border:1px solid #ccc; */
+      /* height: 100vh; */
+      height: calc(var(--vh, 1vh) * 100);
+      /*
+      top: calc((100vh - 49vw)*0.333);
+      position: absolute;
+      width:100vw;
+      left:0px;
+      */
+    }
 
-  #osd-eyes {
-    grid-column: 1;
-    grid-row: 1;
-  }
+    .desktop {
+        display:none;
+    }
 
-  #osd-nose {
-    grid-column: 1;
-    grid-row: 2;
-  }
+    .mobile {
+        display:block;
+    }
 
-  #osd-mouth {
-    grid-column: 1;
-    grid-row: 3;
-  }
+    .overlay {
+        position: absolute;
+        left:0vw;
+        top:0vh;
+        width:60vw;
+        height:80vh;
+    }
 
-  #bottom {
-    flex-wrap: wrap;
-    font-size:8vw;
-    grid-column: 2;
-    grid-row: 1 / span 6;
-    border-left: 1px solid #ccc;
-  }
+    .overlay-mask {
+        background-image: url("../images/Samsung-J5_2017.png");
+        pointer-events:none;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
 
-  .ctrl {
-    grid-column: 1 / span 1;
-  }
+    #bottom {
+      display:flex;
+      color:#888;
+      font-size:4vw;
+      padding:0vw;
+      grid-column: 1 / span 2;
+    }
 
-  .ctrl-icon {
-    height:8vw;
-  }
+    #construction {
+      grid-column: 1;
+      grid-row: 1  / span 2;
+    }
 
-  .icons {
-    font-size:8vw;
-  }
+    #adjust {
+      grid-column: 2;
+      grid-row: 1  / span 2;
+    }
 
-  .splash_content {
-    text-align: center;
-    grid-area: a;
-    align-self: center;
-    justify-self: center;
-    z-index: 9999;
-    font-size: 3vw;
-  }
+    #disco_select {
+      display: none;
+    }
 
-  .linkon {
-    height:8vw;
-    margin:2vw;
-    padding:2vw;
-  }
-
-  .meta {
-    font-size: 2vw;
-  }
-
-  .imp_logo {
-      width:60vw;
-  }
-  .imp_award {
-      width:20vw;
-  }
-
-  #impressum p {
-    text-align: center;
-    padding: 2vw;
-  }
+    #scroll {
+      display: none;
+    }
 
 }
