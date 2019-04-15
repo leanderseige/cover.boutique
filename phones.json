@@ -14,5 +14,17 @@
             "model": "3 (A3003)",
             "image": "Oneplus_3-A3003.png"
         }
+    ],
+    "Apple": [
+        {
+            "model": "iPhone S6 (A1586)",
+            "image": "iPhone-S6-A1586.png"
+        }
+    ],
+    "Sony": [
+        {
+            "model": "Xperia Z",
+            "image": "Xperia-Z-PM-0270-BV.png"
+        }
     ]
 }
