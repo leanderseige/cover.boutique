@@ -52,6 +52,11 @@ function coverboutique(config) {
       elem.setAttribute("src",service+"/full/400,/0/default.jpg");
     }
 
+    function clearDiscoImage(elem) {
+      var service=elem.getAttribute("iiif_service");
+      elem.setAttribute("src","");
+    }
+
     coverboutique.prototype.discoClick = function(id) {
       // console.log("clicked: "+id);
       var elem=document.getElementById(id);
@@ -88,11 +93,14 @@ function coverboutique(config) {
       for (var i = 0; i < x.length; i++) {
         var rect = x[i].getBoundingClientRect();
         // console.log(rect.top);
-        if(rect.top < drect.height*3) {
+        if(rect.top>0 && rect.top<drect.height*3) {
           if(x[i].getAttribute('src') == "") {
             loadDiscoImage(x[i]);
-          } else {
           }
+        } else if(rect.top<-drect.height*2) {
+            if(x[i].getAttribute('src') == "") {
+              loadDiscoImage(x[i]);
+            }
         }
       }
     }
