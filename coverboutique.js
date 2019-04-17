@@ -17,6 +17,7 @@ function coverboutique(config) {
 
     var jcache = {};
     var viewer = {};
+    var filter = {};
     var canvas = false;
     var last_scrollrun=0;
     var phones = false;
@@ -28,9 +29,19 @@ function coverboutique(config) {
 
       viewer['osd'] = false;
       viewer['osdo'] = false;
+      filter['osd'] = {};
+      filter['osdo'] = {};
 
       $("#impressum").hide();
       $("#settings").hide();
+
+      filter['osd']['brightness']=100;
+      filter['osd']['contrast']=100;
+      filter['osd']['rotate']=0;
+      filter['osd']['saturate']=100;
+      filter['osd']['sepia']=0;
+      filter['osd']['invert']=0;
+      filter['osdo']=filter['osd'];
 
       $("#dbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
       $("#dcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
@@ -157,8 +168,10 @@ function coverboutique(config) {
 
     coverboutique.prototype.filter = function() {
         var map={'m':'d','d':'m'};
-        var oid = map[this.id.substring(0,1)]+this.id.substring(1,100);
+        var param=this.id.substring(1,100);
+        var oid = map[this.id.substring(0,1)]+param;
         var value = $('#'+this.id).slider("value");
+        filter[osdid][param]=value;
         $('#'+oid).slider({'slide':'','change':''});
         $('#'+oid).slider({'value':value});
         $('#'+oid).slider({'slide':cb.filter,'change':cb.filter});
