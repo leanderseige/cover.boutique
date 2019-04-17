@@ -16,14 +16,18 @@ function coverboutique(config) {
 
 
     var jcache = {};
-    var viewer = false;
+    var viewer = {};
     var canvas = false;
     var last_scrollrun=0;
     var phones = false;
+    var osdid = "osd";
 
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
+
+      viewer['osd'] = false;
+      viewer['osdo'] = false;
 
       $("#impressum").hide();
       $("#settings").hide();
@@ -63,6 +67,14 @@ function coverboutique(config) {
       var service=elem.getAttribute("iiif_service");
       // console.log("loading: "+service);
       loadOSD(service);
+    }
+
+    coverboutique.prototype.selectLayer = function () {
+        $("#"+osdid).css("pointer-events", "none");
+        var ls=document.getElementById("layer_select");
+        osdid = ls.value;
+        $("#"+osdid).css("pointer-events", "all");
+        $("#osdo").css("opacity", "0.5");
     }
 
     coverboutique.prototype.selectCollection = function () {
@@ -126,6 +138,7 @@ function coverboutique(config) {
       setTimeout(function() {in_scrollrun();},3000);
     }
 
+    /* get filter values from sliders */
     function getFilters() {
 
         var brightness = $("#dbrightness").slider("value");
@@ -138,6 +151,10 @@ function coverboutique(config) {
         return("brightness(" + brightness + "%)" + "hue-rotate(" + rotate + "deg)" + "contrast(" + contrast + "%)" + "invert(" + invert + "%)" + "saturate(" + saturate + "%)" + "sepia(" + sepia + "%)");
     }
 
+    /* set filter values in sliders */
+    function setFilters() {
+    }
+
     coverboutique.prototype.filter = function() {
         var map={'m':'d','d':'m'};
         var oid = map[this.id.substring(0,1)]+this.id.substring(1,100);
@@ -145,7 +162,7 @@ function coverboutique(config) {
         $('#'+oid).slider({'slide':'','change':''});
         $('#'+oid).slider({'value':value});
         $('#'+oid).slider({'slide':cb.filter,'change':cb.filter});
-        $("#osd").css("-webkit-filter", getFilters());
+        $("#"+osdid).css("-webkit-filter", getFilters());
     }
 
     coverboutique.prototype.recalcVH = function() {
@@ -218,12 +235,13 @@ function coverboutique(config) {
           $.getJSON(service + "/info.json", function(result) {
               // console.log(result);
               var setup = setup_template;
+              setup.id = osdid;
               setup.tileSources[0] = result;
-              if (viewer) {
-                  viewer.close();
-                  document.getElementById('osd').innerHTML = "";
+              if (viewer[osdid]) {
+                  viewer[osdid].close();
+                  document.getElementById(osdid).innerHTML = "";
               }
-              viewer = OpenSeadragon(setup);
+              viewer[osdid] = OpenSeadragon(setup);
           });
 
     }
@@ -261,11 +279,11 @@ function coverboutique(config) {
     }
 
     coverboutique.prototype.zoomIn = function() {
-      viewer.viewport.zoomTo(viewer.viewport.getZoom() * 1.05);
+      viewer[osdid].viewport.zoomTo(viewer[osdid].viewport.getZoom() * 1.05);
     }
 
     coverboutique.prototype.zoomOut = function() {
-      viewer.viewport.zoomTo(viewer.viewport.getZoom() * 0.95);
+      viewer[osdid].viewport.zoomTo(viewer[osdid].viewport.getZoom() * 0.95);
     }
 
 /* GENERATE OUTPUT PDF */
@@ -281,8 +299,8 @@ function coverboutique(config) {
         }
 
         console.log("start");
-        var rect = viewer.viewport.viewportToImageRectangle(viewer.viewport.getBounds());
-        var flip = viewer.viewport.getFlip();
+        var rect = viewer[osdid].viewport.viewportToImageRectangle(viewer[osdid].viewport.getBounds());
+        var flip = viewer[osdid].viewport.getFlip();
         var imag = canvas;
 
         var w = Math.round(rect.width);

@@ -86,8 +86,9 @@
         </div>
 
     <div id="construction" style="border:1px solid red;">
-        <div id="osd" class="overlay"></div>
-        <div id="mask" class="overlay overlay-mask"></div>
+        <div id="osd"></div>
+        <div id="osdo"></div>
+        <div id="mask"></div>
     </div>
 
     <div class="noselect" id="adjust" style="border:1px solid blue;">
@@ -98,6 +99,10 @@
         <select id="model_select" class="select-css" onchange="cb.selectModel();">
         </select>
         <div class="desktop">
+            <select id="layer_select" class="select-css" onchange="cb.selectLayer();">
+                <option value="osd">Background</option>
+                <option value="osdo">Overlay</option>
+            </select>
             <div class="sliders" id="dbrightness">brightness</div><br />
             <div class="sliders" id="dcontrast">contrast</div><br />
             <div class="sliders" id="drotate">huerotate</div><br />

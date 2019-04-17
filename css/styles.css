@@ -61,21 +61,40 @@ h1 {
     display:none;
 }
 
-.overlay {
+#osd {
     position: absolute;
     left:35vw;
     top:0vh;
     width:30vw;
     height:80vh;
+    z-index: 10;
 }
 
-.overlay-mask {
+#osdo {
+    position: absolute;
+    left:35vw;
+    top:0vh;
+    width:30vw;
+    height:80vh;
+    opacity: 0.5;
+    z-index: 20;
+}
+
+#mask {
+    position: absolute;
+    left:35vw;
+    top:0vh;
+    width:30vw;
+    height:80vh;
     background-image: url("../images/Samsung-J5_2017.png");
     pointer-events:none;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 30;
 }
+
+
 
 #blur,#grayscale,#brightness,#contrast,#rotate,#invert,#opacity,#saturate,#sepia,#sharpen {
     width: 300px;
