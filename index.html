@@ -109,6 +109,11 @@
             <div class="sliders" id="dinvert">invert</div><br />
             <div class="sliders" id="dsaturate">saturate</div><br />
             <div class="sliders" id="dsepia">sepia</div><br />
+            <select id="mode_select" class="select-css" onchange="cb.selectMode();">
+                <option value="normal">normal</option>
+                <option value="multiply">multiply</option>
+                <option value="exclusion">exclusion</option>
+            </select>
         </div>
         <div class="mobile">
             <div class="icons mainmenu" onclick="cb.showDisco();">&#xf0fe;</div>

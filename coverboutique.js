@@ -96,6 +96,10 @@ function coverboutique(config) {
       di.innerHTML="";
       loadCollection(ds.value);
     }
+    coverboutique.prototype.selectMode = function () {
+      var ms=document.getElementById("mode_select");
+      $("#osdo").css("mix-blend-mode",ms.value);
+    }
 
     coverboutique.prototype.scrollrun = function() {
       in_scrollrun();
