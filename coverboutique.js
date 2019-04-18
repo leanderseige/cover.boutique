@@ -49,6 +49,7 @@ function coverboutique(config) {
       $("#dsaturate").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
       $("#dsepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
       $("#dinvert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
+      $("#dopacity").slider({orientation: "horizontal",min: 0,max: 100,value: 100,slide: cb.filter,change: cb.filter});
 
       $("#mbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
       $("#mcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
@@ -162,8 +163,9 @@ function coverboutique(config) {
         var invert = $("#dinvert").slider("value");
         var saturate = $("#dsaturate").slider("value");
         var sepia = $("#dsepia").slider("value");
+        var opacity = $("#dopacity").slider("value");
 
-        return("brightness(" + brightness + "%)" + "hue-rotate(" + rotate + "deg)" + "contrast(" + contrast + "%)" + "invert(" + invert + "%)" + "saturate(" + saturate + "%)" + "sepia(" + sepia + "%)");
+        return("brightness(" + brightness + "%) hue-rotate(" + rotate + "deg) contrast(" + contrast + "%) invert(" + invert + "%) saturate(" + saturate + "%) sepia(" + sepia + "%) opacity(" + opacity + "%)");
     }
 
     /* set filter values in sliders */
