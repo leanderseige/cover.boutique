@@ -19,6 +19,10 @@
         {
             "model": "iPhone S6 (A1586)",
             "image": "iPhone-S6-A1586.png"
+        },
+        {
+            "model": "iPhone X",
+            "image": "iPhone-X.png"
         }
     ],
     "Sony": [

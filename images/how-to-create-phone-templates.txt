@@ -1,0 +1,14 @@
+1. get a scan of the phone's back that is truly 600dpi
+2. ruffly trim the image
+3. rotate the image so that it is perfectly up right
+4. rectangle-select the backplate of the phone
+5. use round corner to modify the selection to match the actual form
+6. shrinken the selection a little bit if necessary
+7. turn the selection into a 5px border
+8. create a transparent layer
+9. fill the selected border black
+10. repeat select-round-fill with camera holes etc
+11. select the outside of the template, invert the selection and extend by 100px
+12. trim the image to the selection so you finally have the template with 100px padding
+13. hide the background photo and save as transparent png
+14. save xcf for later edits

@@ -359,7 +359,10 @@ function coverboutique(config) {
 
         var dctx = dcanvas.getContext("2d");
         dctx.crossOrigin = "Anonymous";
-        dctx.drawImage(img, 0, 0, dcanvas.width, dcanvas.height);
+        var fac = w/img.width;
+        var offh = fac*img.height;
+        var offy = (h-offh)/2;
+        dctx.drawImage(img, 0, 0, img.width, img.height, 0,offy,w,offh);
         dctx.filter = getFilters();
         dctx.drawImage(dcanvas, 0, 0, w, h);
         dctx.filter = "none";
