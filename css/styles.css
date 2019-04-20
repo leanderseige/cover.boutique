@@ -124,6 +124,14 @@ h1 {
     margin: auto;
 }
 
+#ficons {
+    margin: auto;
+}
+
+#overlay_opacity, #overlay_mode {
+    display: none;
+}
+
 .icons {
   color: #444;
   font-size: 4.2vw;
