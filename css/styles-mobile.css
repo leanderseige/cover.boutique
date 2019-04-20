@@ -1,11 +1,11 @@
 /*
 
-  ANTLITZ.NINJA
+  COVER.BOUTIQUE
 
-  (c) 2018, Leander Seige, leander@seige.name
+  (c) 2019, Leander Seige, leander@seige.name
 
-  https://antlitz.ninja
-	https://github.com/leanderseige/antlitz.ninja
+  https://cover.boutique
+	https://github.com/leanderseige/cover.boutique
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -24,6 +24,42 @@
 
 @media (max-aspect-ratio: 16/17) {
 
+/* INDIVIDUAL ITEMS */
+
+    #osd {
+        left:0vw;
+        top:0vh;
+        width:60vw;
+    }
+
+    #osdo {
+        left:0vw;
+        top:0vh;
+        width:60vw;
+    }
+
+    #mask {
+        left:0vw;
+        top:0vh;
+        width:60vw;
+    }
+
+    #ficons {
+        width:200vw;
+    }
+
+    .icons {
+        font-size: 8vw;
+        padding-left: 4vw;
+        padding-right: 4vw;
+    }
+
+    #add_item {
+        display:inline-block;
+    }
+
+/* MAIN GRID ZONES */
+
     #gridwrap {
       display: grid;
       grid-template-columns: 60vw 40vw;
@@ -39,36 +75,11 @@
       */
     }
 
-    .desktop {
-        display:none;
-    }
-
-    .mobile {
-        display:block;
-    }
-
-    .overlay {
-        position: absolute;
-        left:0vw;
-        top:0vh;
-        width:60vw;
-        height:80vh;
-    }
-
-    .overlay-mask {
-        background-image: url("../images/Samsung-J5_2017.png");
-        pointer-events:none;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-    }
-
     #bottom {
-      display:flex;
-      color:#888;
-      font-size:4vw;
-      padding:0vw;
       grid-column: 1 / span 2;
+      grid-row: 3;
+      width:100vw;
+      overflow-x: scroll;
     }
 
     #construction {
@@ -78,15 +89,40 @@
 
     #adjust {
       grid-column: 2;
-      grid-row: 1  / span 2;
+      grid-row: 2;
+    }
+
+    #logo {
+        grid-column: 2;
+        grid-row: 1;
     }
 
     #disco_select {
       display: none;
+      z-index: 10000;
+      width:80vw;
+    }
+
+    #close_disco {
+        z-index: 10003;
+        position: absolute;
+        right:0px;
+        top:0px;
+        background-color: white;
+        width:20vw;
+        height:10vh;
+        padding:0px;
+        margin:0px;
+        justify-content: space-evenly;
+        align-items: center;
     }
 
     #scroll {
       display: none;
+      z-index: 10001;
+      top:10vh;
+      height:90vh;
     }
+
 
 }

@@ -1,6 +1,7 @@
 /*
 
-COVER.BOUTIQUE
+  COVER.BOUTIQUE
+
   (c) 2019, Leander Seige, leander@seige.name
 
   https://cover.boutique
@@ -21,6 +22,8 @@ COVER.BOUTIQUE
 
 */
 
+/* GENERIC ELEMENTS */
+
 body {
   font-family: 'Montserrat', sans-serif;
   padding: 0px;
@@ -33,20 +36,12 @@ h1 {
   margin: 0 0;
 }
 
-#gridwrap {
-  display: grid;
-  grid-template-columns: 35vw 30vw 35vw;
-  grid-template-rows: 10vh 70vh 20vh;
-  /* border:1px solid #ccc; */
-  /* height: 100vh; */
-  height: calc(var(--vh, 1vh) * 100);
-  /*
-  top: calc((100vh - 49vw)*0.333);
-  position: absolute;
-  width:100vw;
-  left:0px;
-  */
+strong {
+  color:#222;
 }
+
+
+/* INDIVIDUAL ITEMS */
 
 #osd {
     position: absolute;
@@ -82,42 +77,6 @@ h1 {
     z-index: 30;
 }
 
-.sliders, .sliders.p {
-    /* display:flow-root; */
-    display:none;
-    width:55vw;
-    font-size: 2vh;
-    margin-left: 5vw;
-}
-
-[id^="f"].ui-slider-horizontal {
-  background: #444;
-}
-
-[id^="f"].ui-slider-handle, .ui-slider-handle {
-    height: 10vh;
-  background: #444 important!;
-  color:#444  important!;
-}
-
-#close_slider {
-    color: #444;
-    font-size: 6vh;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display:none;
-    margin:2vh;
-    float:right;
-}
-
-.close_slider_label {
-    font-family: sans-serif;
-    font-size: 3vh;
-    margin-right: 5vh;
-    margin-bottom: 2vh;
-    vertical-align: middle;
-}
-
 #fmode_select {
     display:none;
     width:40vw;
@@ -126,20 +85,31 @@ h1 {
 
 #ficons {
     margin: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    display: flex;
+    width:65vw;
 }
 
 #overlay_opacity, #overlay_mode {
     display: none;
 }
 
+#add_item {
+    display:none;
+}
+
 .icons {
   color: #444;
-  font-size: 4.2vw;
+  font-size: 6vh;
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   display:inline-block;
-  padding:6vh 1.4vw;
   text-align: center;
+}
+
+.mainmenu {
+    padding:4vh;
 }
 
 .icon_label {
@@ -150,26 +120,36 @@ h1 {
     font-size: 2vh;
 }
 
-.meta {
-  padding:0px;
-  margib:0px;
-}
+/* MAIN GRID ZONES */
 
-strong {
-  color:#222;
+#gridwrap {
+  display: grid;
+  grid-template-columns: 35vw 30vw 35vw;
+  grid-template-rows: 10vh 70vh 20vh;
+  /* border:1px solid #ccc; */
+  /* height: 100vh; */
+  height: calc(var(--vh, 1vh) * 100);
+  /*
+  top: calc((100vh - 49vw)*0.333);
+  position: absolute;
+  width:100vw;
+  left:0px;
+  */
 }
 
 #bottom {
-  display:block;
+  display:flex;
   color:#888;
   font-size:4vw;
   padding:0vw;
   grid-column: 2 / span 3;
   grid-row: 3;
-  overflow-x: scroll;
   white-space: nowrap;
   height: 20vh;
   max-height: 20vh;
+  justify-content: space-evenly;
+  align-items: center;
+
 }
 
 #construction {
@@ -204,6 +184,8 @@ strong {
     padding-bottom: 1vh;
 }
 
+/* SPLASHS */
+
 .splash {
   display: grid;
   grid-template-columns: 100vw;
@@ -231,6 +213,8 @@ strong {
   color:#ccc;
 }
 
+/* INTERACTIONS */
+
 .noselect {
   touch-action: none;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -243,8 +227,7 @@ strong {
 }
 
 
-
-/* SELECT */
+/* SELECTS */
 
 .select-css {
 	display: block;
@@ -281,4 +264,42 @@ strong {
 }
 .select-css option {
 	font-weight:normal;
+}
+
+/* SLIDERS */
+
+.sliders, .sliders.p {
+    /* display:flow-root; */
+    display:none;
+    width:55vw;
+    font-size: 2vh;
+    margin-left: 5vw;
+}
+
+[id^="f"].ui-slider-horizontal {
+  background: #444;
+}
+
+[id^="f"].ui-slider-handle, .ui-slider-handle {
+    height: 10vh;
+  background: #444 important!;
+  color:#444  important!;
+}
+
+#close_slider, #close_disco {
+    color: #444;
+    font-size: 6vh;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display:none;
+    margin:2vh;
+    float:right;
+}
+
+.close_slider_label {
+    font-family: sans-serif;
+    font-size: 3vh;
+    margin-right: 5vh;
+    margin-bottom: 2vh;
+    vertical-align: middle;
 }

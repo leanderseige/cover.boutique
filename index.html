@@ -4,10 +4,10 @@
 
   COVER.BOUTIQUE
 
-  (c) 2018, Leander Seige, leander@seige.name
+  (c) 2019, Leander Seige, leander@seige.name
 
   https://cover.boutique
-	https://github.com/leanderseige/case.cafe
+	https://github.com/leanderseige/cover.boutique
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
   <meta charset='utf-8'>
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="shortcut icon" type="image/png" href="images/case.cafe.icon.png" sizes="any">
+  <link rel="shortcut icon" type="image/png" href="images/cover.boutique.icon.png" sizes="any">
   <title>COVER BOUTIQUE</title>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel='stylesheet' type='text/css' media='screen' href='css/styles.css' />
@@ -80,6 +80,7 @@
       <option value="https://iiif.manducus.net/collections/0015/collection.json">Leibniz-Institut IOS, Regensburg</option>
       <option value="https://iiif.manducus.net/collections/0016/collection.json">Museum für Kommunikation, Nürnberg</option>
     </select>
+    <div id="close_disco" onclick="cb.hideDiscovery();">&#xf00d;</div>
 
     <div id="scroll" class="noselect" onscroll="cb.scrollrun();" style=" border:2px solid yellow;">
       <div id="discovery-items"></div>
@@ -106,12 +107,13 @@
             <option value="osd">Background</option>
             <option value="osdo">Overlay</option>
         </select>
+        <div id="add_item" class="icons mainmenu" onclick="cb.showDiscovery();">&#xf055;</div>
+        <br />
         <div class="icons mainmenu" onclick="cb.zoomIn();">&#xf00e;</div>
-        <div class="icons mainmenu" onclick="cb.zoomOut();">&#xf010;</div><br />
-        <div class="icons mainmenu" onclick="cb.resetAll();">&#xf049;</div>
-        <div class="icons mainmenu" onclick="cb.launch_download();">&#xf1c1;</div><br />
-        <div class="icons mainmenu" onclick="cb.show('#splash');cb.show('#impressum');"><img src="images/case.cafe.icon.svg" /></div>
-
+        <div class="icons mainmenu" onclick="cb.zoomOut();">&#xf010;</div>
+        <br />
+        <div class="icons mainmenu" onclick="cb.resetAll();">&#xf55a;</div>
+        <div class="icons mainmenu" onclick="cb.launch_download();">&#xf1c1;</div>
       </div>
     </div>
 

@@ -23,6 +23,7 @@ function coverboutique(config) {
     var phones = false;
     var osdid = "osd";
     var discoCountDown = 0;
+    var mobile_mode = false;
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
@@ -69,6 +70,9 @@ function coverboutique(config) {
       var elem=document.getElementById(id);
       var service=elem.getAttribute("iiif_service");
       // console.log("loading: "+service);
+      if(mobile_mode) {
+          hideDiscovery();
+      }
       loadOSD(service);
     }
 
@@ -425,6 +429,20 @@ function coverboutique(config) {
         $("#fsepia").css("display","none");
         $("#fopacity").css("display","none");
         $("#fmode_select").css("display","none");
+    }
+
+    coverboutique.prototype.showDiscovery = function() {
+        $("#disco_select").addClass("splash");
+        $("#scroll").addClass("splash");
+        $("#disco_select").css("display","grid");
+        $("#scroll").css("display","grid");
+        $("#close_disco").css("display","flex");
+        mobile_mode=true;
+    }
+
+    function hideDiscovery() {
+        $("#disco_select").css("display","none");
+        $("#scroll").css("display","none");
     }
 
 }
