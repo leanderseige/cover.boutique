@@ -461,4 +461,25 @@ function coverboutique(config) {
         $("#close_disco").css("display","none");
     }
 
+    coverboutique.prototype.hideSplash = function(id) {
+        hideSplash(id);
+    }
+
+    function hideSplash(id) {
+        $("#"+id).css("display","none");
+        $("#close_splash").css("display","none");
+    }
+
+    coverboutique.prototype.showSplash = function(id) {
+        showSplash(id);
+    }
+
+    function showSplash(id) {
+        console.log("showing "+id);
+        $("#"+id).css("display","grid");
+        $("#close_splash").css("display","flex");
+    }
+
+
+
 }

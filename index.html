@@ -92,7 +92,7 @@
         <div id="mask"></div>
     </div>
 
-    <div id="logo">
+    <div id="logo" onclick="cb.showSplash('splash_info');">
         <h1 class="mobile" style="font-size:8vh;">c.b</h1>
         <h1 class="desktop">cover.boutique</h1>
     </div>
@@ -142,6 +142,18 @@
             <option value="exclusion">exclusion</option>
             <option value="screen">screen</option>
         </select>
+    </div>
+</div>
+
+<div id="close_splash" onclick="cb.hideSplash('splash_info');">&#xf00d;</div>
+
+<div id="splash_info" class="splash">
+    <div class="splash_content">
+        <h1>cover.boutique</h1>
+        <p>
+            &copy; 2019 – Leander Seige und Mathilda Seige<br />
+            <a href="https://github.com/leanderseige/cover.boutique">https://github.com/leanderseige/cover.boutique</a>
+        </p>
     </div>
 </div>
 

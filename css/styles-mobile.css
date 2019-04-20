@@ -111,20 +111,6 @@
       width:80vw;
     }
 
-    #close_disco {
-        z-index: 10003;
-        position: absolute;
-        right:0px;
-        top:0px;
-        background-color: white;
-        width:20vw;
-        height:10vh;
-        padding:0px;
-        margin:0px;
-        justify-content: space-evenly;
-        align-items: center;
-    }
-
     #scroll {
       display: none;
       z-index: 10001;
