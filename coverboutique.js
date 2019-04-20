@@ -443,6 +443,7 @@ function coverboutique(config) {
     function hideDiscovery() {
         $("#disco_select").css("display","none");
         $("#scroll").css("display","none");
+        $("#close_disco").css("display","none");
     }
 
 }

@@ -97,6 +97,14 @@
         grid-row: 1;
     }
 
+    .mobile {
+        display: block;
+    }
+
+    .desktop {
+        display: none;
+    }
+
     #disco_select {
       display: none;
       z-index: 10000;

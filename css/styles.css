@@ -184,6 +184,14 @@ strong {
     padding-bottom: 1vh;
 }
 
+.mobile {
+    display: none;
+}
+
+.desktop {
+    display: block;
+}
+
 /* SPLASHS */
 
 .splash {
