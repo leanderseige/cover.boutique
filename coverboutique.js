@@ -22,7 +22,7 @@ function coverboutique(config) {
     var last_scrollrun=0;
     var phones = false;
     var osdid = "osd";
-
+    var discoCountDown = 0;
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
@@ -37,26 +37,17 @@ function coverboutique(config) {
 
       filter['osd']['brightness']=100;
       filter['osd']['contrast']=100;
-      filter['osd']['rotate']=0;
+      filter['osd']['hue']=0;
       filter['osd']['saturate']=100;
       filter['osd']['sepia']=0;
-      filter['osd']['invert']=0;
       filter['osdo']=filter['osd'];
 
-      $("#dbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#dcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#drotate").slider({orientation: "horizontal",min: -180,max: 180,value: 0,slide: cb.filter,change: cb.filter});
-      $("#dsaturate").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#dsepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
-      $("#dinvert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
-      $("#dopacity").slider({orientation: "horizontal",min: 0,max: 100,value: 100,slide: cb.filter,change: cb.filter});
-
-      $("#mbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#mcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#mrotate").slider({orientation: "horizontal",min: -180,max: 180,value: 0,slide: cb.filter,change: cb.filter});
-      $("#msaturate").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
-      $("#msepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
-      $("#minvert").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
+      $("#fbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#fcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#fhue").slider({orientation: "horizontal",min: -180,max: 180,value: 0,slide: cb.filter,change: cb.filter});
+      $("#fsaturate").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
+      $("#fsepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
+      $("#fopacity").slider({orientation: "horizontal",min: 0,max: 100,value: 100,slide: cb.filter,change: cb.filter});
 
       load_data();
       loadBrand();
@@ -82,11 +73,20 @@ function coverboutique(config) {
     }
 
     coverboutique.prototype.selectLayer = function () {
+        console.log("ok");
         $("#"+osdid).css("pointer-events", "none");
         var ls=document.getElementById("layer_select");
         osdid = ls.value;
         $("#"+osdid).css("pointer-events", "all");
-        $("#osdo").css("opacity", "0.5");
+        if(osdid=='osd') {
+            console.log("disable");
+            $('#overlay_opacity').css("display","none");
+            $('#overlay_mode').css("display","none");
+        } else {
+            console.log("enable");
+            $('#overlay_opacity').css("display","inline-block");
+            $('#overlay_mode').css("display","inline-block");
+        }
     }
 
     coverboutique.prototype.selectCollection = function () {
@@ -98,7 +98,7 @@ function coverboutique(config) {
       loadCollection(ds.value);
     }
     coverboutique.prototype.selectMode = function () {
-      var ms=document.getElementById("mode_select");
+      var ms=document.getElementById("fmode_select");
       $("#osdo").css("mix-blend-mode",ms.value);
     }
 
@@ -136,6 +136,7 @@ function coverboutique(config) {
     function loadCollection(curl) {
       // console.log("loading collection ..."+curl);
       $.getJSON(curl, function(result) {
+         discoCountDown=4;
         for(var m in result['manifests']) {
           var murl=result['manifests'][m]['@id'];
           // console.log("loading manifest ..."+murl);
@@ -148,6 +149,10 @@ function coverboutique(config) {
             html+='<img class="discoimage" src="" iiif_service="'+service+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
             html+='</p>';
             $("#discovery-items").append(html);
+            if(discoCountDown>0) {
+                discoCountDown--;
+                loadDiscoImage(document.getElementById(bid));
+            }
           });
         }
       });
@@ -157,15 +162,14 @@ function coverboutique(config) {
     /* get filter values from sliders */
     function getFilters() {
 
-        var brightness = $("#dbrightness").slider("value");
-        var contrast = $("#dcontrast").slider("value");
-        var rotate = $("#drotate").slider("value");
-        var invert = $("#dinvert").slider("value");
-        var saturate = $("#dsaturate").slider("value");
-        var sepia = $("#dsepia").slider("value");
-        var opacity = $("#dopacity").slider("value");
+        var brightness = $("#fbrightness").slider("value");
+        var contrast = $("#fcontrast").slider("value");
+        var hue = $("#fhue").slider("value");
+        var saturate = $("#fsaturate").slider("value");
+        var sepia = $("#fsepia").slider("value");
+        var opacity = $("#fopacity").slider("value");
 
-        return("brightness(" + brightness + "%) hue-rotate(" + rotate + "deg) contrast(" + contrast + "%) invert(" + invert + "%) saturate(" + saturate + "%) sepia(" + sepia + "%) opacity(" + opacity + "%)");
+        return("brightness(" + brightness + "%) hue-rotate(" + hue + "deg) contrast(" + contrast + "%) saturate(" + saturate + "%) sepia(" + sepia + "%) opacity(" + opacity + "%)");
     }
 
     /* set filter values in sliders */
@@ -173,14 +177,6 @@ function coverboutique(config) {
     }
 
     coverboutique.prototype.filter = function() {
-        var map={'m':'d','d':'m'};
-        var param=this.id.substring(1,100);
-        var oid = map[this.id.substring(0,1)]+param;
-        var value = $('#'+this.id).slider("value");
-        filter[osdid][param]=value;
-        $('#'+oid).slider({'slide':'','change':''});
-        $('#'+oid).slider({'value':value});
-        $('#'+oid).slider({'slide':cb.filter,'change':cb.filter});
         $("#"+osdid).css("-webkit-filter", getFilters());
     }
 
@@ -408,26 +404,27 @@ function coverboutique(config) {
         return url;
     }
 
-    function buildSharpenFilters() {
-        var svg = document.createElement('svg');
-        svg.width=0;
-        svg.height=0;
-        var defs = document.createElement('defs');
-        svg.appendChild(defs);
-        var filter = {};
-        var convo = {};
-        for(i=1;i<10;i=i+2) {
-            filter[i] = document.createElement('filter');
-            filter[i].id = "fsharpen"+i;
-            convo[i] = document.createElement('feConvolveMatrix');
-            convo[i].setAttribute("order","3 3");
-            convo[i].setAttribute("preserveAlpha","true");
-            convo[i].setAttribute("kernelMatrix","0 -."+i+" 0 -."+i+" 5 -."+i+" 0 -."+i+" 0");
-            filter[i].appendChild(convo[i]);
-            defs.appendChild(filter[i]);
-        }
-        document.body.appendChild(svg);
-        console.log(svg);
+    coverboutique.prototype.showSlider = function(id) {
+        console.log("here we go");
+        var label = id.slice(1);
+        label = label.charAt(0).toUpperCase() + label.slice(1);
+        label = '<span class="close_slider_label">'+label+'</span>';
+        $("#ficons").css("display","none");
+        $("#"+id).css("display","flow-root");
+        $("#close_slider").html(label+"&#xf00d;");
+        $("#close_slider").css("display","block");
+    }
+
+    coverboutique.prototype.hideSlider = function(id) {
+        $("#close_slider").css("display","none");
+        $("#ficons").css("display","block");
+        $("#fbrightness").css("display","none");
+        $("#fcontrast").css("display","none");
+        $("#fhue").css("display","none");
+        $("#fsaturate").css("display","none");
+        $("#fsepia").css("display","none");
+        $("#fopacity").css("display","none");
+        $("#fmode_select").css("display","none");
     }
 
 }

@@ -1,11 +1,10 @@
 /*
 
-  ANTLITZ.NINJA
+COVER.BOUTIQUE
+  (c) 2019, Leander Seige, leander@seige.name
 
-  (c) 2018, Leander Seige, leander@seige.name
-
-  https://antlitz.ninja
-	https://github.com/leanderseige/antlitz.ninja
+  https://cover.boutique
+	https://github.com/leanderseige/cover.boutique
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,12 +29,8 @@ body {
 
 h1 {
   font-family: 'Sacramento';
-  font-size: 8vw;
+  font-size: 6vh;
   margin: 0 0;
-}
-
-.discoimage {
-  width:35vw;
 }
 
 #gridwrap {
@@ -51,14 +46,6 @@ h1 {
   width:100vw;
   left:0px;
   */
-}
-
-.desktop {
-    display:block;
-}
-
-.mobile {
-    display:none;
 }
 
 #osd {
@@ -95,31 +82,64 @@ h1 {
     z-index: 30;
 }
 
-
-
-#blur,#grayscale,#brightness,#contrast,#rotate,#invert,#opacity,#saturate,#sepia,#sharpen {
-    width: 300px;
-    margin: 15px;
-   float:left;
- }
-
 .sliders, .sliders.p {
-    display:flow-root;
-    width:20vw;
+    /* display:flow-root; */
+    display:none;
+    width:55vw;
+    font-size: 2vh;
+    margin-left: 5vw;
+}
+
+[id^="f"].ui-slider-horizontal {
+  background: #444;
+}
+
+[id^="f"].ui-slider-handle, .ui-slider-handle {
+    height: 10vh;
+  background: #444 important!;
+  color:#444  important!;
+}
+
+#close_slider {
+    color: #444;
+    font-size: 6vh;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display:none;
+    margin:2vh;
+    float:right;
+}
+
+.close_slider_label {
+    font-family: sans-serif;
+    font-size: 3vh;
+    margin-right: 5vh;
+    margin-bottom: 2vh;
+    vertical-align: middle;
+}
+
+#fmode_select {
+    display:none;
+    width:40vw;
+    margin: auto;
 }
 
 .icons {
-  color: #888;
-  font-size: 4vw;
+  color: #444;
+  font-size: 4.2vw;
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-  display:flex;
+  display:inline-block;
+  padding:6vh 1.4vw;
+  text-align: center;
 }
 
-.mainmenu {
-  padding:1vw;
-  margin:2vw;
-  color:#444;
+.icon_label {
+    padding-top: 1vh;
+    display: block;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 2vh;
 }
 
 .meta {
@@ -132,11 +152,16 @@ strong {
 }
 
 #bottom {
-  display:flex;
+  display:block;
   color:#888;
   font-size:4vw;
   padding:0vw;
   grid-column: 2 / span 3;
+  grid-row: 3;
+  overflow-x: scroll;
+  white-space: nowrap;
+  height: 20vh;
+  max-height: 20vh;
 }
 
 #construction {
@@ -146,25 +171,32 @@ strong {
 
 #adjust {
   grid-column: 3;
-  grid-row: 1  / span 2;
+  grid-row: 2;
 }
 
-.ctrl {
-  border-bottom:1px solid #ccc;
+#disco_select {
+  grid-column: 1;
+  grid-row: 1;
+  height:10vh;
 }
 
-.ctrl-icon {
-  /* height:6vw; */
+#scroll {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  height:90vh;
+  overflow:scroll;
 }
 
-#button_download_image,
-#button_dynamic_manifest,
-#download_button {
-  text-decoration: none;
-  color:#444;
+#logo {
+    display: block;
+    grid-column: 3;
+    grid-row: 1;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 1vh;
 }
 
-#splash {
+.splash {
   display: grid;
   grid-template-columns: 100vw;
   grid-template-areas: "a";
@@ -191,12 +223,6 @@ strong {
   color:#ccc;
 }
 
-.linkon {
-  height:5vh;
-  margin:1vw;
-  padding:1vw;
-}
-
 .noselect {
   touch-action: none;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -208,41 +234,13 @@ strong {
                                   supported by Chrome and Opera */
 }
 
-.imp_logo {
-    width:30vw;
-}
-.imp_award {
-    width:15vw;
-}
 
-#impressum p {
-  text-align: center;
-  padding: 1vw 2vw;
-}
-
-#impressum p a {
-  color:#222;
-}
-
-
-#disco_select {
-  grid-column: 1;
-  grid-row: 1;
-  height:10vh;
-}
-
-#scroll {
-  grid-column: 1;
-  grid-row: 2 / span 2;
-  height:90vh;
-  overflow:scroll;
-}
 
 /* SELECT */
 
 .select-css {
 	display: block;
-	font-size: 16px;
+	font-size: 3vh;
 	font-family: sans-serif;
 	font-weight: 700;
 	color: #444;

@@ -50,3 +50,28 @@ HTML:
   </filter>
 </defs>
 </svg-->
+
+
+.js :
+
+function buildSharpenFilters() {
+    var svg = document.createElement('svg');
+    svg.width=0;
+    svg.height=0;
+    var defs = document.createElement('defs');
+    svg.appendChild(defs);
+    var filter = {};
+    var convo = {};
+    for(i=1;i<10;i=i+2) {
+        filter[i] = document.createElement('filter');
+        filter[i].id = "fsharpen"+i;
+        convo[i] = document.createElement('feConvolveMatrix');
+        convo[i].setAttribute("order","3 3");
+        convo[i].setAttribute("preserveAlpha","true");
+        convo[i].setAttribute("kernelMatrix","0 -."+i+" 0 -."+i+" 5 -."+i+" 0 -."+i+" 0");
+        filter[i].appendChild(convo[i]);
+        defs.appendChild(filter[i]);
+    }
+    document.body.appendChild(svg);
+    console.log(svg);
+}
