@@ -214,6 +214,7 @@ strong {
   justify-self: center;
   z-index: 9999;
   font-size: 3.4vw;
+  display:none;
 }
 
 .splash_content h1 {
@@ -284,19 +285,19 @@ strong {
 .sliders, .sliders.p {
     /* display:flow-root; */
     display:none;
-    width:55vw;
+    width:45vw;
     font-size: 2vh;
     margin-left: 5vw;
 }
 
 [id^="f"].ui-slider-horizontal {
-  background: #444;
+  background: #888;
 }
 
 [id^="f"].ui-slider-handle, .ui-slider-handle {
     height: 10vh;
-  background: #444 important!;
-  color:#444  important!;
+    background: #444 !important;
+    color:#444 !important;
 }
 
 #close_slider, #close_disco, #close_splash {

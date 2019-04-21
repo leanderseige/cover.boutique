@@ -24,6 +24,7 @@ function coverboutique(config) {
     var osdid = "osd";
     var discoCountDown = 0;
     var mobile_mode = false;
+    var lock_filters=false;
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
@@ -41,7 +42,14 @@ function coverboutique(config) {
       filter['osd']['hue']=0;
       filter['osd']['saturate']=100;
       filter['osd']['sepia']=0;
-      filter['osdo']=filter['osd'];
+      filter['osd']['opacity']=100;
+
+      filter['osdo']['brightness']=100;
+      filter['osdo']['contrast']=100;
+      filter['osdo']['hue']=0;
+      filter['osdo']['saturate']=100;
+      filter['osdo']['sepia']=0;
+      filter['osdo']['opacity']=50;
 
       $("#fbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
       $("#fcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
@@ -75,23 +83,6 @@ function coverboutique(config) {
           hideDiscovery();
       }
       loadOSD(service);
-    }
-
-    coverboutique.prototype.selectLayer = function () {
-        console.log("ok");
-        $("#"+osdid).css("pointer-events", "none");
-        var ls=document.getElementById("layer_select");
-        osdid = ls.value;
-        $("#"+osdid).css("pointer-events", "all");
-        if(osdid=='osd') {
-            console.log("disable");
-            $('#overlay_opacity').css("display","none");
-            $('#overlay_mode').css("display","none");
-        } else {
-            console.log("enable");
-            $('#overlay_opacity').css("display","inline-block");
-            $('#overlay_mode').css("display","inline-block");
-        }
     }
 
     coverboutique.prototype.selectCollection = function () {
@@ -166,25 +157,57 @@ function coverboutique(config) {
       setTimeout(function() {scrollrun();},3000);
     }
 
+    coverboutique.prototype.selectLayer = function () {
+        $("#"+osdid).css("pointer-events", "none");
+        // var ls=document.getElementById("layer_select");
+        getFilters();
+        osdid = $("#layer_select").val(); // ls.value;
+        setFilters();
+        $("#"+osdid).css("pointer-events", "all");
+        if(osdid=='osd') {
+            $('#overlay_opacity').css("display","none");
+            $('#overlay_mode').css("display","none");
+        } else {
+            $('#overlay_opacity').css("display","inline-block");
+            $('#overlay_mode').css("display","inline-block");
+        }
+    }
+
     /* get filter values from sliders */
-    function getFilters() {
-
-        var brightness = $("#fbrightness").slider("value");
-        var contrast = $("#fcontrast").slider("value");
-        var hue = $("#fhue").slider("value");
-        var saturate = $("#fsaturate").slider("value");
-        var sepia = $("#fsepia").slider("value");
-        var opacity = $("#fopacity").slider("value");
-
-        return("brightness(" + brightness + "%) hue-rotate(" + hue + "deg) contrast(" + contrast + "%) saturate(" + saturate + "%) sepia(" + sepia + "%) opacity(" + opacity + "%)");
+    function getCssFilters(id) {
+        return(
+            "brightness(" + filter[id]['brightness'] + "%) " +
+            "hue-rotate(" + filter[id]['hue'] + "deg) " +
+            "contrast(" + filter[id]['contrast'] + "%) " +
+            "saturate(" + filter[id]['saturate'] + "%) " +
+            "sepia(" + filter[id]['sepia'] + "%) " +
+            "opacity(" + filter[id]['opacity'] + "%) "
+        );
     }
 
     /* set filter values in sliders */
+
+    function getFilters() {
+        if (lock_filters==false) {
+            console.log("getting filters for "+osdid);
+            for(var f in filter[osdid]) {
+                filter[osdid][f]=$('#f'+f).slider("value");
+            }
+        }
+    }
+
     function setFilters() {
+        lock_filters=true;
+        console.log("setting filters for "+osdid);
+        for(var f in filter[osdid]) {
+            $('#f'+f).slider("value",filter[osdid][f]);
+        }
+        lock_filters=false;
     }
 
     coverboutique.prototype.filter = function() {
-        $("#"+osdid).css("-webkit-filter", getFilters());
+        getFilters(osdid);
+        $("#"+osdid).css("-webkit-filter", getCssFilters(osdid));
     }
 
     coverboutique.prototype.recalcVH = function() {
@@ -319,6 +342,7 @@ function coverboutique(config) {
 /* GENERATE OUTPUT PDF */
 
     coverboutique.prototype.launch_download = function() {
+        showSplash('splash_download');
         this.create_image();
     }
 
@@ -374,7 +398,7 @@ function coverboutique(config) {
         var offh = fac*img.height;
         var offy = (h-offh)/2;
         dctx.drawImage(img, 0, 0, img.width, img.height, 0,offy,w,offh);
-        dctx.filter = getFilters();
+        dctx.filter = getCssFilters('osd');
         dctx.drawImage(dcanvas, 0, 0, w, h);
         dctx.filter = "none";
         dctx.drawImage(img_mask, 0, 0, dcanvas.width, dcanvas.height);
@@ -403,8 +427,7 @@ function coverboutique(config) {
       doc.addImage(data, 'JPEG', 30, c, w*25.4/600, h*25.4/600);
       var ms = (new Date).getTime();
       doc.save("cover.boutique."+ ms.toString() +".pdf");
-      $("#loader").hide();
-      $("#splash").hide();
+      hideSplash('splash_download');
       console.log("finished image");
     }
 
@@ -420,7 +443,6 @@ function coverboutique(config) {
     }
 
     coverboutique.prototype.showSlider = function(id) {
-        console.log("here we go");
         var label = id.slice(1);
         label = label.charAt(0).toUpperCase() + label.slice(1);
         label = '<span class="close_slider_label">'+label+'</span>';
@@ -466,6 +488,7 @@ function coverboutique(config) {
     }
 
     function hideSplash(id) {
+        $("#splash_container").css("display","none");
         $("#"+id).css("display","none");
         $("#close_splash").css("display","none");
     }
@@ -476,10 +499,9 @@ function coverboutique(config) {
 
     function showSplash(id) {
         console.log("showing "+id);
-        $("#"+id).css("display","grid");
+        $("#splash_container").css("display","grid");
+        $("#"+id).css("display","block");
         $("#close_splash").css("display","flex");
     }
-
-
 
 }
