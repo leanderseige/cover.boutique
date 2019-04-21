@@ -25,6 +25,7 @@ function coverboutique(config) {
     var discoCountDown = 0;
     var mobile_mode = false;
     var lock_filters=false;
+    var mask_url = false;
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
@@ -272,7 +273,8 @@ function coverboutique(config) {
     coverboutique.prototype.selectModel = function() {
         var msel=document.getElementById("model_select");
         var mask=document.getElementById("mask");
-        mask.style.backgroundImage = "url('/images/"+msel.value+"')";
+        mask_url="/images/"+msel.value;
+        mask.style.backgroundImage = "url('"+mask_url+"')";
     }
 
     coverboutique.prototype.closeOSD = function() {
@@ -343,16 +345,21 @@ function coverboutique(config) {
 
     coverboutique.prototype.launch_download = function() {
         showSplash('splash_download');
-        this.create_image();
+        create_image();
     }
 
     coverboutique.prototype.create_image = function() {
+        create_image();
+    }
+
+    function create_image() {
+        $('#log').append("create image<br />");
         var deleteme = document.getElementById('deleteme');
         if (deleteme) {
             deleteme.parentNode.removeChild(deleteme);
         }
 
-        console.log("start");
+        $('#log').append("start<br />");
         var rect = viewer[osdid].viewport.viewportToImageRectangle(viewer[osdid].viewport.getBounds());
         var flip = viewer[osdid].viewport.getFlip();
         var imag = canvas;
@@ -365,13 +372,13 @@ function coverboutique(config) {
         img.crossOrigin = "Anonymous";
 
         // var imgurl_mask = "http://localhost:8000/images/test2.png";
-        var imgurl_mask = "http://localhost:8000/images/Samsung-J5_2017.png";
+        var imgurl_mask = mask_url; // "http://localhost:8000/images/Samsung-J5_2017.png";
         var img_mask = document.createElement('img');
         img_mask.crossOrigin = "Anonymous";
 
         console.log("loading "+imgurl);
         img.onload = function() {
-            console.log("loading "+imgurl_mask);
+            $('#log').append("loading "+imgurl_mask+"<br />");
             img_mask.onload = function() {
                 create_image_compose(img, img_mask);
             }
@@ -381,6 +388,7 @@ function coverboutique(config) {
     }
 
     function create_image_compose(img, img_mask) {
+        $('#log').append("create image compose<br />");
         var dcanvas = document.createElement('canvas');
         dcanvas.id = "delme";
         var w = img_mask.width;
@@ -411,6 +419,7 @@ function coverboutique(config) {
     }
 
     function wrapPDF(data,w,h) {
+        $('#log').append("wrapPDF<br />");
       var doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
       var c = 20;
       doc.setFontSize(16);
