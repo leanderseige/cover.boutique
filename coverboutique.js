@@ -446,11 +446,13 @@ function coverboutique(config) {
             console.log("osdo_rect: "+osdo_rect);
             console.log("dest: "+dest_x+" "+dest_y+" "+dest_w+" "+dest_h);
             outcontext.filter = getCssFilters('osdo');
+            var ms=document.getElementById("fmode_select");
+            outcontext.globalCompositeOperation=ms.value;
             outcontext.drawImage(img_osdo, 0, 0, img_osdo.width, img_osdo.height, dest_x, dest_y, dest_w, dest_h);
         }
 
         /* RENDER MASK */
-
+        outcontext.globalCompositeOperation = "source-over";
         outcontext.filter = "none";
         outcontext.drawImage(img_mask, mask_x, mask_y, mask_w, mask_h);
 
