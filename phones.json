@@ -7,6 +7,10 @@
         {
             "model": "Galaxy S9",
             "image": "Samsung-S9.png"
+        },
+        {
+            "model": "Galaxy S3",
+            "image": "Samsung-S3.png"
         }
     ],
     "OnePlus": [

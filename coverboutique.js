@@ -26,12 +26,15 @@ function coverboutique(config) {
     var mobile_mode = false;
     var lock_filters=false;
     var mask_url = false;
+    var src_url = {};
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
 
       viewer['osd'] = false;
       viewer['osdo'] = false;
+      src_url['osd']=false;
+      src_url['osdo']=false;
       filter['osd'] = {};
       filter['osdo'] = {};
 
@@ -293,6 +296,7 @@ function coverboutique(config) {
 
     function loadOSD(service) {
           canvas=service;
+          src_url[osdid]=service;
           $.getJSON(service + "/info.json", function(result) {
               // console.log(result);
               var setup = setup_template;
@@ -351,8 +355,126 @@ function coverboutique(config) {
 
     coverboutique.prototype.launch_download = function() {
         showSplash('splash_download');
-        create_image();
+        prepImages();
+        // create_image();
     }
+
+    function prepImages() {
+        var img_mask = document.createElement('img');
+        img_mask.crossOrigin = "Anonymous";
+
+        var img_osd = document.createElement('img');
+        img_osd.crossOrigin = "Anonymous";
+        var osd_rect = viewer['osd'].viewport.viewportToImageRectangle(viewer['osd'].viewport.getBounds());
+        var osd_src = getIIIFSrc(osd_rect,false,src_url['osd']);
+
+        img_mask.onload = function() {
+            img_osd.onload = function() {
+                if(viewer['osdo']) {
+                    var img_osdo = document.createElement('img');
+                    img_osdo.crossOrigin = "Anonymous";
+                    var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
+                    var osdo_src = getIIIFSrc(osdo_rect,false,src_url['osdo']);
+                    img_osdo.onload = function() {
+                        composeImage(img_mask,img_osd,img_osdo);
+                    }
+                    img_osdo.src=osdo_src;
+                } else {
+                    composeImage(img_mask,img_osd,false);
+                }
+            }
+            img_osd.src=osd_src;
+        }
+        img_mask.src=mask_url;
+    }
+
+    function composeImage(img_mask,img_osd,img_osdo) {
+        /* DETERMINE OUTPUT DIMENSIONS AND MASK POSITION */
+        osd_w = Math.round($('#osd').width());
+        osd_h = Math.round($('#osd').height());
+        osd_r = osd_w/osd_h;
+        mask_w = img_mask.width;
+        mask_h = img_mask.height;
+        mask_r = mask_w/mask_h;
+        console.log("osd: "+osd_w+" x "+osd_h);
+        console.log("mask: "+mask_w+" x "+mask_h);
+        console.log("ratios osd: "+osd_r+" ratio mask: "+mask_r);
+        if(osd_r > mask_r) {
+            out_w=(mask_h/osd_h)*osd_w;
+            out_h=mask_h;
+            mask_y=0;
+            mask_x=(out_w-mask_w)/2;
+        } else {
+            out_w=mask_w;
+            out_h=(mask_w/osd_w)*osd_h;
+            mask_x=0;
+            mask_y=(out_h-mask_h)/2;
+        }
+        console.log("out: "+out_w+" x "+out_h);
+
+        /* PREPARE OUTPUT CANVAS */
+
+        var outcanvas = document.createElement('canvas');
+        outcanvas.id = "delme";
+        outcanvas.width = out_w;
+        outcanvas.height = out_h;
+        outcanvas.crossOrigin = "Anonymous";
+        var outcontext = outcanvas.getContext("2d");
+
+        /* RENDER OSD */
+
+        var osd_rect = viewer['osd'].viewport.viewportToImageRectangle(viewer['osd'].viewport.getBounds());
+        var osd_scale = out_w / osd_rect.width;
+        var dest_x = osd_rect.x < 0 ? -osd_rect.x*osd_scale : 0;
+        var dest_y = osd_rect.y < 0 ? -osd_rect.y*osd_scale : 0;
+        var dest_w = img_osd.width*osd_scale;
+        var dest_h = img_osd.height*osd_scale;
+        console.log("osd_rect: "+osd_rect);
+        console.log("dest: "+dest_x+" "+dest_y+" "+dest_w+" "+dest_h);
+        outcontext.filter = getCssFilters('osd');
+        outcontext.drawImage(img_osd, 0, 0, img_osd.width, img_osd.height, dest_x, dest_y, dest_w, dest_h);
+
+        /* RENDER OSDO */
+
+        if(img_osdo) {
+            var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
+            var osdo_scale = out_w / osdo_rect.width;
+            var dest_x = osdo_rect.x < 0 ? -osdo_rect.x*osdo_scale : 0;
+            var dest_y = osdo_rect.y < 0 ? -osdo_rect.y*osdo_scale : 0;
+            var dest_w = img_osdo.width*osdo_scale;
+            var dest_h = img_osdo.height*osdo_scale;
+            console.log("osdo_rect: "+osdo_rect);
+            console.log("dest: "+dest_x+" "+dest_y+" "+dest_w+" "+dest_h);
+            outcontext.filter = getCssFilters('osdo');
+            outcontext.drawImage(img_osdo, 0, 0, img_osdo.width, img_osdo.height, dest_x, dest_y, dest_w, dest_h);
+        }
+
+        /* RENDER MASK */
+
+        outcontext.filter = "none";
+        outcontext.drawImage(img_mask, mask_x, mask_y, mask_w, mask_h);
+
+        /* OUTPUT DATA TO PDF CREATOR */
+
+        var ms = (new Date).getTime();
+        var fn = "cover.boutique" + ms.toString() + ".jpg";
+        var data = outcanvas.toDataURL("image/jpeg", 1.0);
+        wrapPDF(data,out_w,out_h);
+
+    }
+
+    function getIIIFSrc(rect, flip, src) {
+        var url = src;
+        url = url + "/" + Math.floor(rect.x) + "," + Math.floor(rect.y) + "," + Math.ceil(rect.width) + "," + Math.ceil(rect.height + 1);
+        url = url + "/full/";
+        if (flip) {
+            url = url + "!";
+        }
+        url = url + "0/default.jpg";
+        return url;
+    }
+
+
 
     coverboutique.prototype.create_image = function() {
         create_image();
@@ -444,7 +566,7 @@ function coverboutique(config) {
     function get_permalink(vrect, vflip, vimag, w, h) {
         var url = vimag;
         url = url + "/" + Math.floor(vrect.x) + "," + Math.floor(vrect.y) + "," + Math.ceil(vrect.width) + "," + Math.ceil(vrect.height + 1);
-        url = url + "/" + w + "," + h + "/";
+        url = url + "/full/"; //  ""/" + w + "," + h + "/";
         if (vflip) {
             url = url + "!";
         }
