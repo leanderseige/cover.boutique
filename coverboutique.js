@@ -38,19 +38,8 @@ function coverboutique(config) {
       $("#impressum").hide();
       $("#settings").hide();
 
-      filter['osd']['brightness']=100;
-      filter['osd']['contrast']=100;
-      filter['osd']['hue']=0;
-      filter['osd']['saturate']=100;
-      filter['osd']['sepia']=0;
-      filter['osd']['opacity']=100;
-
-      filter['osdo']['brightness']=100;
-      filter['osdo']['contrast']=100;
-      filter['osdo']['hue']=0;
-      filter['osdo']['saturate']=100;
-      filter['osdo']['sepia']=0;
-      filter['osdo']['opacity']=50;
+      setFilterDefaults('osd');
+      setFilterDefaults('osdo');
 
       $("#fbrightness").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
       $("#fcontrast").slider({orientation: "horizontal",min: 0,max: 200,value: 100,slide: cb.filter,change: cb.filter});
@@ -133,12 +122,10 @@ function coverboutique(config) {
     }
 
     function loadCollection(curl) {
-      // console.log("loading collection ..."+curl);
       $.getJSON(curl, function(result) {
          discoCountDown=4;
         for(var m in result['manifests']) {
           var murl=result['manifests'][m]['@id'];
-          // console.log("loading manifest ..."+murl);
           $.getJSON(murl, function(result) {
             var label=result['label'];
             var murl=result['@id'];
@@ -160,9 +147,8 @@ function coverboutique(config) {
 
     coverboutique.prototype.selectLayer = function () {
         $("#"+osdid).css("pointer-events", "none");
-        // var ls=document.getElementById("layer_select");
         getFilters();
-        osdid = $("#layer_select").val(); // ls.value;
+        osdid = $("#layer_select").val();
         setFilters();
         $("#"+osdid).css("pointer-events", "all");
         if(osdid=='osd') {
@@ -190,7 +176,6 @@ function coverboutique(config) {
 
     function getFilters() {
         if (lock_filters==false) {
-            console.log("getting filters for "+osdid);
             for(var f in filter[osdid]) {
                 filter[osdid][f]=$('#f'+f).slider("value");
             }
@@ -199,11 +184,32 @@ function coverboutique(config) {
 
     function setFilters() {
         lock_filters=true;
-        console.log("setting filters for "+osdid);
         for(var f in filter[osdid]) {
             $('#f'+f).slider("value",filter[osdid][f]);
         }
         lock_filters=false;
+    }
+
+    function setFilterDefaults(id) {
+        filter[id]['brightness']=100;
+        filter[id]['contrast']=100;
+        filter[id]['hue']=0;
+        filter[id]['saturate']=100;
+        filter[id]['sepia']=0;
+        if(id=='osdo') {
+            filter[id]['opacity']=50;
+        } else {
+            filter[id]['opacity']=100;
+        }
+    }
+
+    coverboutique.prototype.resetFilters = function() {
+        resetFilters();
+    }
+
+    function resetFilters() {
+        setFilterDefaults(osdid);
+        setFilters();
     }
 
     coverboutique.prototype.filter = function() {
@@ -353,7 +359,6 @@ function coverboutique(config) {
     }
 
     function create_image() {
-        $('#log').append("create image<br />");
         var deleteme = document.getElementById('deleteme');
         if (deleteme) {
             deleteme.parentNode.removeChild(deleteme);
@@ -378,7 +383,6 @@ function coverboutique(config) {
 
         console.log("loading "+imgurl);
         img.onload = function() {
-            $('#log').append("loading "+imgurl_mask+"<br />");
             img_mask.onload = function() {
                 create_image_compose(img, img_mask);
             }
@@ -388,7 +392,6 @@ function coverboutique(config) {
     }
 
     function create_image_compose(img, img_mask) {
-        $('#log').append("create image compose<br />");
         var dcanvas = document.createElement('canvas');
         dcanvas.id = "delme";
         var w = img_mask.width;
@@ -419,7 +422,6 @@ function coverboutique(config) {
     }
 
     function wrapPDF(data,w,h) {
-        $('#log').append("wrapPDF<br />");
       var doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
       var c = 20;
       doc.setFontSize(16);
