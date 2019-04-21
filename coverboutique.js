@@ -364,7 +364,6 @@ function coverboutique(config) {
             deleteme.parentNode.removeChild(deleteme);
         }
 
-        $('#log').append("start<br />");
         var rect = viewer[osdid].viewport.viewportToImageRectangle(viewer[osdid].viewport.getBounds());
         var flip = viewer[osdid].viewport.getFlip();
         var imag = canvas;
