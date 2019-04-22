@@ -4,27 +4,27 @@
   "description": "cover.boutique",
   "icons": [
     {
-      "src": "c.b.48.png",
+      "src": "images/c.b.48.png",
       "sizes": "48x48",
       "type": "image/png"
     },
     {
-      "src": "c.b.96.png",
+      "src": "images/c.b.96.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "c.b.144.png",
+      "src": "images/c.b.144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "c.b.192.png",
+      "src": "images/c.b.192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "c.b.256.png",
+      "src": "images/c.b.256.png",
       "sizes": "256x256",
       "type": "image/png"
     }
