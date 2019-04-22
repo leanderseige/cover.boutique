@@ -56,16 +56,6 @@ function coverboutique(config) {
 
     })
 
-    function loadDiscoImage(elem) {
-      var service=elem.getAttribute("iiif_service");
-      elem.setAttribute("src",service+"/full/400,/0/default.jpg");
-    }
-
-    function clearDiscoImage(elem) {
-      var service=elem.getAttribute("iiif_service");
-      elem.setAttribute("src","");
-    }
-
     coverboutique.prototype.discoClick = function(id) {
       // console.log("clicked: "+id);
       var elem=document.getElementById(id);
@@ -125,26 +115,36 @@ function coverboutique(config) {
 
     function loadCollection(curl) {
       $.getJSON(curl, function(result) {
-         discoCountDown=4;
+          discoCountDown=4;
         for(var m in result['manifests']) {
           var murl=result['manifests'][m]['@id'];
-          $.getJSON(murl, function(result) {
-            var label=result['label'];
-            var murl=result['@id'];
-            var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
-            var html='<p>'+label;
-            var bid = b64EncodeUnicode(murl);
-            html+='<img class="discoimage" src="" iiif_service="'+service+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
-            html+='</p>';
-            $("#discovery-items").append(html);
-            if(discoCountDown>0) {
-                discoCountDown--;
-                loadDiscoImage(document.getElementById(bid));
-            }
-          });
+          var label=result['manifests'][m]['label'];
+          var bid = b64EncodeUnicode(murl);
+          var html='<p>'+label;
+          html+='<img class="discoimage" src="" iiif_service="" iiif_manifest="'+murl+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
+          html+='</p>';
+          $("#discovery-items").append(html);
+          if(discoCountDown>0) {
+              discoCountDown--;
+              loadDiscoImage(document.getElementById(bid));
+          }
         }
       });
       setTimeout(function() {scrollrun();},3000);
+    }
+
+    function loadDiscoImage(elem) {
+        var murl=elem.getAttribute("iiif_manifest");
+        $.getJSON(murl, function(result) {
+            var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
+            elem.setAttribute("iiif_service",service);
+            elem.setAttribute("src",service+"/full/400,/0/default.jpg");
+        });
+    }
+
+    function clearDiscoImage(elem) {
+      var service=elem.getAttribute("iiif_service");
+      elem.setAttribute("src","");
     }
 
     coverboutique.prototype.selectLayer = function () {
