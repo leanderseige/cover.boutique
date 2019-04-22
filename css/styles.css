@@ -149,12 +149,14 @@ strong {
   max-height: 20vh;
   justify-content: space-evenly;
   align-items: center;
+  border-top:1px solid #888;
 
 }
 
 #construction {
   grid-column: 2;
   grid-row: 1  / span 2;
+  border-right:1px dotted #888;
 }
 
 #adjust {
@@ -173,6 +175,8 @@ strong {
   grid-row: 2 / span 2;
   height:90vh;
   overflow:scroll;
+  border-right:1px dotted #888;
+
 }
 
 #logo {
