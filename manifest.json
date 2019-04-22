@@ -1,5 +1,5 @@
 {
-  "short_name": "c.b",
+  "short_name": "cover.boutique",
   "name": "cover.boutique",
   "description": "cover.boutique",
   "icons": [
@@ -26,6 +26,11 @@
     {
       "src": "images/c.b.256.png",
       "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "images/c.b.512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
