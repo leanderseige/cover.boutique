@@ -51,7 +51,6 @@ function coverboutique(config) {
       $("#fsepia").slider({orientation: "horizontal",min: 0,max: 100,value: 0,slide: cb.filter,change: cb.filter});
       $("#fopacity").slider({orientation: "horizontal",min: 0,max: 100,value: 100,slide: cb.filter,change: cb.filter});
 
-      load_data();
       loadBrand();
       cb.selectCollection();
 
@@ -227,22 +226,6 @@ function coverboutique(config) {
         document.documentElement.style.setProperty('--vh', `${vh}px`);
 
         window.scrollTo(0,1);
-    }
-
-    async function load_data() {
-        manifest_uri = "https://iiif.manducus.net/manifests/0009/e6a31cbb9aa05946dae080765091c765a5b57bf6/manifest.json";
-        $('#loader_msg').html("");
-        console.log("boarding completed");
-        cb.hide('#splash');
-        init_display();
-    }
-
-    function init_display(result) {
-      console.log("hi");
-      // console.log(manifest_uri);
-      // loadOSD();
-      $("#splash").hide();
-      $("#loader").hide();
     }
 
     function loadBrand() {
@@ -476,74 +459,6 @@ function coverboutique(config) {
         return url;
     }
 
-
-
-    coverboutique.prototype.create_image = function() {
-        create_image();
-    }
-
-    function create_image() {
-        var deleteme = document.getElementById('deleteme');
-        if (deleteme) {
-            deleteme.parentNode.removeChild(deleteme);
-        }
-
-        var rect = viewer[osdid].viewport.viewportToImageRectangle(viewer[osdid].viewport.getBounds());
-        var flip = viewer[osdid].viewport.getFlip();
-        var imag = canvas;
-
-        var w = Math.round(rect.width);
-        var h = Math.round(rect.height);
-
-        var imgurl = get_permalink(rect, flip, imag, w, h);
-        var img = document.createElement('img');
-        img.crossOrigin = "Anonymous";
-
-        // var imgurl_mask = "http://localhost:8000/images/test2.png";
-        var imgurl_mask = mask_url; // "http://localhost:8000/images/Samsung-J5_2017.png";
-        var img_mask = document.createElement('img');
-        img_mask.crossOrigin = "Anonymous";
-
-        console.log("loading "+imgurl);
-        img.onload = function() {
-            img_mask.onload = function() {
-                create_image_compose(img, img_mask);
-            }
-            img_mask.src=imgurl_mask;
-        }
-        img.src=imgurl;
-    }
-
-    function create_image_compose(img, img_mask) {
-        var dcanvas = document.createElement('canvas');
-        dcanvas.id = "delme";
-        var w = img_mask.width;
-        var h = img_mask.height;
-
-        dcanvas.width = w;
-        dcanvas.height = h;
-        dcanvas.crossOrigin = "Anonymous";
-
-        console.log("wxh="+w+" + "+h);
-
-        var dctx = dcanvas.getContext("2d");
-        dctx.crossOrigin = "Anonymous";
-        var fac = w/img.width;
-        var offh = fac*img.height;
-        var offy = (h-offh)/2;
-        dctx.drawImage(img, 0, 0, img.width, img.height, 0,offy,w,offh);
-        dctx.filter = getCssFilters('osd');
-        dctx.drawImage(dcanvas, 0, 0, w, h);
-        dctx.filter = "none";
-        dctx.drawImage(img_mask, 0, 0, dcanvas.width, dcanvas.height);
-
-        var ms = (new Date).getTime();
-        var fn = "cover.boutique" + ms.toString() + ".jpg";
-
-        var data = dcanvas.toDataURL("image/jpeg", 1.0);
-        wrapPDF(data,dcanvas.width,dcanvas.height);
-    }
-
     function wrapPDF(data,w,h) {
       var doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
       var c = 20;
@@ -563,17 +478,6 @@ function coverboutique(config) {
       doc.save("cover.boutique."+ ms.toString() +".pdf");
       hideSplash('splash_download');
       console.log("finished image");
-    }
-
-    function get_permalink(vrect, vflip, vimag, w, h) {
-        var url = vimag;
-        url = url + "/" + Math.floor(vrect.x) + "," + Math.floor(vrect.y) + "," + Math.ceil(vrect.width) + "," + Math.ceil(vrect.height + 1);
-        url = url + "/full/"; //  ""/" + w + "," + h + "/";
-        if (vflip) {
-            url = url + "!";
-        }
-        url = url + "0/default.jpg";
-        return url;
     }
 
     coverboutique.prototype.showSlider = function(id) {
