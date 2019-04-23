@@ -120,6 +120,15 @@ strong {
     font-size: 2vh;
 }
 
+.discoimage {
+    width:100%;
+    clear:both;
+}
+
+.discoparagraph {
+    text-align:center;
+}
+
 /* MAIN GRID ZONES */
 
 #gridwrap {

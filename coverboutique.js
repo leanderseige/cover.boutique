@@ -88,7 +88,7 @@ function coverboutique(config) {
     function scrollrun() {
       var now = Math.floor(Date.now());
       // throttle to 1 run per sec
-      if(now<last_scrollrun+1000 && last_scrollrun>0) {
+      if(now<last_scrollrun+500 && last_scrollrun>0) {
         return;
       }
       last_scrollrun=now;
@@ -120,7 +120,7 @@ function coverboutique(config) {
           var murl=result['manifests'][m]['@id'];
           var label=result['manifests'][m]['label'];
           var bid = b64EncodeUnicode(murl);
-          var html='<p>'+label;
+          var html='<p class="discoparagraph">'+label+"<br />";
           html+='<img class="discoimage" src="" iiif_service="" iiif_manifest="'+murl+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
           html+='</p>';
           $("#discovery-items").append(html);
@@ -130,7 +130,7 @@ function coverboutique(config) {
           }
         }
       });
-      setTimeout(function() {scrollrun();},3000);
+      // setTimeout(function() {scrollrun();},3000);
     }
 
     function loadDiscoImage(elem) {
@@ -138,7 +138,7 @@ function coverboutique(config) {
         $.getJSON(murl, function(result) {
             var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
             elem.setAttribute("iiif_service",service);
-            elem.setAttribute("src",service+"/full/400,/0/default.jpg");
+            elem.setAttribute("src",service+"/full/512,/0/default.jpg");
         });
     }
 
