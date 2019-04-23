@@ -25,6 +25,7 @@ function coverboutique(config) {
     var discoCountDown = 0;
     var mobile_mode = false;
     var lock_filters=false;
+    var lock_scrollrun=false;
     var mask_url = false;
     var src_url = {};
 
@@ -86,9 +87,15 @@ function coverboutique(config) {
     }
 
     function scrollrun() {
+      if(lock_scrollrun==true) {
+          return;
+      }
+      lock_scrollrun=true;
+      var changed=false;
       var now = Math.floor(Date.now());
       // throttle to 1 run per sec
       if(now<last_scrollrun+500 && last_scrollrun>0) {
+        lock_scrollrun=false;
         return;
       }
       last_scrollrun=now;
@@ -104,12 +111,18 @@ function coverboutique(config) {
         if(rect.top>0 && rect.top<drect.height*3) {
           if(x[i].getAttribute('src') == "") {
             loadDiscoImage(x[i]);
+            changed=true;
           }
         } else if(rect.top<-drect.height*2) {
             if(x[i].getAttribute('src') == "") {
               loadDiscoImage(x[i]);
+              changed=true;
             }
         }
+      }
+      lock_scrollrun=false;
+      if(changed==true) {
+          setTimeout(function() {scrollrun();},500);
       }
     }
 
@@ -130,7 +143,6 @@ function coverboutique(config) {
           }
         }
       });
-      // setTimeout(function() {scrollrun();},3000);
     }
 
     function loadDiscoImage(elem) {
