@@ -502,7 +502,7 @@ function coverboutique(config) {
 
     coverboutique.prototype.hideSlider = function(id) {
         $("#close_slider").css("display","none");
-        $("#ficons").css("display","block");
+        $("#ficons").css("display","flex");
         $("#fbrightness").css("display","none");
         $("#fcontrast").css("display","none");
         $("#fhue").css("display","none");

@@ -159,7 +159,6 @@ strong {
   justify-content: space-evenly;
   align-items: center;
   border-top:1px solid #888;
-
 }
 
 #construction {
@@ -302,6 +301,7 @@ strong {
     width:45vw;
     font-size: 2vh;
     margin-left: 5vw;
+    margin-right: 15vw;
 }
 
 [id^="f"].ui-slider-horizontal {
@@ -320,8 +320,7 @@ strong {
     font-family: "Font Awesome 5 Free";
     font-weight: 700;
     display:none;
-    margin:2vh;
-    float:right;
+    float:left;
 }
 
 #close_disco, #close_splash {
@@ -338,9 +337,17 @@ strong {
     align-items: center;
 }
 
+#close_slider {
+    position: absolute;
+    top: 80vh;
+    right: 1vh;
+    margin:2vh;
+    clear: both;
+}
+
 .close_slider_label {
     font-family: sans-serif;
-    font-size: 3vh;
+    font-size: 2vh;
     margin-right: 5vh;
     margin-bottom: 2vh;
     vertical-align: middle;

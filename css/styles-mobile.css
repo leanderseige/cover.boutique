@@ -58,6 +58,13 @@
         display:inline-block;
     }
 
+    .sliders, .sliders.p {
+        display:none;
+        width:70vw;
+        margin-left: 10vw;
+        margin-right: 20vw;
+    }
+
 /* MAIN GRID ZONES */
 
     #gridwrap {
