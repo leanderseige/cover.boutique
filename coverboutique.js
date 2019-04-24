@@ -74,8 +74,25 @@ function coverboutique(config) {
       var ds=document.getElementById("disco_select");
       var di=document.getElementById("discovery-items");
       console.log(ds.value);
-      di.innerHTML="";
-      loadIIIFResource(ds.value);
+      if(ds.value=="IIIF") {
+          showSplash('splash_addiiif');
+      } else {
+          di.innerHTML="";
+          loadIIIFResource(ds.value);
+      }
+    }
+
+    coverboutique.prototype.addIIIFResource = function () {
+        var uri = $('#addiiif_uri').val();
+        var label = $('#addiiif_label').val();
+        var option = document.createElement("option");
+        var select = document.getElementById("disco_select");
+        option.setAttribute("value",uri);
+        option.innerHTML=label;
+        select.appendChild(option);
+        $('#disco_select').val(uri);
+        cb.selectCollection();
+        hideSplash('splash_addiiif');
     }
 
     coverboutique.prototype.selectMode = function () {

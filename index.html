@@ -80,7 +80,6 @@
 
   <div id="gridwrap">
 
-      <div id="add_disco" onclick="cb.hideDiscovery();">&#xf055;</div>
     <select id="disco_select" class="select-css" onchange="cb.selectCollection();">
       <option value="https://iiif.manducus.net/collections/0008/collection.json">Art: Städel Museum, Frankfurt am Main</option>
       <option value="https://iiif.manducus.net/collections/0009/collection.json">Art: Metropolitan Museum of Art, New York</option>
@@ -92,8 +91,9 @@
       <option value="https://iiif.bodleian.ox.ac.uk/iiif/manifest/e32a277e-91e2-4a6d-8ba6-cc4bad230410.json">Burmese Art: Bodleian Libraries, Oxford</option>
       <option value="https://media.nga.gov/public/manifests/nga_highlights.json">National Gallery of Art, Washington DC</option>
       <option value="https://iiif.bodleian.ox.ac.uk/iiif/collection/flora-graeca">Bodleian Libraries, Oxford</option>
-      <option value="https://ids.si.edu/ids/manifest/NASM-A19700102000-NASM2016-04272">test</option>
-      <option value="https://ids.si.edu/ids/manifest/NPM-2006_2036_149_1z">test2</option>
+      <!-- https://ids.si.edu/ids/manifest/NASM-A19700102000-NASM2016-04272 -->
+      <!--- https://ids.si.edu/ids/manifest/NPM-2006_2036_149_1z -->
+      <option value="IIIF">Add IIIF resource...</option>
     </select>
     <div id="close_disco" onclick="cb.hideDiscovery();">&#xf00d;</div>
 
@@ -180,6 +180,17 @@
             Please wait for your PDF to finish.<br />
             <br />
             <img src="images/ajax.gif" />
+        </p>
+        <pre id="log" style="font-size:10px;font-family:monospace;">
+        </pre>
+    </div>
+    <div id="splash_addiiif" class="splash_content">
+        <img src="images/iiif.svg" width="100px" /><br />
+        Paste a IIIF resoure URI (Manifest or Collection)
+        <p>
+            URI: <input type="text" id="addiiif_uri" /><br />
+            Label: <input type="text" id="addiiif_label" /><br />
+            <input type="button" value="Add" onclick="cb.addIIIFResource();"/>
         </p>
         <pre id="log" style="font-size:10px;font-family:monospace;">
         </pre>
