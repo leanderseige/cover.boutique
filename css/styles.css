@@ -176,6 +176,8 @@ strong {
   grid-column: 1;
   grid-row: 1;
   height:10vh;
+  left:20vw;
+  
 }
 
 #scroll {
@@ -314,7 +316,7 @@ strong {
     color:#444 !important;
 }
 
-#close_slider, #close_disco, #close_splash {
+#close_slider, #close_disco, #close_splash, #add_disco {
     color: #444;
     font-size: 6vh;
     font-family: "Font Awesome 5 Free";
@@ -328,6 +330,20 @@ strong {
     position: absolute;
     right:0px;
     top:0px;
+    background-color: white;
+    width:20vw;
+    height:10vh;
+    padding:0px;
+    margin:0px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#add_disco {
+    z-index: 10003;
+    position: absolute;
+    right:0px;
+    left:0px;
     background-color: white;
     width:20vw;
     height:10vh;

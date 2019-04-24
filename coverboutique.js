@@ -75,7 +75,7 @@ function coverboutique(config) {
       var di=document.getElementById("discovery-items");
       console.log(ds.value);
       di.innerHTML="";
-      loadCollection(ds.value);
+      loadIIIFResource(ds.value);
     }
 
     coverboutique.prototype.selectMode = function () {
@@ -124,36 +124,59 @@ function coverboutique(config) {
       }
     }
 
-    function loadCollection(curl) {
+    function loadIIIFResource(curl) {
       $.getJSON(curl, function(result) {
-          discoCountDown=4;
-        for(var m in result['manifests']) {
-          var murl=result['manifests'][m]['@id'];
-          var label=result['manifests'][m]['label'];
-          var bid = b64EncodeUnicode(murl);
-          var html='<p class="discoparagraph">'+label+"<br />";
-          html+='<img class="discoimage" src="" iiif_service="" iiif_manifest="'+murl+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
-          html+='</p>';
-          $("#discovery-items").append(html);
-          if(discoCountDown>0) {
-              discoCountDown--;
-              loadDiscoImage(document.getElementById(bid));
+        discoCountDown=4;
+        if(result['@type']=="sc:Collection") {
+            for(var m in result['manifests']) {
+              var murl=result['manifests'][m]['@id'];
+              var label=result['manifests'][m]['label'];
+              var bid = b64EncodeUnicode(murl);
+              var html='<p class="discoparagraph">'+label+"<br />";
+              html+='<img class="discoimage" src="" iiif_type="sc:Manifest" iiif_service="" iiif_manifest="'+murl+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
+              html+='</p>';
+              $("#discovery-items").append(html);
+              if(discoCountDown>0) {
+                  discoCountDown--;
+                  loadDiscoImage(document.getElementById(bid));
+              }
           }
+      } else if(result['@type']=="sc:Manifest") {
+          for(var c in result['sequences'][0]['canvases']) {
+            var curl=result['sequences'][0]['canvases'][c]['@id'];
+            var label=result['sequences'][0]['canvases'][c]['label'];
+            var service=result['sequences'][0]['canvases'][c]['images'][0]['resource']['service']['@id'];
+            var bid = b64EncodeUnicode(curl);
+            var html='<p class="discoparagraph">'+label+"<br />";
+            html+='<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="'+service+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
+            html+='</p>';
+            $("#discovery-items").append(html);
+            if(discoCountDown>0) {
+                discoCountDown--;
+                loadDiscoImage(document.getElementById(bid));
+            }
         }
+      }
       });
     }
 
     function loadDiscoImage(elem) {
-        var murl=elem.getAttribute("iiif_manifest");
-        $.getJSON(murl, function(result) {
-            var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
-            elem.setAttribute("iiif_service",service);
+        var type=elem.getAttribute("iiif_type");
+        if(type=="sc:Manifest") {
+            var murl=elem.getAttribute("iiif_manifest");
+            $.getJSON(murl, function(result) {
+                var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
+                elem.setAttribute("iiif_service",service);
+                elem.setAttribute("src",service+"/full/512,/0/default.jpg");
+            });
+        } else if(type=="sc:Canvas") {
+            var service = elem.getAttribute("iiif_service");
             elem.setAttribute("src",service+"/full/512,/0/default.jpg");
-        });
+        }
+
     }
 
     function clearDiscoImage(elem) {
-      var service=elem.getAttribute("iiif_service");
       elem.setAttribute("src","");
     }
 
