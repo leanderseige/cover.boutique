@@ -172,14 +172,6 @@ strong {
   grid-row: 2;
 }
 
-#disco_select {
-  grid-column: 1;
-  grid-row: 1;
-  height:10vh;
-  left:20vw;
-  
-}
-
 #scroll {
   grid-column: 1;
   grid-row: 2 / span 2;
@@ -316,7 +308,7 @@ strong {
     color:#444 !important;
 }
 
-#close_slider, #close_disco, #close_splash, #add_disco {
+#close_slider, #close_disco, #close_splash {
     color: #444;
     font-size: 6vh;
     font-family: "Font Awesome 5 Free";
@@ -340,17 +332,33 @@ strong {
 }
 
 #add_disco {
+    color: #444;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 700;
+    display:none;
+    float:left;
     z-index: 10003;
     position: absolute;
     right:0px;
     left:0px;
     background-color: white;
-    width:20vw;
+    width:5vw;
     height:10vh;
-    padding:0px;
-    margin:0px;
+    padding:1vh;
+    margin:0vh;
     justify-content: space-evenly;
     align-items: center;
+    display:block;
+    font-size: 4vh;
+}
+
+#disco_select {
+  grid-column: 1;
+  grid-row: 1;
+  height:10vh;
+  margin-left:5vw;
+  font-size: 4vh;
+  width:29vw;
 }
 
 #close_slider {
