@@ -124,6 +124,7 @@ p, input {
 }
 
 .discoimage {
+    margin:1vh 0vh 4vh 0vh;
     width:100%;
     clear:both;
 }

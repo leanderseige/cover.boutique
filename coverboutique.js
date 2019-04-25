@@ -177,6 +177,25 @@ function coverboutique(config) {
       });
     }
 
+    function setDiscoThumb(elem) {
+        var service = elem.getAttribute("iiif_service");
+        $.getJSON(service+"/info.json", function(result) {
+            if(result['profile'][0]=="http://iiif.io/api/image/2/level0.json") {
+                elem.setAttribute("src","images/level0.png");
+                elem.setAttribute("alt","This image is not compliant.");
+                return;
+            }
+            var tw=999999;
+            for(x in result['sizes']) {
+                console.log(result['sizes'][x]['width']+" vs "+tw);
+                if(result['sizes'][x]['width']>400 && result['sizes'][x]['width']<tw) {
+                    tw=result['sizes'][x]['width'];
+                }
+            }
+            elem.setAttribute("src",service+"/full/"+(tw==999999?400:tw)+",/0/default.jpg");
+        });
+    }
+
     function loadDiscoImage(elem) {
         var type=elem.getAttribute("iiif_type");
         if(type=="sc:Manifest") {
@@ -184,13 +203,11 @@ function coverboutique(config) {
             $.getJSON(murl, function(result) {
                 var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
                 elem.setAttribute("iiif_service",service);
-                elem.setAttribute("src",service+"/full/512,/0/default.jpg");
+                setDiscoThumb(elem);
             });
         } else if(type=="sc:Canvas") {
-            var service = elem.getAttribute("iiif_service");
-            elem.setAttribute("src",service+"/full/512,/0/default.jpg");
+            setDiscoThumb(elem);
         }
-
     }
 
     function clearDiscoImage(elem) {
@@ -343,8 +360,6 @@ function coverboutique(config) {
           });
 
     }
-
-
 
     async function get_cached_url(url) {
       var key = b64EncodeUnicode(url);
