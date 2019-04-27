@@ -29,6 +29,8 @@ function coverboutique(config) {
     var last_scrollpos=0;
     var mask_url = false;
     var src_url = {};
+    var meta_attribution = {};
+    var meta_label = {};
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
@@ -60,13 +62,13 @@ function coverboutique(config) {
 
     coverboutique.prototype.discoClick = function(id) {
       // console.log("clicked: "+id);
-      var elem=document.getElementById(id);
-      var service=elem.getAttribute("iiif_service");
+      // var elem=document.getElementById(id);
+      // var service=elem.getAttribute("iiif_service");
       // console.log("loading: "+service);
       if(mobile_mode) {
           hideDiscovery();
       }
-      loadOSD(service);
+      loadOSD(id);
     }
 
     coverboutique.prototype.selectCollection = function () {
@@ -164,6 +166,8 @@ function coverboutique(config) {
             var label=result['sequences'][0]['canvases'][c]['label'];
             var service=result['sequences'][0]['canvases'][c]['images'][0]['resource']['service']['@id'];
             var bid = b64EncodeUnicode(curl);
+            meta_label[bid]=result['label'];
+            meta_attribution[bid]=result['attribution'];
             var html='<p class="discoparagraph">'+label+"<br />";
             html+='<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="'+service+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
             html+='</p>';
@@ -201,6 +205,9 @@ function coverboutique(config) {
         if(type=="sc:Manifest") {
             var murl=elem.getAttribute("iiif_manifest");
             $.getJSON(murl, function(result) {
+                var bid=elem.getAttribute("id");
+                meta_label[bid]=result['label'];
+                meta_attribution[bid]=result['attribution'];
                 var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
                 elem.setAttribute("iiif_service",service);
                 setDiscoThumb(elem);
@@ -344,7 +351,9 @@ function coverboutique(config) {
         }
     }
 
-    function loadOSD(service) {
+    function loadOSD(id) {
+          var elem=document.getElementById(id);
+          var service=elem.getAttribute("iiif_service");
           canvas=service;
           src_url[osdid]=service;
           $.getJSON(service + "/info.json", function(result) {
@@ -356,6 +365,8 @@ function coverboutique(config) {
                   viewer[osdid].close();
                   document.getElementById(osdid).innerHTML = "";
               }
+              $('#meta_'+osdid).html(meta_label[id]+"<br />"+meta_attribution[id]+"<br />"); //+elem.getAttribute("iiif_manifest"));
+              $('#metai_'+osdid).attr("src",elem.getAttribute("src"));
               viewer[osdid] = OpenSeadragon(setup);
           });
 

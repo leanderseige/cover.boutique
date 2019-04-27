@@ -133,6 +133,17 @@ p, input {
     text-align:center;
 }
 
+#splash_meta p {
+    width:60vw;
+    text-align:right;
+    overflow: auto;
+}
+#splash_meta p img {
+    width:15vh;
+    float:right;
+    margin:0px 0px 0px 1vh;
+}
+
 /* MAIN GRID ZONES */
 
 #gridwrap {

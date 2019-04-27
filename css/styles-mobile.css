@@ -65,6 +65,22 @@
         margin-right: 20vw;
     }
 
+    #splash_meta p {
+        text-align: center;
+    }
+
+    #splash_meta p img {
+         margin: 0 auto;
+        display: block;
+        width:20vh;
+        float:none;
+        clear:both;
+    }
+
+    #splash_meta p span {
+        clear:both;
+    }
+
 /* MAIN GRID ZONES */
 
     #gridwrap {
