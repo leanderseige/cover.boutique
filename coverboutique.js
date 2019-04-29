@@ -31,6 +31,8 @@ function coverboutique(config) {
     var src_url = {};
     var meta_attribution = {};
     var meta_label = {};
+    var current_id = {};
+    var manifests = {};
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
@@ -151,6 +153,7 @@ function coverboutique(config) {
               var murl=result['manifests'][m]['@id'];
               var label=result['manifests'][m]['label'];
               var bid = b64EncodeUnicode(murl);
+              manifests[bid] = murl;
               var html='<p class="discoparagraph">'+label+"<br />";
               html+='<img class="discoimage" src="" iiif_type="sc:Manifest" iiif_service="" iiif_manifest="'+murl+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
               html+='</p>';
@@ -166,6 +169,7 @@ function coverboutique(config) {
             var label=result['sequences'][0]['canvases'][c]['label'];
             var service=result['sequences'][0]['canvases'][c]['images'][0]['resource']['service']['@id'];
             var bid = b64EncodeUnicode(curl);
+            manifests[bid] = result['@id'];
             meta_label[bid]=result['label'];
             meta_attribution[bid]=result['attribution'];
             var html='<p class="discoparagraph">'+label+"<br />";
@@ -367,6 +371,7 @@ function coverboutique(config) {
               }
               $('#meta_'+osdid).html(meta_label[id]+"<br />"+meta_attribution[id]+"<br />"); //+elem.getAttribute("iiif_manifest"));
               $('#metai_'+osdid).attr("src",elem.getAttribute("src"));
+              current_id[osdid]=id;
               viewer[osdid] = OpenSeadragon(setup);
           });
 
@@ -532,22 +537,36 @@ function coverboutique(config) {
             url = url + "!";
         }
         url = url + "0/default.jpg";
+        console.log("returning "+url);
         return url;
     }
 
     function wrapPDF(data,w,h) {
       var doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
       var c = 20;
+      doc.addFont('ArialMS', 'Arial', 'Sacramento','normal');
+      doc.setFont('Sacramento');
       doc.setFontSize(16);
       doc.setFontType("bold");
-      doc.text(30, c, 'COVER.BOUTIQUE'); c+=8;
+      doc.text(30, c, 'cover.boutique'); c+=8;
+      doc.setFont('Arial');
       doc.setFontType("normal");
       doc.setFontSize(10);
       doc.setTextColor(127,127,127);
       doc.textWithLink('https://cover.boutique', 30, c, { url: 'https://cover.boutique' }); c+=12;
       doc.setTextColor(0,0,0);
-      // doc.addPage();
-      doc.text(30, c, "Composed Image: CC-BY-SA 4.0");
+      doc.setFontType("bold");
+      doc.text(10, c, "Background"); c+=6;
+      doc.setFontType("normal");
+      doc.text(10, c, meta_label[current_id['osd']]); c+=6;
+      doc.text(10, c, meta_attribution[current_id['osd']]); c+=6;
+      doc.text(10, c, manifests[current_id['osd']]); c+=6;
+      doc.setFontType("bold");
+      doc.text(10, c, "Overlay"); c+=6;
+      doc.setFontType("normal");
+      doc.text(10, c, meta_label[current_id['osdo']]); c+=6;
+      doc.text(10, c, meta_attribution[current_id['osdo']]); c+=6;
+      doc.text(10, c, manifests[current_id['osdo']]); c+=6;
       c+=6;
       doc.addImage(data, 'JPEG', 30, c, w*25.4/600, h*25.4/600);
       var ms = (new Date).getTime();
