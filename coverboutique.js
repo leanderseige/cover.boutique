@@ -488,7 +488,9 @@ function coverboutique(config) {
         /* RENDER OSD */
 
         var osd_rect = viewer['osd'].viewport.viewportToImageRectangle(viewer['osd'].viewport.getBounds());
-        var osd_scale = out_w / osd_rect.width;
+        console.log("osd_rect.width: "+osd_rect.width);
+        console.log("img_osd.width: "+img_osd.width);
+        var osd_scale = out_w / img_osd.width; // out_w / osd_rect.width;
         var dest_x = osd_rect.x < 0 ? -osd_rect.x*osd_scale : 0;
         var dest_y = osd_rect.y < 0 ? -osd_rect.y*osd_scale : 0;
         var dest_w = img_osd.width*osd_scale;
@@ -502,7 +504,7 @@ function coverboutique(config) {
 
         if(img_osdo) {
             var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
-            var osdo_scale = out_w / osdo_rect.width;
+            var osdo_scale = out_w / img_osdo.width; // osdo_rect.width;
             var dest_x = osdo_rect.x < 0 ? -osdo_rect.x*osdo_scale : 0;
             var dest_y = osdo_rect.y < 0 ? -osdo_rect.y*osdo_scale : 0;
             var dest_w = img_osdo.width*osdo_scale;
@@ -564,9 +566,9 @@ function coverboutique(config) {
       doc.setFontType("bold");
       doc.text(10, c, "Overlay"); c+=6;
       doc.setFontType("normal");
-      doc.text(10, c, meta_label[current_id['osdo']]); c+=6;
-      doc.text(10, c, meta_attribution[current_id['osdo']]); c+=6;
-      doc.text(10, c, manifests[current_id['osdo']]); c+=6;
+      // doc.text(10, c, meta_label[current_id['osdo']]); c+=6;
+      // doc.text(10, c, meta_attribution[current_id['osdo']]); c+=6;
+      // doc.text(10, c, manifests[current_id['osdo']]); c+=6;
       c+=6;
       doc.addImage(data, 'JPEG', 30, c, w*25.4/600, h*25.4/600);
       var ms = (new Date).getTime();
