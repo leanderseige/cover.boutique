@@ -195,7 +195,7 @@ function coverboutique(config) {
             }
             var tw=999999;
             for(x in result['sizes']) {
-                console.log(result['sizes'][x]['width']+" vs "+tw);
+                // console.log(result['sizes'][x]['width']+" vs "+tw);
                 if(result['sizes'][x]['width']>400 && result['sizes'][x]['width']<tw) {
                     tw=result['sizes'][x]['width'];
                 }
@@ -484,17 +484,20 @@ function coverboutique(config) {
         outcanvas.height = out_h;
         outcanvas.crossOrigin = "Anonymous";
         var outcontext = outcanvas.getContext("2d");
+        outcontext.fillStyle = 'white';
+        outcontext.fillRect(0, 0, out_w, out_h);
 
         /* RENDER OSD */
 
         var osd_rect = viewer['osd'].viewport.viewportToImageRectangle(viewer['osd'].viewport.getBounds());
         console.log("osd_rect.width: "+osd_rect.width);
         console.log("img_osd.width: "+img_osd.width);
-        var osd_scale = out_w / img_osd.width; // out_w / osd_rect.width;
+        var img_scale = out_w / img_osd.width;
+        var osd_scale = out_w / osd_rect.width;
         var dest_x = osd_rect.x < 0 ? -osd_rect.x*osd_scale : 0;
         var dest_y = osd_rect.y < 0 ? -osd_rect.y*osd_scale : 0;
-        var dest_w = img_osd.width*osd_scale;
-        var dest_h = img_osd.height*osd_scale;
+        var dest_w = img_osd.width*img_scale;
+        var dest_h = img_osd.height*img_scale;
         console.log("osd_rect: "+osd_rect);
         console.log("dest: "+dest_x+" "+dest_y+" "+dest_w+" "+dest_h);
         outcontext.filter = getCssFilters('osd');
