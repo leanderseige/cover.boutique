@@ -79,6 +79,9 @@ function coverboutique(config) {
       var di=document.getElementById("discovery-items");
       console.log(ds.value);
       if(ds.value=="IIIF") {
+          if(mobile_mode) {
+              hideDiscovery();
+          }
           showSplash('splash_addiiif');
       } else {
           di.innerHTML="";
@@ -625,7 +628,7 @@ function coverboutique(config) {
         hideSplash(id);
     }
 
-    function hideSplash(id) {
+    function hideSplash(id, followup=false) {
         $("#splash_container").css("display","none");
         $("#"+id).css("display","none");
         $("#close_splash").css("display","none");
@@ -640,6 +643,18 @@ function coverboutique(config) {
         $("#splash_container").css("display","grid");
         $("#"+id).css("display","block");
         $("#close_splash").css("display","flex");
+    }
+
+    coverboutique.prototype.show = function(id) {
+        $(id).fadeIn(500,function() {
+            $(id).show();
+        });
+    }
+
+    coverboutique.prototype.hide = function(id) {
+        $(id).fadeOut(500,function() {
+            $(id).hide();
+        });
     }
 
 }
