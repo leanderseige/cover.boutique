@@ -553,6 +553,7 @@ function coverboutique(config) {
       var doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
       var c = 20;
       doc.addFont('ArialMS', 'Arial', 'Sacramento','normal');
+      doc.addFont('ArialMS', 'Arial', 'Sacramento','normal');
       doc.setFont('Sacramento');
       doc.setFontSize(16);
       doc.setFontType("bold");
@@ -566,9 +567,9 @@ function coverboutique(config) {
       doc.setFontType("bold");
       doc.text(10, c, "Background"); c+=6;
       doc.setFontType("normal");
-      doc.text(10, c, meta_label[current_id['osd']]); c+=6;
-      doc.text(10, c, meta_attribution[current_id['osd']]); c+=6;
-      doc.text(10, c, manifests[current_id['osd']]); c+=6;
+      // doc.text(10, c, meta_label[current_id['osd']]); c+=6;
+      // doc.text(10, c, meta_attribution[current_id['osd']]); c+=6;
+      // doc.text(10, c, manifests[current_id['osd']]); c+=6;
       doc.setFontType("bold");
       doc.text(10, c, "Overlay"); c+=6;
       doc.setFontType("normal");
