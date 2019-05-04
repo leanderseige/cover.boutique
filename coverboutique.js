@@ -33,6 +33,7 @@ function coverboutique(config) {
     var meta_label = {};
     var current_id = {};
     var manifests = {};
+    var current_splash = false;
 
     $(document).ready(function() {
       console.log("coverboutique waking up");
@@ -89,11 +90,16 @@ function coverboutique(config) {
       }
     }
 
-    coverboutique.prototype.addIIIFResource = function () {
+    coverboutique.prototype.addIIIFResource = async function () {
         var uri = $('#addiiif_uri').val();
         var label = $('#addiiif_label').val();
         var option = document.createElement("option");
         var select = document.getElementById("disco_select");
+
+        var j = await get_cached_url(uri);
+        j = j.json();
+        label = j['label'];
+
         option.setAttribute("value",uri);
         option.innerHTML=label;
         select.appendChild(option);
@@ -173,8 +179,8 @@ function coverboutique(config) {
             var service=result['sequences'][0]['canvases'][c]['images'][0]['resource']['service']['@id'];
             var bid = b64EncodeUnicode(curl);
             manifests[bid] = result['@id'];
-            meta_label[bid]=result['label'];
-            meta_attribution[bid]=result['attribution'];
+            meta_label[bid]=""+result['label'];
+            meta_attribution[bid]=""+result['attribution'];
             var html='<p class="discoparagraph">'+label+"<br />";
             html+='<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="'+service+'" id="'+bid+'" onclick="cb.discoClick(\''+bid+'\')"; />';
             html+='</p>';
@@ -386,9 +392,8 @@ function coverboutique(config) {
         return jcache[key];
       }
       const mresp = await fetch(url);
-      const mresu = await mresp.json();
-      jcache[key] = mresu;
-      return mresu;
+      jcache[key] = mresp;
+      return mresp;
     }
 
     function b64EncodeUnicode(str) {
@@ -427,12 +432,22 @@ function coverboutique(config) {
     }
 
     function prepImages() {
+        if(viewer['osd']==false) {
+            showSplashError('No Images No Export.');
+            return;
+        }
+
+        var osd_off = {x:0,y:0};
+        var osdo_off = {x:0,y:0};
+
         var img_mask = document.createElement('img');
         img_mask.crossOrigin = "Anonymous";
 
         var img_osd = document.createElement('img');
         img_osd.crossOrigin = "Anonymous";
         var osd_rect = viewer['osd'].viewport.viewportToImageRectangle(viewer['osd'].viewport.getBounds());
+        // if (osd_rect.x<0) {osd_off.x=-osd_rect.x;osd_rect.x=0;}
+        // if (osd_rect.y<0) {osd_off.y=-osd_rect.y;osd_rect.y=0;}
         var osd_src = getIIIFSrc(osd_rect,false,src_url['osd']);
 
         img_mask.onload = function() {
@@ -441,6 +456,8 @@ function coverboutique(config) {
                     var img_osdo = document.createElement('img');
                     img_osdo.crossOrigin = "Anonymous";
                     var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
+                    // if (osdo_rect.x<0) {osdo_off.x=-osdo_rect.x;osdo_rect.x=0;}
+                    // if (osdo_rect.y<0) {osdo_off.y=-osdo_rect.y;osdo_rect.y=0;}
                     var osdo_src = getIIIFSrc(osdo_rect,false,src_url['osdo']);
                     img_osdo.onload = function() {
                         composeImage(img_mask,img_osd,img_osdo);
@@ -539,7 +556,7 @@ function coverboutique(config) {
 
     function getIIIFSrc(rect, flip, src) {
         var url = src;
-        url = url + "/" + Math.floor(rect.x) + "," + Math.floor(rect.y) + "," + Math.ceil(rect.width) + "," + Math.ceil(rect.height + 1);
+        url = url + "/" + Math.floor(rect.x<0?0:rect.x) + "," + Math.floor(rect.y<0?0:rect.y) + "," + Math.ceil(rect.width) + "," + Math.ceil(rect.height + 1);
         url = url + "/full/";
         if (flip) {
             url = url + "!";
@@ -549,33 +566,41 @@ function coverboutique(config) {
         return url;
     }
 
-    function wrapPDF(data,w,h) {
+    async function wrapPDF(data,w,h) {
       var doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
       var c = 20;
-      doc.addFont('ArialMS', 'Arial', 'Sacramento','normal');
-      doc.addFont('ArialMS', 'Arial', 'Sacramento','normal');
+
+      doc.addFileToVFS('Sacramento',sacramentottf);
+      doc.addFont('Sacramento', 'Sacramento', 'normal');
+
       doc.setFont('Sacramento');
-      doc.setFontSize(16);
-      doc.setFontType("bold");
-      doc.text(30, c, 'cover.boutique'); c+=8;
-      doc.setFont('Arial');
+
+      console.log(doc.getFontList());
+
+      doc.setFontSize(48);
+      doc.text(10, c, 'cover.boutique'); c+=8;
+      doc.setFont('Helvetica');
       doc.setFontType("normal");
       doc.setFontSize(10);
       doc.setTextColor(127,127,127);
-      doc.textWithLink('https://cover.boutique', 30, c, { url: 'https://cover.boutique' }); c+=12;
+      doc.textWithLink('https://cover.boutique', 10, c, { url: 'https://cover.boutique' }); c+=12;
       doc.setTextColor(0,0,0);
       doc.setFontType("bold");
-      doc.text(10, c, "Background"); c+=6;
-      doc.setFontType("normal");
-      // doc.text(10, c, meta_label[current_id['osd']]); c+=6;
-      // doc.text(10, c, meta_attribution[current_id['osd']]); c+=6;
-      // doc.text(10, c, manifests[current_id['osd']]); c+=6;
-      doc.setFontType("bold");
-      doc.text(10, c, "Overlay"); c+=6;
-      doc.setFontType("normal");
-      // doc.text(10, c, meta_label[current_id['osdo']]); c+=6;
-      // doc.text(10, c, meta_attribution[current_id['osdo']]); c+=6;
-      // doc.text(10, c, manifests[current_id['osdo']]); c+=6;
+      if(viewer['osd']) {
+          doc.text(10, c, "Background"); c+=6;
+          doc.setFontType("normal");
+          doc.text(10, c, meta_label[current_id['osd']]); c+=6;
+          doc.text(10, c, meta_attribution[current_id['osd']]); c+=6;
+          doc.text(10, c, manifests[current_id['osd']]); c+=6;
+          doc.setFontType("bold");
+      }
+      if(viewer['osdo']) {
+          doc.text(10, c, "Overlay"); c+=6;
+          doc.setFontType("normal");
+          doc.text(10, c, meta_label[current_id['osdo']]); c+=6;
+          doc.text(10, c, meta_attribution[current_id['osdo']]); c+=6;
+          doc.text(10, c, manifests[current_id['osdo']]); c+=6;
+      }
       c+=6;
       doc.addImage(data, 'JPEG', 30, c, w*25.4/600, h*25.4/600);
       var ms = (new Date).getTime();
@@ -633,17 +658,29 @@ function coverboutique(config) {
         $("#splash_container").css("display","none");
         $("#"+id).css("display","none");
         $("#close_splash").css("display","none");
+        current_splash = false;
     }
 
     coverboutique.prototype.showSplash = function(id) {
+        current_splash = id;
         showSplash(id);
     }
 
     function showSplash(id) {
+        if(current_splash) {
+            console.log("going to hide "+current_splash);
+            hideSplash(current_splash);
+        }
         console.log("showing "+id);
         $("#splash_container").css("display","grid");
         $("#"+id).css("display","block");
         $("#close_splash").css("display","flex");
+        current_splash=id;
+    }
+
+    function showSplashError(msg) {
+        $('#error_msg').html(msg);
+        showSplash('splash_error');
     }
 
     coverboutique.prototype.show = function(id) {

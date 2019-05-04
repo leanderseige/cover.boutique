@@ -30,18 +30,20 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="shortcut icon" type="image/png" href="images/c.b.256.png" sizes="any">
   <title>COVER BOUTIQUE</title>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="libs/jquery-ui.css">
   <link rel='stylesheet' type='text/css' media='screen' href='css/styles.css' />
   <link rel='stylesheet' type='text/css' media='screen' href='css/styles-mobile.css' />
-  <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="libs/jquery.ui.touch-punch.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js" integrity="sha384-CchuzHs077vGtfhGYl9Qtc7Vx64rXBXdIAZIPbItbNyWIRTdG0oYAqki3Ry13Yzu" crossorigin="anonymous"></script>
+  <!--script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js" integrity="sha384-CchuzHs077vGtfhGYl9Qtc7Vx64rXBXdIAZIPbItbNyWIRTdG0oYAqki3Ry13Yzu" crossorigin="anonymous"></script-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
   <script src="libs/jsonc.min.js"></script>
   <script src="openseadragon/openseadragon.min.js"></script>
   <script src="coverboutique.js"></script>
+  <script src="css/sacramento.js"></script>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#ffffff">
   <script>
@@ -184,13 +186,11 @@
         <p>
             Please wait for your PDF to finish.<br />
             <br />
-            <img src="images/ajax.gif" />
+            <img src="images/ajax.gif" /><br />
         </p>
-        <pre id="log" style="font-size:10px;font-family:monospace;">
-        </pre>
     </div>
     <div id="splash_addiiif" class="splash_content">
-        <img src="images/iiif.svg" width="100px" /><br />
+        <img src="images/iiif.svg" width="100" /><br />
         Paste a IIIF resoure URI (Manifest or Collection)
         <p>
             URI: <input type="text" id="addiiif_uri" /><br />

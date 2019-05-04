@@ -44,5 +44,11 @@
             "model": "Xperia Z",
             "image": "Xperia-Z-PM-0270-BV.png"
         }
+    ],
+    "(Blank)": [
+        {
+            "model": "(Blank)",
+            "image": "blank.png"
+        }
     ]
 }

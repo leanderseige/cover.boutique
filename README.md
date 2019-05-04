@@ -3,3 +3,8 @@
 ![Graphic Recording by Michael Schrenk, http://live-illustration.de](images/graphicrecording.png)
 
 cover.boutique is web application to create DIY self made inlays for transparent smartphone cases.
+
+
+
+
+Logo Font: Sacramento by Brian J. Bonislawsky, Open Font License, Source: https://fonts.google.com/specimen/Sacramento
