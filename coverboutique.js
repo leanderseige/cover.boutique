@@ -123,7 +123,7 @@ function coverboutique(config) {
       }
       lock_scrollrun=true;
       var now = Math.floor(Date.now());
-      if(now<last_scrollrun+500 && last_scrollrun>0) {
+      if(now<last_scrollrun+1000 && last_scrollrun>0) {
         lock_scrollrun=false;
         return;
       }

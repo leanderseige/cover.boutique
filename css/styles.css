@@ -291,6 +291,7 @@ p, input {
 	background-repeat: no-repeat, repeat;
 	background-position: right .7em top 50%, 0 0;
 	background-size: .65em auto, 100%;
+    border-radius: 1.25vh;
 }
 .select-css::-ms-expand {
 	display: none;
@@ -354,7 +355,7 @@ p, input {
 
 
 #disco_select {
-  margin: 0px;
+  margin: 0vh 0vw;
   grid-column: 1;
   grid-row: 1;
   height:10vh;
