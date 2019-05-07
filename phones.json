@@ -45,10 +45,10 @@
             "image": "Xperia-Z-PM-0270-BV.png"
         }
     ],
-    "(Blank)": [
+    "Google": [
         {
-            "model": "(Blank)",
-            "image": "blank.png"
+            "model": "Pixel 1",
+            "image": "pixel1_G-2PW4200.png"
         }
     ]
 }
