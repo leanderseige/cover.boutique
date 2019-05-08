@@ -17,10 +17,10 @@
             "image": "Samsung-S9.png"
         }
     ],
-    "Huawai": [
+    "Huawei": [
         {
-            "model": "Huawai Y6 (SCL L21)",
-            "image": "Huawai_Y6_SCL-L21.png"
+            "model": "Huawei Y6 (SCL L21)",
+            "image": "Huawei_Y6_SCL-L21.png"
         },
 		{	"model": "Huawei P10 lite WAS-LX1A",
 			"image": "huawei-WAS-LX1A.png"
