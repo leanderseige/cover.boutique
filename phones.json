@@ -21,7 +21,13 @@
         {
             "model": "Huawai Y6 (SCL L21)",
             "image": "Huawai_Y6_SCL-L21.png"
-        }
+        },
+		{	"model": "Huawei P10 lite WAS-LX1A",
+			"image": "huawei-WAS-LX1A.png"
+		},
+		{	"model": "Huawei P10 VTR-L09",
+			"image": "huawei-P10-VTR-L09.png"
+		}
     ],
     "OnePlus": [
         {
@@ -34,6 +40,10 @@
             "model": "iPhone S6 (A1586)",
             "image": "iPhone-S6-A1586.png"
         },
+		{
+            "model": "iPhone SE (A1723)",
+            "image": "iPhoneSE-A1723.png"
+        },
         {
             "model": "iPhone X",
             "image": "iPhone-X.png"
@@ -45,10 +55,16 @@
             "image": "Xperia-Z-PM-0270-BV.png"
         }
     ],
-    "Google": [
+	"Google": [
         {
             "model": "Pixel 1",
             "image": "pixel1_G-2PW4200.png"
+        }
+    ],
+	"Honor": [
+        {
+            "model": "Honor 6A, DLI-22",
+            "image": "Honor-6A-DLI-22.png"
         }
     ]
 }
