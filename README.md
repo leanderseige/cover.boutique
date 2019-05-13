@@ -1,10 +1,10 @@
 ![COVER.BOUTIQUE](images/cover.boutique.png)
 
-cover.boutique is web application to create DIY self made inlays for transparent smartphone cases.
+COVER.BOUTIQUE is web application to create DIY self made inlays for transparent smartphone cases. COVER.BOUTIQUE is IIIF compatible.
 
-+ Idee: Mathilda Seige
-+ Programmierung: Leander Seige
-+ Smartphone Templates: Leander Seige, Mathilda Seige, Robin Kocaurek
+* Idee: Mathilda Seige
+* Programmierung: Leander Seige
+* Smartphone Templates: Leander Seige, Mathilda Seige, Robin Kocaurek
 
 
 ![Transparent Smartphone Inlays](images/demo.jpg)
