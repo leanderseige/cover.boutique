@@ -1,4 +1,4 @@
-# cover.boutique
+![COVER.BOUTIQUE](images/cover.boutique.png)
 
 cover.boutique is web application to create DIY self made inlays for transparent smartphone cases.
 
