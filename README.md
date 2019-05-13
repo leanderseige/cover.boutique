@@ -5,7 +5,7 @@
 cover.boutique is web application to create DIY self made inlays for transparent smartphone cases.
 
 
-![Transparent Smartphone Inlays(images/demo.jpg)
+![Transparent Smartphone Inlays](images/demo.jpg)
 
 
 
