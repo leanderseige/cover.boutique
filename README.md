@@ -1,6 +1,6 @@
 ![COVER.BOUTIQUE](images/cover.boutique.png)
 
-COVER.BOUTIQUE is a web application to create DIY inlays for transparent smartphone cases. COVER.BOUTIQUE is IIIF compatible.
+COVER.BOUTIQUE is a web application to create DIY inlays for transparent smartphone cases. It runs in browsers on all devices and can be installed as a PWA (progressive web app). COVER.BOUTIQUE is IIIF compatible and extensible.
 
 * Idee: Mathilda Seige
 * Programmierung: Leander Seige
