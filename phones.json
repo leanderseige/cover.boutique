@@ -66,5 +66,11 @@
             "model": "Honor 6A, DLI-22",
             "image": "Honor-6A-DLI-22.png"
         }
+    ],
+    "Blank": [
+      {
+        "model": "Blank",
+        "image": "blank.png"
+      }
     ]
 }
