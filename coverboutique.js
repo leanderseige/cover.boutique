@@ -75,6 +75,9 @@ function coverboutique(config) {
     }
 
     coverboutique.prototype.selectCollection = function () {
+    var scroll=document.getElementById("scroll");
+    scroll.scrollTop = 0;
+    scroll.scrollLeft = 0;
       console.log("select");
       var ds=document.getElementById("disco_select");
       var di=document.getElementById("discovery-items");
@@ -97,7 +100,6 @@ function coverboutique(config) {
         var select = document.getElementById("disco_select");
 
         var j = await get_cached_url(uri);
-        j = j.json();
         label = j['label'];
 
         option.setAttribute("value",uri);
@@ -123,7 +125,7 @@ function coverboutique(config) {
       }
       lock_scrollrun=true;
       var now = Math.floor(Date.now());
-      if(now<last_scrollrun+1000 && last_scrollrun>0) {
+      if(now<last_scrollrun+500 && last_scrollrun>0) {
         lock_scrollrun=false;
         return;
       }
@@ -136,11 +138,11 @@ function coverboutique(config) {
       var x = document.getElementsByClassName("discoimage");
       for (var i = 0; i < x.length; i++) {
         var rect = x[i].getBoundingClientRect();
-        if(rect.top>0 && rect.top<drect.height*3) {
+        if(rect.top>0 && rect.top<drect.height*4) {
           if(x[i].getAttribute('src') == "") {
             loadDiscoImage(x[i]);
           }
-        } else if(rect.top<-drect.height*2) {
+        } else if(rect.top<-drect.height*4) {
             if(x[i].getAttribute('src') == "") {
               loadDiscoImage(x[i]);
               changed=true;
@@ -154,8 +156,9 @@ function coverboutique(config) {
       }
     }
 
-    function loadIIIFResource(curl) {
-      $.getJSON(curl, function(result) {
+    async function loadIIIFResource(curl) {
+      // $.getJSON(curl, function(result) {
+      var result = await get_cached_url(curl);
         discoCountDown=4;
         if(result['@type']=="sc:Collection") {
             for(var m in result['manifests']) {
@@ -191,12 +194,13 @@ function coverboutique(config) {
             }
         }
       }
-      });
+      // });
     }
 
-    function setDiscoThumb(elem) {
+    async function setDiscoThumb(elem) {
         var service = elem.getAttribute("iiif_service");
-        $.getJSON(service+"/info.json", function(result) {
+        // $.getJSON(service+"/info.json", function(result) {
+        var result = await get_cached_url(service+"/info.json");
             if(result['profile'][0]=="http://iiif.io/api/image/2/level0.json") {
                 elem.setAttribute("src","images/level0.png");
                 elem.setAttribute("alt","This image is not compliant.");
@@ -210,21 +214,22 @@ function coverboutique(config) {
                 }
             }
             elem.setAttribute("src",service+"/full/"+(tw==999999?400:tw)+",/0/default.jpg");
-        });
+        // });
     }
 
-    function loadDiscoImage(elem) {
+    async function loadDiscoImage(elem) {
         var type=elem.getAttribute("iiif_type");
         if(type=="sc:Manifest") {
             var murl=elem.getAttribute("iiif_manifest");
-            $.getJSON(murl, function(result) {
+            // $.getJSON(murl, function(result) {
+                var result = await get_cached_url(murl);
                 var bid=elem.getAttribute("id");
                 meta_label[bid]=result['label'];
                 meta_attribution[bid]=result['attribution'];
                 var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
                 elem.setAttribute("iiif_service",service);
                 setDiscoThumb(elem);
-            });
+            // });
         } else if(type=="sc:Canvas") {
             setDiscoThumb(elem);
         }
@@ -364,12 +369,13 @@ function coverboutique(config) {
         }
     }
 
-    function loadOSD(id) {
+    async function loadOSD(id) {
           var elem=document.getElementById(id);
           var service=elem.getAttribute("iiif_service");
           canvas=service;
           src_url[osdid]=service;
-          $.getJSON(service + "/info.json", function(result) {
+          // $.getJSON(service + "/info.json", function(result) {
+            var result = await get_cached_url(service + "/info.json");
               // console.log(result);
               var setup = setup_template;
               setup.id = osdid;
@@ -382,7 +388,7 @@ function coverboutique(config) {
               $('#metai_'+osdid).attr("src",elem.getAttribute("src"));
               current_id[osdid]=id;
               viewer[osdid] = OpenSeadragon(setup);
-          });
+          // });
 
     }
 
@@ -392,8 +398,9 @@ function coverboutique(config) {
         return jcache[key];
       }
       const mresp = await fetch(url);
-      jcache[key] = mresp;
-      return mresp;
+      const mresu = await mresp.json();
+      jcache[key] = mresu;
+      return mresu;
     }
 
     function b64EncodeUnicode(str) {
@@ -582,24 +589,29 @@ function coverboutique(config) {
       doc.setFont('Helvetica');
       doc.setFontType("normal");
       doc.setFontSize(10);
-      doc.setTextColor(127,127,127);
-      doc.textWithLink('https://cover.boutique', 10, c, { url: 'https://cover.boutique' }); c+=12;
       doc.setTextColor(0,0,0);
-      doc.setFontType("bold");
+      doc.textWithLink('https://cover.boutique', 20, c, { url: 'https://cover.boutique' }); c+=8;
+      var model=$("#brand_select option:selected").text()+" "+$("#model_select option:selected").text();
+      doc.text(10, c, "Phone: "+model); c+=7;
       if(viewer['osd']) {
-          doc.text(10, c, "Background"); c+=6;
-          doc.setFontType("normal");
-          doc.text(10, c, meta_label[current_id['osd']]); c+=6;
-          doc.text(10, c, meta_attribution[current_id['osd']]); c+=6;
-          doc.text(10, c, manifests[current_id['osd']]); c+=6;
           doc.setFontType("bold");
+          doc.text(10, c, "Background"); c+=5;
+          doc.setFontType("normal");
+          doc.text(10, c, meta_label[current_id['osd']]); c+=5;
+          doc.text(10, c, meta_attribution[current_id['osd']]); c+=5;
+          doc.setTextColor(127,127,127);
+          doc.text(10, c, manifests[current_id['osd']]); c+=7;
+          doc.setTextColor(0,0,0);
       }
       if(viewer['osdo']) {
-          doc.text(10, c, "Overlay"); c+=6;
+          doc.setFontType("bold");
+          doc.text(10, c, "Overlay"); c+=5;
           doc.setFontType("normal");
-          doc.text(10, c, meta_label[current_id['osdo']]); c+=6;
-          doc.text(10, c, meta_attribution[current_id['osdo']]); c+=6;
+          doc.text(10, c, meta_label[current_id['osdo']]); c+=5;
+          doc.text(10, c, meta_attribution[current_id['osdo']]); c+=5;
+          doc.setTextColor(127,127,127);
           doc.text(10, c, manifests[current_id['osdo']]); c+=6;
+          doc.setTextColor(0,0,0);
       }
       c+=6;
       doc.addImage(data, 'JPEG', 30, c, w*25.4/600, h*25.4/600);
