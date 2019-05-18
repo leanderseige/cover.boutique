@@ -51,6 +51,10 @@
         {
             "model": "iPhone X",
             "image": "iPhone-X.png"
+        },
+        {
+          "model": "iPhone 1457",
+          "image": "iPhone-1457.png"
         }
     ],
     "Sony": [
