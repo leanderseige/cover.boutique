@@ -13,6 +13,10 @@
             "image": "Samsung-S3.png"
         },
         {
+            "model": "Galaxy S5",
+            "image": "Samsung-S5.png"
+        },
+        {
             "model": "Galaxy S7",
             "image": "Samsung-S7.png"
         },
