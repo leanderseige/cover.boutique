@@ -35,7 +35,11 @@
 		},
 		{	"model": "Huawei P10 VTR-L09",
 			"image": "huawei-P10-VTR-L09.png"
-		}
+		},
+    {
+      "model": "Huawei P20 lite",
+      "image": "Huawei-P20lite.png"
+    }
     ],
     "OnePlus": [
         {
@@ -55,6 +59,10 @@
         {
             "model": "iPhone X",
             "image": "iPhone-X.png"
+        },
+        {
+          "model": "iPhone XS Max",
+          "image": "iPhone-XS-Max.png"
         },
         {
           "model": "iPhone 1457",
