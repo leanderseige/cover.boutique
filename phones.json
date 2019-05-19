@@ -1,96 +1,85 @@
 {
-    "Samsung": [
-        {
-            "model": "Galaxy J5 (2017)",
-            "image": "Samsung-J5_2017.png"
-        },
-        {
-            "model": "Galaxy A3",
-            "image": "Samsung-A3.png"
-        },
-        {
-            "model": "Galaxy S3",
-            "image": "Samsung-S3.png"
-        },
-        {
-            "model": "Galaxy S5",
-            "image": "Samsung-S5.png"
-        },
-        {
-            "model": "Galaxy S7",
-            "image": "Samsung-S7.png"
-        },
-        {
-            "model": "Galaxy S9",
-            "image": "Samsung-S9.png"
-        }
-    ],
-    "Huawei": [
-        {
-            "model": "Huawei Y6 (SCL L21)",
-            "image": "Huawei_Y6_SCL-L21.png"
-        },
-		{	"model": "Huawei P10 lite WAS-LX1A",
-			"image": "huawei-WAS-LX1A.png"
-		},
-		{	"model": "Huawei P10 VTR-L09",
-			"image": "huawei-P10-VTR-L09.png"
-		},
+  "Samsung": [{
+      "model": "Galaxy J5 (2017)",
+      "image": "Samsung-J5_2017.png"
+    },
+    {
+      "model": "Galaxy A3",
+      "image": "Samsung-A3.png"
+    },
+    {
+      "model": "Galaxy S3",
+      "image": "Samsung-S3.png"
+    },
+    {
+      "model": "Galaxy S5",
+      "image": "Samsung-S5.png"
+    },
+    {
+      "model": "Galaxy S7",
+      "image": "Samsung-S7.png"
+    },
+    {
+      "model": "Galaxy S9",
+      "image": "Samsung-S9.png"
+    }
+  ],
+  "Huawei": [{
+      "model": "Huawei Y6 (SCL L21)",
+      "image": "Huawei_Y6_SCL-L21.png"
+    },
+    {
+      "model": "Huawei P10 lite WAS-LX1A",
+      "image": "huawei-WAS-LX1A.png"
+    },
+    {
+      "model": "Huawei P10 VTR-L09",
+      "image": "huawei-P10-VTR-L09.png"
+    },
     {
       "model": "Huawei P20 lite",
       "image": "Huawei-P20lite.png"
     }
-    ],
-    "OnePlus": [
-        {
-            "model": "3 (A3003)",
-            "image": "Oneplus_3-A3003.png"
-        }
-    ],
-    "Apple": [
-        {
-            "model": "iPhone S6 (A1586)",
-            "image": "iPhone-S6-A1586.png"
-        },
-		{
-            "model": "iPhone SE (A1723)",
-            "image": "iPhoneSE-A1723.png"
-        },
-        {
-            "model": "iPhone X",
-            "image": "iPhone-X.png"
-        },
-        {
-          "model": "iPhone XS Max",
-          "image": "iPhone-XS-Max.png"
-        },
-        {
-          "model": "iPhone 1457",
-          "image": "iPhone-1457.png"
-        }
-    ],
-    "Sony": [
-        {
-            "model": "Xperia Z",
-            "image": "Xperia-Z-PM-0270-BV.png"
-        }
-    ],
-	"Google": [
-        {
-            "model": "Pixel 1",
-            "image": "pixel1_G-2PW4200.png"
-        }
-    ],
-	"Honor": [
-        {
-            "model": "Honor 6A, DLI-22",
-            "image": "Honor-6A-DLI-22.png"
-        }
-    ],
-    "Blank": [
-      {
-        "model": "Blank",
-        "image": "blank.png"
-      }
-    ]
+  ],
+  "OnePlus": [{
+    "model": "3 (A3003)",
+    "image": "Oneplus_3-A3003.png"
+  }],
+  "Apple": [{
+      "model": "iPhone S6 (A1586)",
+      "image": "iPhone-S6-A1586.png"
+    },
+    {
+      "model": "iPhone SE (A1723)",
+      "image": "iPhoneSE-A1723.png"
+    },
+    {
+      "model": "iPhone X",
+      "image": "iPhone-X.png"
+    },
+    {
+      "model": "iPhone XS Max",
+      "image": "iPhone-XS-Max.png"
+    },
+    {
+      "model": "iPhone 1457",
+      "image": "iPhone-1457.png"
+    }
+  ],
+  "Sony": [{
+    "model": "Xperia Z",
+    "image": "Xperia-Z-PM-0270-BV.png"
+  }],
+  "Google": [{
+    "model": "Pixel 1",
+    "image": "pixel1_G-2PW4200.png"
+  }],
+  "Honor": [{
+    "model": "Honor 6A, DLI-22",
+    "image": "Honor-6A-DLI-22.png"
+  }],
+  "Blank": [{
+    "model": "Blank",
+    "image": "blank.png"
+  }]
 }

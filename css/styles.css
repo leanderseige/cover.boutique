@@ -49,6 +49,11 @@ p, input {
     font-size: 2vh;
 }
 
+.small {
+    font-size: 1vh;
+    line-height: .8vh;
+}
+
 /* INDIVIDUAL ITEMS */
 
 #osd {
@@ -129,13 +134,14 @@ p, input {
 }
 
 .discoimage {
-    margin:1vh 0vh 4vh 0vh;
+    margin:1vh 0vh 0vh 0vh;
     width:100%;
     clear:both;
 }
 
 .discoparagraph {
     text-align:center;
+    margin-bottom:4vh;
 }
 
 #splash_meta p {
@@ -147,6 +153,11 @@ p, input {
     width:15vh;
     float:right;
     margin:0px 0px 0px 1vh;
+}
+
+#addiiif_uri {
+  width:60vw;
+  margin-bottom: 1vh;
 }
 
 /* MAIN GRID ZONES */
