@@ -212,7 +212,7 @@ function coverboutique(config) {
         manifests[bid] = murl;
         var html = '<p class="discoparagraph">' + label + '<br />';
         html += '<img class="discoimage" src="" iiif_type="sc:Manifest" iiif_service="" iiif_manifest="' + murl + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
-        html += '<span class="small">Attribution:</span> <span class="small" id="attr_'+bid+'"></span>';
+        html += '<span class="small" id="attr_'+bid+'"></span>';
         html += '</p>';
         $("#discovery-items").append(html);
         if (discoCountDown > 0) {
