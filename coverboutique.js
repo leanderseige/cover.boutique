@@ -228,7 +228,7 @@ function coverboutique(config) {
         var bid = b64EncodeUnicode(curl);
         manifests[bid] = result['@id'];
         meta_label[bid] = "" + result['label'];
-        meta_attribution[bid] = "Attribution: " + result['attribution'] +" / License: "+ result['license'];
+        meta_attribution[bid] = getAL(result);
         var html = '<p class="discoparagraph">' + label + '<br />';
         html += '<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="' + service + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
         html += '<span class="small" id="attr_'+bid+'"></span>';
@@ -241,6 +241,18 @@ function coverboutique(config) {
       }
     }
     // });
+  }
+
+  function getAL(j) {
+    var ret = "";
+    if(j['attribution']) {
+      ret += "Attribution: "+j['attribution'];
+    }
+    if(j['license']) {
+      if(ret.length>0) ret +="; ";
+      ret += "License: "+j['license'];
+    }
+    return(ret);
   }
 
   async function setDiscoThumb(elem) {
@@ -276,7 +288,7 @@ function coverboutique(config) {
       var result = await get_cached_url(murl);
       var bid = elem.getAttribute("id");
       meta_label[bid] = result['label'];
-      meta_attribution[bid] = "Attribution: " + result['attribution'] +" / License: "+ result['license'];
+      meta_attribution[bid] = getAL(result);
       var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
       elem.setAttribute("iiif_service", service);
       setDiscoThumb(elem);
