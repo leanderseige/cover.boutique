@@ -355,6 +355,7 @@ function coverboutique(config) {
     filter[id]['sepia'] = 0;
     if (id == 'osdo') {
       filter[id]['opacity'] = 75;
+      $("#fmode_select").val("multiply");
     } else {
       filter[id]['opacity'] = 100;
     }
@@ -451,6 +452,9 @@ function coverboutique(config) {
     $('#metai_' + osdid).attr("src", elem.getAttribute("src"));
     current_id[osdid] = id;
     viewer[osdid] = OpenSeadragon(setup);
+    setFilterDefaults(osdid);
+    setFilters();
+    cb.selectMode();
     // });
 
   }
