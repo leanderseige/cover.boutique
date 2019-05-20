@@ -354,7 +354,7 @@ function coverboutique(config) {
     filter[id]['saturate'] = 100;
     filter[id]['sepia'] = 0;
     if (id == 'osdo') {
-      filter[id]['opacity'] = 50;
+      filter[id]['opacity'] = 75;
     } else {
       filter[id]['opacity'] = 100;
     }
