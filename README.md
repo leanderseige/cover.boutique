@@ -2,7 +2,8 @@
 
 COVER.BOUTIQUE is a web application to create DIY inlays for transparent smartphone cases. It runs in browsers on all devices and can be installed as a PWA (progressive web app). COVER.BOUTIQUE is IIIF compatible and extensible.
 
-COVER.BOUTIQUE won the price for "BEST DESIGN" in Germany premier cultural hackathon Coding da Vinci
+COVER.BOUTIQUE was awarded with "BEST DESIGN" in Germanys premier cultural hackathon Coding da Vinci
+https://codingdavinci.de/events/sued/
 
 ![COVER.BOUTIQUE](images/cdvsued.png)
 
