@@ -716,7 +716,7 @@ function coverboutique(config) {
     label = label.charAt(0).toUpperCase() + label.slice(1);
     label = '<span class="close_slider_label">' + label + '</span>';
     $("#ficons").css("display", "none");
-    $("#" + id).css("display", "flow-root");
+    $("#" + id).css("display", "block");
     $("#close_slider").html(label + "&#xf00d;");
     $("#close_slider").css("display", "block");
   }
