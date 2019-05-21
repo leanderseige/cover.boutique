@@ -4,7 +4,7 @@ COVER.BOUTIQUE is a web application to create DIY inlays for transparent smartph
 
 COVER.BOUTIQUE won the price for "BEST DESIGN" in Germany premier cultural hackathon Coding da Vinci
 
-![COVER.BOUTIQUE](images/cdvsued.png|width=200)
+![COVER.BOUTIQUE](images/cdvsued.png)
 
 * Idee: Mathilda Seige
 * Programmierung: Leander Seige
