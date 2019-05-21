@@ -63,17 +63,16 @@
         window.addEventListener('resize', function(event) {
             cb.recalcVH();
         });
-
         /*
-            $('.gridwrap').bind('touchend', function(e) {
+            $('#gridwrap').bind('touchend', function(e) {
               e.preventDefault();
               $(this).click();
-            })
+            });
         */
         $('.noselect').bind('touchend', function(e) {
             e.preventDefault();
             $(this).click();
-        })
+        });
     </script>
 
 

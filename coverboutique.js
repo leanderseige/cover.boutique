@@ -155,7 +155,9 @@ function coverboutique(config) {
 
   coverboutique.prototype.selectMode = function() {
     var ms = document.getElementById("fmode_select");
-    $("#osdo").css("mix-blend-mode", ms.value);
+    var v = ms.value;
+    console.log("setting osdo to: "+v);
+    $("#osdo").css("mix-blend-mode", v);
   }
 
   coverboutique.prototype.scrollrun = function() {
