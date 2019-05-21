@@ -131,7 +131,8 @@ function coverboutique(config) {
       showSplash('splash_addiiif');
     } else {
       di.innerHTML = "";
-      loadIIIFResource(ds.value);
+      var url = ds.value;
+      loadIIIFResource(url);
     }
   }
 
@@ -200,9 +201,9 @@ function coverboutique(config) {
     }
   }
 
-  async function loadIIIFResource(curl) {
+  async function loadIIIFResource(url) {
     // $.getJSON(curl, function(result) {
-    var result = await get_cached_url(curl);
+    var result = await get_cached_url(url);
     discoCountDown = 4;
     if (result['@type'] == "sc:Collection") {
       for (var m in result['manifests']) {
