@@ -1,8 +1,8 @@
 ![COVER.BOUTIQUE](images/cover.boutique.png)
 
-COVER.BOUTIQUE is a web application to create DIY inlays for transparent smartphone cases. It runs in browsers on all devices and can be installed as a PWA (progressive web app). COVER.BOUTIQUE is IIIF compatible and extensible.
+*cover.boutique* is a web application to create DIY inlays for transparent smartphone cases. It runs in browsers on all devices and can be installed as a PWA (progressive web app). COVER.BOUTIQUE is IIIF compatible and extensible.
 
-COVER.BOUTIQUE was awarded with "BEST DESIGN" in Germanys premier cultural hackathon Coding da Vinci
+*cover.boutique* was awarded with "BEST DESIGN" in Germanys premier cultural hackathon Coding da Vinci
 https://codingdavinci.de/events/sued/
 
 ![COVER.BOUTIQUE](images/cdvsued.png)
@@ -13,7 +13,7 @@ https://codingdavinci.de/events/sued/
 
 ![Transparent Smartphone Inlays](images/demo.jpg)
 
-BEWARE! ANTLITZ.NINJA is a hack, it is not intended to demonstrate exemplary programming, it was built to work.
+BEWARE! *cover.boutique* is a hack, it is not intended to demonstrate exemplary programming, it was built to work.
 
 ### Other Resources
 
