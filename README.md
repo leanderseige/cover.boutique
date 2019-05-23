@@ -11,7 +11,7 @@ https://codingdavinci.de/events/sued/
 * Programmierung: Leander Seige
 * Smartphone Templates: Leander Seige, Mathilda Seige, Robin Kocaurek
 
-![Transparent Smartphone Inlays](images/demo.jpg)
+![Transparent Smartphone Inlays](images/demo.png)
 
 BEWARE! *cover.boutique* is a hack, it is not intended to demonstrate exemplary programming, it was built to work.
 
