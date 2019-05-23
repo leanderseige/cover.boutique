@@ -58,21 +58,22 @@
     <script type="text/javascript">
         var cb = new coverboutique();
 
-        cb.recalcVH();
-
         window.addEventListener('resize', function(event) {
             cb.recalcVH();
         });
-        /*
-            $('#gridwrap').bind('touchend', function(e) {
-              e.preventDefault();
-              $(this).click();
-            });
-        */
+
+        cb.recalcVH();
+
+        $('#gridwrap').bind('touchend', function(e) {
+          e.preventDefault();
+          $(this).click();
+        });
+
         $('.noselect').bind('touchend', function(e) {
             e.preventDefault();
             $(this).click();
         });
+
     </script>
 
 

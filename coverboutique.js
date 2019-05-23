@@ -1,7 +1,7 @@
 function coverboutique(config) {
 
   var setup_template = {
-    id: "osd",
+    id: false,
     preserveViewport: true,
     sequenceMode: false,
     showNavigationControl: false,
