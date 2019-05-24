@@ -20,6 +20,10 @@
       "image": "Samsung-S7.png"
     },
     {
+      "model": "Galaxy S8",
+      "image": "Samsung-S8.png"
+    },
+    {
       "model": "Galaxy S9",
       "image": "Samsung-S9.png"
     }

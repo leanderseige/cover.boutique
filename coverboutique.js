@@ -103,6 +103,25 @@ function coverboutique(config) {
     loadBrand();
     cb.selectCollection();
 
+    var ua = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i),browser;
+    if (navigator.userAgent.match(/Edge/i) || navigator.userAgent.match(/Trident.*rv[ :]*11\./i)) {
+        browser = "msie";
+    } else {
+        browser = ua[1].toLowerCase();
+    }
+
+    switch(browser) {
+        case 'safari':
+        case 'msie':
+        case 'opera':
+            console.log("safari");
+            showSplash("splash_unsupported");
+            break;
+        default:
+            break;
+    }
+
+
   })
 
   coverboutique.prototype.discoClick = function(id) {
@@ -156,8 +175,10 @@ function coverboutique(config) {
   coverboutique.prototype.selectMode = function() {
     var ms = document.getElementById("fmode_select");
     var v = ms.value;
+    var e = document.getElementById("osdo");
     console.log("setting osdo to: "+v);
-    $("#osdo").css("mix-blend-mode", v);
+    document.getElementById("osdo").style["mix-blend-mode"] = v;
+    document.getElementById("osdo").firstChild.style["mix-blend-mode"] = v; // HACK for Safari
   }
 
   coverboutique.prototype.scrollrun = function() {

@@ -46,6 +46,7 @@
 
     #ficons {
         width:200vw;
+        justify-content: center;
     }
 
     .icons {
@@ -104,6 +105,7 @@
       grid-row: 3;
       width:100vw;
       overflow-x: scroll;
+      justify-content: inherit;
     }
 
     #construction {
@@ -141,6 +143,5 @@
       top:10vh;
       height:90vh;
     }
-
 
 }

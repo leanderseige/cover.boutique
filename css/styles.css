@@ -114,7 +114,7 @@ p, input {
 
 .icons {
   color: #444;
-  font-size: 6vh;
+  font-size: 5.5vh;
   font-family: "Font Awesome 5 Free";
   font-weight: 700;
   display:inline-block;
@@ -252,6 +252,7 @@ p, input {
   z-index: 9999;
   font-size: 3.4vw;
   display:none;
+  padding:10vw;
 }
 
 .splash_content h1 {
