@@ -34,6 +34,7 @@ function coverboutique(config) {
   var current_id = {};
   var manifests = {};
   var current_splash = false;
+  var gfx_mode="css";
 
   $(document).ready(function() {
     console.log("coverboutique waking up");
@@ -114,8 +115,9 @@ function coverboutique(config) {
         case 'safari':
         case 'msie':
         case 'opera':
-            console.log("safari");
-            showSplash("splash_unsupported");
+            console.log("incompatible browser detected, switching gfx mode");
+            showSplash('splash_info');
+            gfx_mode="cbf";
             break;
         default:
             break;
@@ -624,7 +626,11 @@ function coverboutique(config) {
     var dest_h = img_osd.height * img_scale;
     console.log("osd_rect: " + osd_rect);
     console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
-    outcontext.filter = getCssFilters('osd');
+    if(gfx_mode=="cbf") {
+        img_osd=cbf(img_osd,filter['osd']);
+    } else {
+        outcontext.filter = getCssFilters('osd');
+    }
     outcontext.drawImage(img_osd, 0, 0, img_osd.width, img_osd.height, dest_x, dest_y, dest_w, dest_h);
 
     /* RENDER OSDO */
@@ -638,7 +644,11 @@ function coverboutique(config) {
       var dest_h = img_osdo.height * osdo_scale;
       console.log("osdo_rect: " + osdo_rect);
       console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
-      outcontext.filter = getCssFilters('osdo');
+      if(gfx_mode=="cbf") {
+          img_osdo=cbf(img_osdo,filter['osdo']);
+      } else {
+          outcontext.filter = getCssFilters('osdo');
+      }
       var ms = document.getElementById("fmode_select");
       outcontext.globalCompositeOperation = ms.value;
       outcontext.drawImage(img_osdo, 0, 0, img_osdo.width, img_osdo.height, dest_x, dest_y, dest_w, dest_h);
@@ -726,7 +736,9 @@ function coverboutique(config) {
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(10);
     }
-    c += 4;
+    doc.setFontSize(6);
+    doc.setTextColor(127, 127, 127);
+    doc.text(10, c,"gfx mode: "+gfx_mode); c += 4;
     doc.addImage(data, 'JPEG', 30, c, w * 25.4 / 600, h * 25.4 / 600);
     var ms = (new Date).getTime();
     doc.save("cover.boutique." + ms.toString() + ".pdf");

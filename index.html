@@ -42,6 +42,7 @@
 
     <script src="libs/jsonc.min.js"></script>
     <script src="openseadragon/openseadragon.min.js"></script>
+    <script src="coverboutique_filters.js"></script>
     <script src="coverboutique.js"></script>
     <script src="css/sacramento.js"></script>
     <link rel="manifest" href="manifest.json">
@@ -65,15 +66,14 @@
         cb.recalcVH();
 
         $('#gridwrap').bind('touchend', function(e) {
-          e.preventDefault();
-          $(this).click();
+            e.preventDefault();
+            $(this).click();
         });
 
         $('.noselect').bind('touchend', function(e) {
             e.preventDefault();
             $(this).click();
         });
-
     </script>
 
 
@@ -179,13 +179,19 @@
         <div id="splash_info" class="splash_content">
             <h1>cover.boutique</h1>
             <p>
-                &copy; 2019 – Leander Seige und Mathilda Seige<br />
-                <a href="https://github.com/leanderseige/cover.boutique">https://github.com/leanderseige/cover.boutique</a>
+                &copy; 2019 – Leander Seige und Mathilda Seige<br /><br>
+                <a href="https://github.com/leanderseige/cover.boutique">https://github.com/leanderseige/cover.boutique</a><br /><br />
+                <br />
+                For best results use Chrome or Firefox on Android, Linux, Mac OS X or Windows.<br />
+                <br />
+                iOS devices (iPhone/iPad) are not fully supported yet.<br />
+                <br />
+                Follow us on Twitter <a href="https://twitter.com/cover_boutique" target="_blank">@cover_boutique</a> for updates!<br />
             </p>
             <hr />
             <div id="splash_meta">
-                <p><img src="" id="metai_osd" />Background:<br /><span id="meta_osd"></span></p>
-                <p><img src="" id="metai_osdo" />Overlay:<br /><span id="meta_osdo"></span></p>
+                <p><img src="" id="metai_osd" /><span id="meta_osd"></span></p>
+                <p><img src="" id="metai_osdo" /><span id="meta_osdo"></span></p>
             </div>
         </div>
         <div id="splash_download" class="splash_content">
@@ -204,24 +210,13 @@
                 <!-- Label: <input type="text" id="addiiif_label" /><br /> -->
                 <input type="button" value="Add" onclick="cb.addIIIFResource();" />
             </p>
-            <pre id="log" style="font-size:10px;font-family:monospace;">
-        </pre>
+            <pre id="log" style="font-size:10px;font-family:monospace;"></pre>
         </div>
         <div id="splash_error" class="splash_content">
             <p id="error_msg">
                 ERROR
             </p>
         </div>
-        <div id="splash_unsupported" class="splash_content">
-            <p>
-                Sorry – Safari, Opera and IE/Edge do not support all technologies required by canvas.boutique.<br />
-                <br />
-                <strong>Please use Chrome or Firefox for all features!</strong><br />
-                <br />
-                You may use cover.boutique anyway but some features may work not as expected (color manipulation).
-            </p>
-        </div>
-
     </div>
 
 </body>
