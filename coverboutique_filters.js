@@ -17,6 +17,7 @@ function cbf(img, filter) {
     x.putImageData(cbf_sat(x, w, h, filter['saturate']), 0, 0);
     x.putImageData(cbf_sep(x, w, h, filter['sepia']), 0, 0);
     x.putImageData(cbf_bri(x, w, h, filter['brightness']), 0, 0);
+    x.putImageData(cbf_opa(x, w, h, filter['opacity']), 0, 0);
 
     var i = new Image();
     i.crossOrigin = "Anonymous";
@@ -44,7 +45,6 @@ function cbf_sat(x, w, h, v) {
             t = (max - rgba.data[i + 2]) * adjust;
             rgba.data[i + 2] = byteRange(rgba.data[i + 2] + t);
         }
-        rgba.data[i + 3] = 255;
     }
     return rgba;
 }
@@ -72,7 +72,6 @@ function cbf_bri(x, w, h, v) {
         rgba.data[i + 0] = byteRange(rgba.data[i + 0] + adjust);
         rgba.data[i + 1] = byteRange(rgba.data[i + 1] + adjust);
         rgba.data[i + 2] = byteRange(rgba.data[i + 2] + adjust);
-        rgba.data[i + 3] = 255;
     }
     return rgba;
 }
@@ -152,6 +151,15 @@ function cbf_con(x, w, h, v) {
     return rgba;
 }
 
+function cbf_opa(x, w, h, v) {
+    var rgba = x.getImageData(0, 0, w, h);
+    var i = 0;
+    for (i = 0; i < rgba.data.length; i += 4) {
+        rgba.data[i + 3] = byteRange(v*255/100);
+    }
+    return rgba;
+}
+
 function cbf_test(x, w, h, v) {
     var rgba = x.getImageData(0, 0, w, h);
     var i = 0;
@@ -159,7 +167,6 @@ function cbf_test(x, w, h, v) {
         rgba.data[i] = 255 - rgba.data[i];
         rgba.data[i + 1] = 255 - rgba.data[i + 1];
         rgba.data[i + 2] = 255 - rgba.data[i + 2];
-        rgba.data[i + 3] = 255;
     }
     return rgba;
 }
