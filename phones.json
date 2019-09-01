@@ -8,6 +8,10 @@
       "image": "Samsung-A3.png"
     },
     {
+      "model": "Galaxy A40",
+      "image": "Samsung-A40.png"
+    },
+    {
       "model": "Galaxy S3",
       "image": "Samsung-S3.png"
     },
@@ -60,6 +64,10 @@
     {
       "model": "iPhone X",
       "image": "iPhone-X.png"
+    },
+    {
+      "model": "iPhone X AS",
+      "image": "iPhone-X-AS.png"
     },
     {
       "model": "iPhone XS Max",
