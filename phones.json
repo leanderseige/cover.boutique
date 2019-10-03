@@ -94,6 +94,10 @@
     "model": "Honor 6A, DLI-22",
     "image": "Honor-6A-DLI-22.png"
   }],
+  "LG": [{
+    "model": "K8 (2017)",
+    "image": "LG-K8_2017.png"
+  }],
   "Blank": [{
     "model": "Blank",
     "image": "blank.png"
