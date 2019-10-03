@@ -102,6 +102,8 @@
             </optgroup>
             <optgroup label="IIIF" />
             <option value="IIIF">Add IIIF resource...</option>
+            <optgroup label="Local" />
+            <option value="Local">Load your image...</option>
             </optgroup>
         </select>
         <div id="close_disco" onclick="cb.hideDiscovery();">&#xf00d;</div>
@@ -173,7 +175,7 @@
         </div>
     </div>
 
-    <div id="close_splash" onclick="cb.hideSplash('splash_info');">&#xf00d;</div>
+    <div id="close_splash" onclick="cb.hideSplash();">&#xf00d;</div>
 
     <div id="splash_container" class="splash">
         <div id="splash_info" class="splash_content">
@@ -210,6 +212,15 @@
                 URI: <input type="text" id="addiiif_uri" /><br />
                 <!-- Label: <input type="text" id="addiiif_label" /><br /> -->
                 <input type="button" value="Add" onclick="cb.addIIIFResource();" />
+            </p>
+            <pre id="log" style="font-size:10px;font-family:monospace;"></pre>
+        </div>
+        <div id="splash_addlocal" class="splash_content">
+            <div class="icons">&#xf07c;</div><br />
+            Load your image
+            <p>
+                File: <input type="file" id="addlocal_file" onchange="" /><br />
+                <input type="button" value="Add" onclick="cb.addLocalResource();" />
             </p>
             <pre id="log" style="font-size:10px;font-family:monospace;"></pre>
         </div>

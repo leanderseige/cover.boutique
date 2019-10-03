@@ -29,12 +29,13 @@ function coverboutique(config) {
   var last_scrollpos = 0;
   var mask_url = false;
   var src_url = {};
+  var src_type = {};
   var meta_attribution = {};
   var meta_label = {};
   var current_id = {};
   var manifests = {};
   var current_splash = false;
-  var gfx_mode="css";
+  var gfx_mode = "css";
 
   $(document).ready(function() {
     console.log("coverboutique waking up");
@@ -43,6 +44,8 @@ function coverboutique(config) {
     viewer['osdo'] = false;
     src_url['osd'] = false;
     src_url['osdo'] = false;
+    src_type['osd']="iiif";
+    src_type['osdo']="iiif";
     filter['osd'] = {};
     filter['osdo'] = {};
 
@@ -104,23 +107,24 @@ function coverboutique(config) {
     loadBrand();
     cb.selectCollection();
 
-    var ua = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i),browser;
+    var ua = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i),
+      browser;
     if (navigator.userAgent.match(/Edge/i) || navigator.userAgent.match(/Trident.*rv[ :]*11\./i)) {
-        browser = "msie";
+      browser = "msie";
     } else {
-        browser = ua[1].toLowerCase();
+      browser = ua[1].toLowerCase();
     }
 
-    switch(browser) {
-        case 'safari':
-        case 'msie':
-        case 'opera':
-            console.log("incompatible browser detected, switching gfx mode");
-            showSplash('splash_info');
-            gfx_mode="cbf";
-            break;
-        default:
-            break;
+    switch (browser) {
+      case 'safari':
+      case 'msie':
+      case 'opera':
+        console.log("incompatible browser detected, switching gfx mode");
+        showSplash('splash_info');
+        gfx_mode = "cbf";
+        break;
+      default:
+        break;
     }
 
 
@@ -150,11 +154,49 @@ function coverboutique(config) {
         hideDiscovery();
       }
       showSplash('splash_addiiif');
+    } else if (ds.value == "Local") {
+      if (mobile_mode) {
+        hideDiscovery();
+      }
+      showSplash('splash_addlocal');
     } else {
       di.innerHTML = "";
       var url = ds.value;
       loadIIIFResource(url);
     }
+  }
+
+  coverboutique.prototype.addLocalResource = async function() {
+    var file = document.getElementById('addlocal_file').files[0];
+    console.log(file['name']);
+
+    var reader = new FileReader();
+    if (file) {
+      var data=URL.createObjectURL(file); // reader.readAsDataURL(file);
+      var elem = document.getElementById(osdid);
+      var setup = setup_template;
+      setup.id = osdid;
+      setup.tileSources[0] = {
+        type: "image",
+        url: data
+      };
+      if (viewer[osdid]) {
+        viewer[osdid].close();
+        document.getElementById(osdid).innerHTML = "";
+      }
+      viewer[osdid] = OpenSeadragon(setup);
+      src_type[osdid]="local";
+      src_url[osdid]=data;
+      setFilterDefaults(osdid);
+      setFilters();
+      var bid=file['name'];
+      current_id[osdid]=bid;
+      manifests[bid] = "";
+      meta_label[bid] = "" + file['name'];
+      meta_attribution[bid] = "unkown, user upload";
+    }
+    hideSplash();
+    $("#disco_select").val($("#disco_select option:first").val());
   }
 
   coverboutique.prototype.addIIIFResource = async function() {
@@ -171,14 +213,14 @@ function coverboutique(config) {
     select.appendChild(option);
     $('#disco_select').val(uri);
     cb.selectCollection();
-    hideSplash('splash_addiiif');
+    hideSplash();
   }
 
   coverboutique.prototype.selectMode = function() {
     var ms = document.getElementById("fmode_select");
     var v = ms.value;
     var e = document.getElementById("osdo");
-    console.log("setting osdo to: "+v);
+    console.log("setting osdo to: " + v);
     document.getElementById("osdo").style["mix-blend-mode"] = v;
     document.getElementById("osdo").firstChild.style["mix-blend-mode"] = v; // HACK for Safari
   }
@@ -238,7 +280,7 @@ function coverboutique(config) {
         manifests[bid] = murl;
         var html = '<p class="discoparagraph">' + label + '<br />';
         html += '<img class="discoimage" src="" iiif_type="sc:Manifest" iiif_service="" iiif_manifest="' + murl + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
-        html += '<span class="small" id="attr_'+bid+'"></span>';
+        html += '<span class="small" id="attr_' + bid + '"></span>';
         html += '</p>';
         $("#discovery-items").append(html);
         if (discoCountDown > 0) {
@@ -257,7 +299,7 @@ function coverboutique(config) {
         meta_attribution[bid] = getAL(result);
         var html = '<p class="discoparagraph">' + label + '<br />';
         html += '<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="' + service + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
-        html += '<span class="small" id="attr_'+bid+'"></span>';
+        html += '<span class="small" id="attr_' + bid + '"></span>';
         html += '</p>';
         $("#discovery-items").append(html);
         if (discoCountDown > 0) {
@@ -271,14 +313,14 @@ function coverboutique(config) {
 
   function getAL(j) {
     var ret = "";
-    if(j['attribution']) {
-      ret += "Attribution: "+j['attribution'];
+    if (j['attribution']) {
+      ret += "Attribution: " + j['attribution'];
     }
-    if(j['license']) {
-      if(ret.length>0) ret +="; ";
-      ret += "License: "+j['license'];
+    if (j['license']) {
+      if (ret.length > 0) ret += "; ";
+      ret += "License: " + j['license'];
     }
-    return(ret);
+    return (ret);
   }
 
   async function setDiscoThumb(elem) {
@@ -300,9 +342,9 @@ function coverboutique(config) {
     elem.setAttribute("src", service + "/full/" + (tw == 999999 ? 400 : tw) + ",/0/default.jpg");
     //set attribution
     var bid = elem.getAttribute("id");
-    console.log('attr_'+bid);
-    var span = document.getElementById('attr_'+bid);
-    span.innerHTML=meta_attribution[bid];
+    console.log('attr_' + bid);
+    var span = document.getElementById('attr_' + bid);
+    span.innerHTML = meta_attribution[bid];
     // });
   }
 
@@ -464,6 +506,7 @@ function coverboutique(config) {
     var service = elem.getAttribute("iiif_service");
     canvas = service;
     src_url[osdid] = service;
+    src_type[osdid]="iiif";
     // $.getJSON(service + "/info.json", function(result) {
     var result = await get_cached_url(service + "/info.json");
     // console.log(result);
@@ -531,6 +574,10 @@ function coverboutique(config) {
     // create_image();
   }
 
+  function cutLocalImage(rect,url) {
+    return url;
+  }
+
   function prepImages() {
     if (viewer['osd'] == false) {
       showSplashError('No Images No Export.');
@@ -554,7 +601,11 @@ function coverboutique(config) {
     var osd_rect = viewer['osd'].viewport.viewportToImageRectangle(viewer['osd'].viewport.getBounds());
     // if (osd_rect.x<0) {osd_off.x=-osd_rect.x;osd_rect.x=0;}
     // if (osd_rect.y<0) {osd_off.y=-osd_rect.y;osd_rect.y=0;}
-    var osd_src = getIIIFSrc(osd_rect, false, src_url['osd']);
+    if(src_type["osd"]=="local") {
+      var osd_src = cutLocalImage(osd_rect, src_url['osd']);
+    } else {
+      var osd_src = getIIIFSrc(osd_rect, false, src_url['osd']);
+    }
 
     img_mask.onload = function() {
       img_osd.onload = function() {
@@ -564,7 +615,12 @@ function coverboutique(config) {
           var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
           // if (osdo_rect.x<0) {osdo_off.x=-osdo_rect.x;osdo_rect.x=0;}
           // if (osdo_rect.y<0) {osdo_off.y=-osdo_rect.y;osdo_rect.y=0;}
-          var osdo_src = getIIIFSrc(osdo_rect, false, src_url['osdo']);
+          // var osdo_src = getIIIFSrc(osdo_rect, false, src_url['osdo']);
+          if(src_type["osdo"]=="local") {
+            var osdo_src = cutLocalImage(osdo_rect, src_url['osdo']);
+          } else {
+            var osdo_src = getIIIFSrc(osdo_rect, false, src_url['osdo']);
+          }
           img_osdo.onload = function() {
             composeImage(img_mask, img_osd, img_osdo);
           }
@@ -579,7 +635,9 @@ function coverboutique(config) {
   }
 
   function composeImage(img_mask, img_osd, img_osdo) {
+
     /* DETERMINE OUTPUT DIMENSIONS AND MASK POSITION */
+
     osd_w = Math.round($('#osd').width());
     osd_h = Math.round($('#osd').height());
     osd_r = osd_w / osd_h;
@@ -626,13 +684,16 @@ function coverboutique(config) {
     var dest_h = img_osd.height * img_scale;
     console.log("osd_rect: " + osd_rect);
     console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
-    if(gfx_mode=="cbf") {
-        img_osd=cbf(img_osd,filter['osd']);
+    if (gfx_mode == "cbf") {
+      img_osd = cbf(img_osd, filter['osd']);
     } else {
-        outcontext.filter = getCssFilters('osd');
+      outcontext.filter = getCssFilters('osd');
     }
-    outcontext.drawImage(img_osd, 0, 0, img_osd.width, img_osd.height, dest_x, dest_y, dest_w, dest_h);
-
+    if(src_type['osd']=="local"){
+      outcontext.drawImage(img_osd, osd_rect.x, osd_rect.y, osd_rect.width, osd_rect.height, 0, 0, out_w, out_h);
+    } else {
+      outcontext.drawImage(img_osd, 0, 0, img_osd.width, img_osd.height, dest_x, dest_y, dest_w, dest_h);
+    }
     /* RENDER OSDO */
 
     if (img_osdo) {
@@ -644,14 +705,18 @@ function coverboutique(config) {
       var dest_h = img_osdo.height * osdo_scale;
       console.log("osdo_rect: " + osdo_rect);
       console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
-      if(gfx_mode=="cbf") {
-          img_osdo=cbf(img_osdo,filter['osdo']);
+      if (gfx_mode == "cbf") {
+        img_osdo = cbf(img_osdo, filter['osdo']);
       } else {
-          outcontext.filter = getCssFilters('osdo');
+        outcontext.filter = getCssFilters('osdo');
       }
       var ms = document.getElementById("fmode_select");
       outcontext.globalCompositeOperation = ms.value;
-      outcontext.drawImage(img_osdo, 0, 0, img_osdo.width, img_osdo.height, dest_x, dest_y, dest_w, dest_h);
+      if(src_type['osdo']=="local"){
+        outcontext.drawImage(img_osdo, osdo_rect.x, osdo_rect.y, osdo_rect.width, osdo_rect.height, 0, 0, out_w, out_h);
+      } else {
+        outcontext.drawImage(img_osdo, 0, 0, img_osdo.width, img_osdo.height, dest_x, dest_y, dest_w, dest_h);
+      }
     }
 
     /* RENDER MASK */
@@ -715,11 +780,14 @@ function coverboutique(config) {
       doc.text(10, c, "Background");
       c += 5;
       doc.setFontType("normal");
-      doc.text(10, c, meta_label[current_id['osd']]); c += 3;
+      doc.text(10, c, meta_label[current_id['osd']]);
+      c += 3;
       doc.setFontSize(6);
-      doc.text(10, c, meta_attribution[current_id['osd']]); c += 3;
+      doc.text(10, c, meta_attribution[current_id['osd']]);
+      c += 3;
       doc.setTextColor(127, 127, 127);
-      doc.text(10, c, manifests[current_id['osd']]); c += 7;
+      doc.text(10, c, manifests[current_id['osd']]);
+      c += 7;
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(10);
     }
@@ -728,21 +796,25 @@ function coverboutique(config) {
       doc.text(10, c, "Overlay");
       c += 5;
       doc.setFontType("normal");
-      doc.text(10, c, meta_label[current_id['osdo']]); c += 3;
+      doc.text(10, c, meta_label[current_id['osdo']]);
+      c += 3;
       doc.setFontSize(6);
-      doc.text(10, c, meta_attribution[current_id['osdo']]); c += 3;
+      doc.text(10, c, meta_attribution[current_id['osdo']]);
+      c += 3;
       doc.setTextColor(127, 127, 127);
-      doc.text(10, c, manifests[current_id['osdo']]); c += 6;
+      doc.text(10, c, manifests[current_id['osdo']]);
+      c += 6;
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(10);
     }
     doc.setFontSize(6);
     doc.setTextColor(127, 127, 127);
-    doc.text(10, c,"gfx mode: "+gfx_mode); c += 4;
+    doc.text(10, c, "gfx mode: " + gfx_mode);
+    c += 4;
     doc.addImage(data, 'JPEG', 30, c, w * 25.4 / 600, h * 25.4 / 600);
     var ms = (new Date).getTime();
     doc.save("cover.boutique." + ms.toString() + ".pdf");
-    hideSplash('splash_download');
+    hideSplash();
     console.log("finished image");
   }
 
@@ -788,13 +860,14 @@ function coverboutique(config) {
   }
 
   coverboutique.prototype.hideSplash = function(id) {
-    hideSplash(id);
+    hideSplash();
   }
 
-  function hideSplash(id, followup = false) {
-    $("#splash_container").css("display", "none");
+  function hideSplash() {
+    var id = current_splash;
     $("#" + id).css("display", "none");
     $("#close_splash").css("display", "none");
+    $("#splash_container").css("display", "none");
     current_splash = false;
   }
 
@@ -806,7 +879,7 @@ function coverboutique(config) {
   function showSplash(id) {
     if (current_splash) {
       console.log("going to hide " + current_splash);
-      hideSplash(current_splash);
+      hideSplash();
     }
     console.log("showing " + id);
     $("#splash_container").css("display", "grid");
