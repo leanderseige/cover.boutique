@@ -81,8 +81,8 @@
 
         <select id="disco_select" class="select-css" onchange="cb.selectCollection();">
             <optgroup label="Coding da Vinci" />
-            <option value="https://iiif.manducus.net/collections/0016/collection.json">MfK Nürnberg</option>
             <option value="https://iiif.manducus.net/collections/0008/collection.json">Städel Museum</option>
+            <option value="https://iiif.manducus.net/collections/0016/collection.json">MfK Nürnberg</option>
             <option value="https://iiif.manducus.net/collections/0006/collection.json">Leibniz Länderkunde</option>
             <option value="https://iiif.manducus.net/collections/0012/collection.json">Zeppelin Museum</option>
             <option value="https://iiif.manducus.net/collections/0015/collection.json">Leibniz-Institut IOS</option>
@@ -209,9 +209,8 @@
         </div>
         <div id="splash_addlocal" class="splash_content">
             <p>Load your own image</p>
-            <p>File: <input type="file" id="addlocal_file" accept="image/*" onchange="" /></p>
-            <p><input type="button" value="Add" onclick="cb.addLocalResource();" /></p>
-            <pre id="log" style="font-size:10px;font-family:monospace;"></pre>
+            <p><input class="select-css" type="file" id="addlocal_file" accept="image/*" onchange="" /></p>
+            <div class="icons mainmenu" onclick="cb.addLocalResource();">&#xf055;</div>
         </div>
         <div id="splash_error" class="splash_content">
             <p id="error_msg">
