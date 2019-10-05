@@ -121,6 +121,10 @@ p, input {
   text-align: center;
 }
 
+.icons_big {
+    font-size: 11vh;
+}
+
 .mainmenu {
     padding:4vh;
 }
@@ -142,6 +146,10 @@ p, input {
 .discoparagraph {
     text-align:center;
     margin-bottom:4vh;
+}
+
+.hidden {
+    display: none;
 }
 
 #splash_meta p {

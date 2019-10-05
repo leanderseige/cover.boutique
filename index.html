@@ -199,18 +199,20 @@
         </div>
         <div id="splash_addiiif" class="splash_content">
             <img src="images/iiif.svg" width="100" /><br />
-            Paste a IIIF resource URI (Manifest or Collection)
+            Paste a IIIF resource URI<br />(Manifest or Collection)
             <p>
                 URI: <input type="text" id="addiiif_uri" /><br />
                 <!-- Label: <input type="text" id="addiiif_label" /><br /> -->
-                <input type="button" value="Add" onclick="cb.addIIIFResource();" />
+                <input type="button" value="Add" onclick="cb.addIIIFResource();" id="addiiif_icon" class="hidden" />
+                <label for="addiiif_icon" class="select-css"><span class="icons icons_big">&#xf055;</span></label>
             </p>
             <pre id="log" style="font-size:10px;font-family:monospace;"></pre>
         </div>
         <div id="splash_addlocal" class="splash_content">
-            <p>Load your own image</p>
-            <p><input class="select-css" type="file" id="addlocal_file" accept="image/*" onchange="" /></p>
-            <div class="icons mainmenu" onclick="cb.addLocalResource();">&#xf055;</div>
+            <p>
+                <input class="hidden" type="file" id="addlocal_file" accept="image/*" onchange="cb.addLocalResource();" />
+                <label for="addlocal_file" class="select-css"><span class="icons icons_big">&#xf07c;</span><br />Choose a file</label>
+            </p>
         </div>
         <div id="splash_error" class="splash_content">
             <p id="error_msg">
