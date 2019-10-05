@@ -122,7 +122,7 @@ p, input {
 }
 
 .icons_big {
-    font-size: 11vh;
+    font-size: 16.5vh;
 }
 
 .mainmenu {
@@ -303,7 +303,7 @@ p, input {
 	width: 100%;
 	max-width: 100%;
 	box-sizing: border-box;
-	margin: 1.2vh 0;
+	margin: 1.6vh 0;
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
@@ -382,10 +382,20 @@ p, input {
   font-size: 2vh;
 }
 
-#brand_select, #layer_select, #model_select {
+#brand_select, #model_select {
     width:90%;
     margin-left:auto;
     margin-right:auto;
+    border-color:#000;
+    color:#000;
+}
+
+#layer_select {
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: #444;
+    color:white;
 }
 
 #close_slider {

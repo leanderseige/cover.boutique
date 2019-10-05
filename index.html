@@ -74,6 +74,14 @@
             e.preventDefault();
             $(this).click();
         });
+
+        $(document).ready(function(){
+            if($("#add_item").is(":visible")){
+                for(x=1;x<10;x++) {
+                    $("#add_item").fadeOut(500/x).fadeIn(500/x);
+                }
+            }
+        });
     </script>
 
 
@@ -211,7 +219,7 @@
         <div id="splash_addlocal" class="splash_content">
             <p>
                 <input class="hidden" type="file" id="addlocal_file" accept="image/*" onchange="cb.addLocalResource();" />
-                <label for="addlocal_file" class="select-css"><span class="icons icons_big">&#xf07c;</span><br />Choose a file</label>
+                <label for="addlocal_file" class="select-css icons_big"><span class="icons icons_big">&#xf07c;</span><br />Choose a file</label>
             </p>
         </div>
         <div id="splash_error" class="splash_content">
