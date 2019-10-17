@@ -282,7 +282,7 @@ function coverboutique(config) {
         html += '<img class="discoimage" src="" iiif_type="sc:Manifest" iiif_service="" iiif_manifest="' + murl + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
         html += '<span class="small" id="attr_' + bid + '"></span>';
         html += '</p>';
-        if(Math.random()>0.5) { $("#discovery-items").append(html); } else  { $("#discovery-items").prepend(html); }
+        if(Math.random()>0.75) { $("#discovery-items").append(html); } else  { $("#discovery-items").prepend(html); }
         if (discoCountDown > 0) {
           discoCountDown--;
           loadDiscoImage(document.getElementById(bid));
@@ -301,7 +301,7 @@ function coverboutique(config) {
         html += '<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="' + service + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
         html += '<span class="small" id="attr_' + bid + '"></span>';
         html += '</p>';
-        if(Math.random()>0.5) { $("#discovery-items").append(html); } else  { $("#discovery-items").prepend(html); }
+        if(Math.random()>0.75) { $("#discovery-items").append(html); } else  { $("#discovery-items").prepend(html); }
         if (discoCountDown > 0) {
           discoCountDown--;
           loadDiscoImage(document.getElementById(bid));
