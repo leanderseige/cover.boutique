@@ -2,7 +2,7 @@ function coverboutique(config) {
 
   var setup_template = {
     id: false,
-    preserveViewport: true,
+    preserveViewport: false,
     sequenceMode: false,
     showNavigationControl: false,
     crossOriginPolicy: "Anonymous",
@@ -10,8 +10,9 @@ function coverboutique(config) {
     zoomPerSecond: 1,
     prefixUrl: "openseadragon/images/",
     tileSources: [],
-    homeFillsViewer: true,
-    maxZoomLevel: 10
+    homeFillsViewer: false,
+    maxZoomLevelRatio: 100,
+    minZoomLevelRatio: 0.01
   };
 
 
@@ -565,6 +566,14 @@ function coverboutique(config) {
 
   coverboutique.prototype.zoomOut = function() {
     viewer[osdid].viewport.zoomTo(viewer[osdid].viewport.getZoom() * 0.95);
+  }
+
+  coverboutique.prototype.rotLeft = function() {
+    viewer[osdid].viewport.setRotation(viewer[osdid].viewport.getRotation() - 90);
+  }
+
+  coverboutique.prototype.rotRight = function() {
+    viewer[osdid].viewport.setRotation(viewer[osdid].viewport.getRotation() + 90);
   }
 
   /* GENERATE OUTPUT PDF */

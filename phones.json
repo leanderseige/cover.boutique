@@ -41,6 +41,9 @@
     }
   ],
   "Huawei": [{
+      "model": "Huawei nova2",
+      "image": "Huawei-nova2.png"
+    },{
       "model": "Huawei Y6 (SCL L21)",
       "image": "Huawei_Y6_SCL-L21.png"
     },
