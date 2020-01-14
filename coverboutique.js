@@ -11,8 +11,12 @@ function coverboutique(config) {
     prefixUrl: "openseadragon/images/",
     tileSources: [],
     homeFillsViewer: false,
-    maxZoomLevelRatio: 100,
-    minZoomLevelRatio: 0.01
+    maxZoomLevelRatio: 1000,
+    minZoomLevelRatio: 0.001,
+    maxZoomImageRatio: 1000,
+    minZoomImageRatio: 0.001,
+    visibilityRatio: 0.05,
+
   };
 
 
