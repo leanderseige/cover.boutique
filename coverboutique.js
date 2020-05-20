@@ -692,10 +692,17 @@ function coverboutique(config) {
     console.log("img_osd.width: " + img_osd.width);
     var img_scale = out_w / img_osd.width;
     var osd_scale = out_w / osd_rect.width;
-    var dest_x = osd_rect.x < 0 ? -osd_rect.x * osd_scale : 0;
-    var dest_y = osd_rect.y < 0 ? -osd_rect.y * osd_scale : 0;
-    var dest_w = img_osd.width * img_scale;
-    var dest_h = img_osd.height * img_scale;
+    if(src_type['osd']=="local"){
+        var dest_x = -osd_rect.x * osd_scale;
+        var dest_y = -osd_rect.y * osd_scale;
+        var dest_w = img_osd.width * osd_scale;
+        var dest_h = img_osd.height * osd_scale;
+    } else {
+        var dest_x = osd_rect.x < 0 ? -osd_rect.x * osd_scale : 0;
+        var dest_y = osd_rect.y < 0 ? -osd_rect.y * osd_scale : 0;
+        var dest_w = img_osd.width * osd_scale;
+        var dest_h = img_osd.height * osd_scale;
+    }
     console.log("osd_rect: " + osd_rect);
     console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
     if (gfx_mode == "cbf") {
@@ -704,7 +711,8 @@ function coverboutique(config) {
       outcontext.filter = getCssFilters('osd');
     }
     if(src_type['osd']=="local"){
-      outcontext.drawImage(img_osd, osd_rect.x, osd_rect.y, osd_rect.width, osd_rect.height, 0, 0, out_w, out_h);
+      // outcontext.drawImage(img_osd, osd_rect.x, osd_rect.y, osd_rect.width, osd_rect.height, 0, 0, out_w, out_h);
+      outcontext.drawImage(img_osd, 0, 0, img_osd.width, img_osd.height, dest_x, dest_y, dest_w, dest_h);
     } else {
       outcontext.drawImage(img_osd, 0, 0, img_osd.width, img_osd.height, dest_x, dest_y, dest_w, dest_h);
     }
@@ -713,10 +721,22 @@ function coverboutique(config) {
     if (img_osdo) {
       var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
       var osdo_scale = out_w / img_osdo.width; // osdo_rect.width;
-      var dest_x = osdo_rect.x < 0 ? -osdo_rect.x * osdo_scale : 0;
-      var dest_y = osdo_rect.y < 0 ? -osdo_rect.y * osdo_scale : 0;
-      var dest_w = img_osdo.width * osdo_scale;
-      var dest_h = img_osdo.height * osdo_scale;
+      var imgo_scale = out_w / img_osdo.width;
+      // var dest_x = osdo_rect.x < 0 ? -osdo_rect.x * osdo_scale : 0;
+      // var dest_y = osdo_rect.y < 0 ? -osdo_rect.y * osdo_scale : 0;
+      // var dest_w = img_osdo.width * osdo_scale;
+      // var dest_h = img_osdo.height * osdo_scale;
+      if(src_type['osdo']=="local"){
+          var dest_x = -osdo_rect.x * osdo_scale;
+          var dest_y = -osdo_rect.y * osdo_scale;
+          var dest_w = img_osdo.width * osdo_scale;
+          var dest_h = img_osdo.height * osdo_scale;
+      } else {
+          var dest_x = osdo_rect.x < 0 ? -osdo_rect.x * osdo_scale : 0;
+          var dest_y = osdo_rect.y < 0 ? -osdo_rect.y * osdo_scale : 0;
+          var dest_w = img_osdo.width * osdo_scale;
+          var dest_h = img_osdo.height * osdo_scale;
+      }
       console.log("osdo_rect: " + osdo_rect);
       console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
       if (gfx_mode == "cbf") {
@@ -727,7 +747,8 @@ function coverboutique(config) {
       var ms = document.getElementById("fmode_select");
       outcontext.globalCompositeOperation = ms.value;
       if(src_type['osdo']=="local"){
-        outcontext.drawImage(img_osdo, osdo_rect.x, osdo_rect.y, osdo_rect.width, osdo_rect.height, 0, 0, out_w, out_h);
+        // outcontext.drawImage(img_osdo, osdo_rect.x, osdo_rect.y, osdo_rect.width, osdo_rect.height, 0, 0, out_w, out_h);
+        outcontext.drawImage(img_osdo, 0, 0, img_osdo.width, img_osdo.height, dest_x, dest_y, dest_w, dest_h);
       } else {
         outcontext.drawImage(img_osdo, 0, 0, img_osdo.width, img_osdo.height, dest_x, dest_y, dest_w, dest_h);
       }
