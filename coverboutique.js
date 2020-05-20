@@ -312,7 +312,23 @@ function coverboutique(config) {
           loadDiscoImage(document.getElementById(bid));
         }
       }
-    }
+  } else if (result['@context'] == "http://iiif.io/api/image/2/context.json") {
+      var label = result['@id'];
+      var bid = b64EncodeUnicode(result['@id']);
+      var service = result['@id'];
+      meta_label[bid] = result['@id'];
+      meta_attribution[bid] = "unkown, please respect copyrights"
+      manifests[bid] = result['@id']; // hack, it's not a manifest
+      var html = '<p class="discoparagraph">' + label + '<br />';
+      html += '<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="' + service + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
+      html += '<span class="small" id="attr_' + bid + '"></span>';
+      html += '</p>';
+      $("#discovery-items").append(html);
+      if (discoCountDown > 0) {
+        discoCountDown--;
+        loadDiscoImage(document.getElementById(bid));
+      }
+  }
     scrollrun();
     // });
   }
@@ -613,8 +629,6 @@ function coverboutique(config) {
     var img_osd = document.createElement('img');
     img_osd.crossOrigin = "Anonymous";
     var osd_rect = viewer['osd'].viewport.viewportToImageRectangle(viewer['osd'].viewport.getBounds());
-    // if (osd_rect.x<0) {osd_off.x=-osd_rect.x;osd_rect.x=0;}
-    // if (osd_rect.y<0) {osd_off.y=-osd_rect.y;osd_rect.y=0;}
     if(src_type["osd"]=="local") {
       var osd_src = cutLocalImage(osd_rect, src_url['osd']);
     } else {
@@ -627,9 +641,6 @@ function coverboutique(config) {
           var img_osdo = document.createElement('img');
           img_osdo.crossOrigin = "Anonymous";
           var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
-          // if (osdo_rect.x<0) {osdo_off.x=-osdo_rect.x;osdo_rect.x=0;}
-          // if (osdo_rect.y<0) {osdo_off.y=-osdo_rect.y;osdo_rect.y=0;}
-          // var osdo_src = getIIIFSrc(osdo_rect, false, src_url['osdo']);
           if(src_type["osdo"]=="local") {
             var osdo_src = cutLocalImage(osdo_rect, src_url['osdo']);
           } else {
@@ -692,6 +703,7 @@ function coverboutique(config) {
     console.log("img_osd.width: " + img_osd.width);
     var img_scale = out_w / img_osd.width;
     var osd_scale = out_w / osd_rect.width;
+    var scalecorrect = osd_rect.width / img_osd.width;
     if(src_type['osd']=="local"){
         var dest_x = -osd_rect.x * osd_scale;
         var dest_y = -osd_rect.y * osd_scale;
@@ -700,9 +712,12 @@ function coverboutique(config) {
     } else {
         var dest_x = osd_rect.x < 0 ? -osd_rect.x * osd_scale : 0;
         var dest_y = osd_rect.y < 0 ? -osd_rect.y * osd_scale : 0;
-        var dest_w = img_osd.width * osd_scale;
-        var dest_h = img_osd.height * osd_scale;
+        var dest_w = img_osd.width * osd_scale * scalecorrect;
+        var dest_h = img_osd.height * osd_scale * scalecorrect;
     }
+    console.log("img_scale: "+img_scale);
+    console.log("osd_scale: "+osd_scale);
+    console.log("scalecorrect: "+scalecorrect);
     console.log("osd_rect: " + osd_rect);
     console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
     if (gfx_mode == "cbf") {
@@ -720,8 +735,9 @@ function coverboutique(config) {
 
     if (img_osdo) {
       var osdo_rect = viewer['osdo'].viewport.viewportToImageRectangle(viewer['osdo'].viewport.getBounds());
-      var osdo_scale = out_w / img_osdo.width; // osdo_rect.width;
       var imgo_scale = out_w / img_osdo.width;
+      var osdo_scale = out_w / osdo_rect.width;
+      var scalecorrecto = osdo_rect.width / img_osdo.width;
       // var dest_x = osdo_rect.x < 0 ? -osdo_rect.x * osdo_scale : 0;
       // var dest_y = osdo_rect.y < 0 ? -osdo_rect.y * osdo_scale : 0;
       // var dest_w = img_osdo.width * osdo_scale;
@@ -734,8 +750,8 @@ function coverboutique(config) {
       } else {
           var dest_x = osdo_rect.x < 0 ? -osdo_rect.x * osdo_scale : 0;
           var dest_y = osdo_rect.y < 0 ? -osdo_rect.y * osdo_scale : 0;
-          var dest_w = img_osdo.width * osdo_scale;
-          var dest_h = img_osdo.height * osdo_scale;
+          var dest_w = img_osdo.width * osdo_scale * scalecorrecto;
+          var dest_h = img_osdo.height * osdo_scale * scalecorrecto;
       }
       console.log("osdo_rect: " + osdo_rect);
       console.log("dest: " + dest_x + " " + dest_y + " " + dest_w + " " + dest_h);
@@ -770,8 +786,16 @@ function coverboutique(config) {
 
   function getIIIFSrc(rect, flip, src) {
     var url = src;
-    url = url + "/" + Math.floor(rect.x < 0 ? 0 : rect.x) + "," + Math.floor(rect.y < 0 ? 0 : rect.y) + "," + Math.ceil(rect.width) + "," + Math.ceil(rect.height + 1);
-    url = url + "/full/";
+    var rx = Math.floor(rect.x < 0 ? 0 : rect.x);
+    var ry = Math.floor(rect.y < 0 ? 0 : rect.y);
+    var rw = Math.ceil(rect.width);
+    var rh = Math.ceil(rect.height + 1);
+    if(rw>2400 || rh>2400) {
+        var full="/,2400/";
+    } else {
+        var full="/full/";
+    }
+    url = url + "/" + rx + "," + ry + "," + rw + "," + rh + full;
     if (flip) {
       url = url + "!";
     }
