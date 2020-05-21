@@ -790,8 +790,8 @@ function coverboutique(config) {
     var ry = Math.floor(rect.y < 0 ? 0 : rect.y);
     var rw = Math.ceil(rect.width);
     var rh = Math.ceil(rect.height + 1);
-    if(rw>2400 || rh>2400) {
-        var full="/,2400/";
+    if(rw>3200 || rh>3200) {
+        var full="/,3200/";
     } else {
         var full="/full/";
     }
