@@ -1,5 +1,5 @@
 0. install gimp if not already available
-1. get a scan of the phone's back that is truly 600dpi (or upscale im necessary)
+1. get a scan of the phone's back that is truly 600dpi (or upscale if necessary)
 2. roughly trim the image
 3. rotate the image so that it is perfectly upright
 4. rectangle-select the backplate of the phone

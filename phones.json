@@ -76,6 +76,10 @@
       "image": "iPhoneSE-A1723.png"
     },
     {
+      "model": "iPhone 11",
+      "image": "iPhone11.png"
+    },
+    {
       "model": "iPhone X",
       "image": "iPhone-X.png"
     },
@@ -91,6 +95,12 @@
       "model": "iPhone 1457",
       "image": "iPhone-1457.png"
     }
+  ],
+  "Fairphone": [
+      {
+          "model": "Fairphone 2",
+          "image": "Fairphone2.png"
+      }
   ],
   "Sony": [{
     "model": "Xperia Z",
