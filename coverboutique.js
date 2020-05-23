@@ -42,6 +42,7 @@ function coverboutique(config) {
   var current_splash = false;
   var gfx_mode = "css";
   var readypdf = false;
+  var readypdf_output = false;
 
   $(document).ready(function() {
     console.log("coverboutique waking up");
@@ -301,7 +302,11 @@ function coverboutique(config) {
         var service = result['sequences'][0]['canvases'][c]['images'][0]['resource']['service']['@id'];
         var bid = b64EncodeUnicode(curl);
         manifests[bid] = result['@id'];
-        meta_label[bid] = "" + result['label'];
+        if(typeof result['label'] === 'string') {
+            meta_label[bid] = "" + result['label'];
+        } else {
+            meta_label[bid] = "" + result['label'][0]['@value'];
+        }
         meta_attribution[bid] = getAL(result);
         var html = '<p class="discoparagraph">' + label + '<br />';
         html += '<img class="discoimage" src="" iiif_type="sc:Canvas" iiif_service="' + service + '" id="' + bid + '" onclick="cb.discoClick(\'' + bid + '\')"; />';
@@ -317,7 +322,11 @@ function coverboutique(config) {
       var label = result['@id'];
       var bid = b64EncodeUnicode(result['@id']);
       var service = result['@id'];
-      meta_label[bid] = result['@id'];
+      if(typeof result['label'] === 'string') {
+          meta_label[bid] = "" + result['label'];
+      } else {
+          meta_label[bid] = "" + result['label'][0]['@value'];
+      }
       meta_attribution[bid] = "unkown, please respect copyrights"
       manifests[bid] = result['@id']; // hack, it's not a manifest
       var html = '<p class="discoparagraph">' + label + '<br />';
@@ -378,7 +387,11 @@ function coverboutique(config) {
       // $.getJSON(murl, function(result) {
       var result = await get_cached_url(murl);
       var bid = elem.getAttribute("id");
-      meta_label[bid] = result['label'];
+      if(typeof result['label'] === 'string') {
+          meta_label[bid] = "" + result['label'];
+      } else {
+          meta_label[bid] = "" + result['label'][0]['@value'];
+      }
       meta_attribution[bid] = getAL(result);
       var service = result['sequences'][0]['canvases'][0]['images'][0]['resource']['service']['@id'];
       elem.setAttribute("iiif_service", service);
@@ -872,20 +885,24 @@ function coverboutique(config) {
     doc.text(10, c, "gfx mode: " + gfx_mode);
     c += 4;
     doc.addImage(data, 'JPEG', 30, c, w * 25.4 / 600, h * 25.4 / 600);
-    // var ms = (new Date).getTime();
 
-    readypdf = doc;
+    var ms = (new Date).getTime();
+    doc.save("cover.boutique." + ms.toString() + ".pdf");
 
-    // doc.save("cover.boutique." + ms.toString() + ".pdf");
+    // readypdf = doc;
+    // console.log("1");
+    // // readypdf.autoPrint();
+    // var oframe = document.getElementById("iframe_pdfview");
+    // console.log("2");
+    // oframe.src = readypdf.output('datauristring');
+    // console.log("3");
 
     // var oframe = document.getElementById("iframe_pdfview");
     // oframe.src = "/libs/web/viewer.html?file="+doc.output('bloburi');
 
     hideSplash();
 
-    showSplash('splash_pdfview');
-
-    // hideSplash();
+    // showSplash('splash_pdfview');
 
     console.log("finished image");
   }
@@ -896,12 +913,10 @@ function coverboutique(config) {
     }
 
     coverboutique.prototype.printPDF = function() {
-        readypdf.autoPrint();
-        var oHiddFrame = document.createElement("iframe");
-        oHiddFrame.style.position = "fixed";
-        oHiddFrame.style.visibility = "hidden";
-        oHiddFrame.src = readypdf.output('bloburl');
-        document.body.appendChild(oHiddFrame);
+        console.log("a");
+        var oframe = document.getElementById("iframe_pdfview");
+        oframe.contentWindow.print();
+        console.log("c");
     }
 
   coverboutique.prototype.showSlider = function(id) {
