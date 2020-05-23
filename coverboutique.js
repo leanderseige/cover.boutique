@@ -872,8 +872,16 @@ function coverboutique(config) {
     c += 4;
     doc.addImage(data, 'JPEG', 30, c, w * 25.4 / 600, h * 25.4 / 600);
     var ms = (new Date).getTime();
-    doc.save("cover.boutique." + ms.toString() + ".pdf");
+
+    // doc.save("cover.boutique." + ms.toString() + ".pdf");
+
+    var oframe = document.getElementById("iframe_pdfview");
+    oframe.src = "/libs/web/viewer.html?file="+doc.output('bloburi');
     hideSplash();
+    showSplash('splash_pdfview');
+
+    // hideSplash();
+
     console.log("finished image");
   }
 
