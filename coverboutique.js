@@ -41,6 +41,7 @@ function coverboutique(config) {
   var manifests = {};
   var current_splash = false;
   var gfx_mode = "css";
+  var readypdf = false;
 
   $(document).ready(function() {
     console.log("coverboutique waking up");
@@ -790,8 +791,8 @@ function coverboutique(config) {
     var ry = Math.floor(rect.y < 0 ? 0 : rect.y);
     var rw = Math.ceil(rect.width);
     var rh = Math.ceil(rect.height + 1);
-    if(rw>3200 || rh>3200) {
-        var full="/,3200/";
+    if(rw>2400 || rh>2400) {
+        var full="/,2400/";
     } else {
         var full="/full/";
     }
@@ -871,19 +872,37 @@ function coverboutique(config) {
     doc.text(10, c, "gfx mode: " + gfx_mode);
     c += 4;
     doc.addImage(data, 'JPEG', 30, c, w * 25.4 / 600, h * 25.4 / 600);
-    var ms = (new Date).getTime();
+    // var ms = (new Date).getTime();
+
+    readypdf = doc;
 
     // doc.save("cover.boutique." + ms.toString() + ".pdf");
 
-    var oframe = document.getElementById("iframe_pdfview");
-    oframe.src = "/libs/web/viewer.html?file="+doc.output('bloburi');
+    // var oframe = document.getElementById("iframe_pdfview");
+    // oframe.src = "/libs/web/viewer.html?file="+doc.output('bloburi');
+
     hideSplash();
+
     showSplash('splash_pdfview');
 
     // hideSplash();
 
     console.log("finished image");
   }
+
+    coverboutique.prototype.savePDF = function() {
+        var ms = (new Date).getTime();
+        readypdf.save("cover.boutique." + ms.toString() + ".pdf");
+    }
+
+    coverboutique.prototype.printPDF = function() {
+        readypdf.autoPrint();
+        var oHiddFrame = document.createElement("iframe");
+        oHiddFrame.style.position = "fixed";
+        oHiddFrame.style.visibility = "hidden";
+        oHiddFrame.src = readypdf.output('bloburl');
+        document.body.appendChild(oHiddFrame);
+    }
 
   coverboutique.prototype.showSlider = function(id) {
     var label = id.slice(1);
