@@ -64,6 +64,10 @@
     "model": "3 (A3003)",
     "image": "Oneplus_3-A3003.png"
   }],
+  "Xiaomi": [{
+    "model":"Redmi 9C",
+    "image":"Xiaomi-Redmi-9C.png"
+  }],
   "Apple": [{
       "model": "iPhone S5",
       "image": "iPhone-S5.png"
